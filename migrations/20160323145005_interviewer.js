@@ -1,21 +1,14 @@
-
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
-  .createTable('interviewer',function(tb1)
-  {
+  .createTable('interviewer', function (table) {
     //PK
-    tb1.increments();
+    table.increments();
 
     //Fields
-    tb1.string('name', 60).notNullable().defaultTo('n/a');
-
-  })
-
-
+    table.string('name', 60).notNullable();
+  });
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('interviewer')
 };

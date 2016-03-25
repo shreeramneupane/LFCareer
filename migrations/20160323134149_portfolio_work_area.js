@@ -1,26 +1,15 @@
-
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
 
-
-  .createTable('portfolio_work_area',function(tb1)
-  {
-    //PK
-    tb1.increments();
-
+  .createTable('portfolio_work_area', function (table) {
     //Fields
-
-    tb1.integer('portfolio_id').notNullable().references('id').inTable('portfolio').onDelete('CASCADE');
-    tb1.integer('work_area_id').notNullable().references('id').inTable('work_area').onDelete('CASCADE');
-    tb1.primary(['portfolio_id', 'work_area_id']);
-  })
-
-
+    table.integer('portfolio_id').notNullable().references('id').inTable('portfolio').onDelete('CASCADE');
+    table.integer('work_area_id').notNullable().references('id').inTable('work_area').onDelete('CASCADE');
+    table.primary(['portfolio_id', 'work_area_id']);
+  });
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('portfolio_work_area')
 };
 
