@@ -1,30 +1,24 @@
-
-
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
 
-
-  .createTable('reference',function(tb1)
-  {
+  .createTable('reference', function (table) {
     //PK
-    tb1.increments();
+    table.increments();
 
     //Fields
-    tb1.string('full_name', 60).notNullable().defaultTo('n/a');
-    tb1.string('organization', 80).notNullable().defaultTo('n/a');
-    tb1.string('designation', 80).notNullable().defaultTo('n/a');
-    tb1.string('email', 80).notNullable().defaultTo('n/a');
-    tb1.string('phone_number', 20).notNullable().defaultTo('n/a');
-    tb1.string('relationship', 80).notNullable().defaultTo('n/a');
-    tb1.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
+    table.string('full_name', 60).notNullable();
+    table.string('organization', 80).notNullable();
+    table.string('designation', 80).notNullable();
+    table.string('email', 80).notNullable();
+    table.string('phone_number', 20).notNullable();
+    table.string('relationship', 80).notNullable();
 
-  })
+    //FK
+    table.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
 
-
+  });
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('reference')
 };

@@ -1,25 +1,21 @@
-
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('experience',function(tb1)
-  {
+  .createTable('experience', function (table) {
     //PK
-    tb1.increments();
+    table.increments();
 
     //Fields
-    tb1.string('company_name', 60).notNullable().defaultTo('n/a');
-    tb1.string('designation', 80).notNullable().defaultTo('n/a');
-    tb1.date('from_date').notNullable().defaultTo('n/a');
-    tb1.date('to_date').notNullable().defaultTo('n/a');
-    tb1.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
-  })
+    table.string('company_name', 60).notNullable();
+    table.string('designation', 80).notNullable();
+    table.date('from_date').notNullable();
+    table.date('to_date').notNullable();
 
-
+    //FK
+    table.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
+  });
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('experience')
 };

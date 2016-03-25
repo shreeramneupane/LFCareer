@@ -1,16 +1,15 @@
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('stage',function(tb1)
-  {
+  .createTable('stage', function (table) {
     //PK
-    tb1.increments();
-    tb1.string('name', 60).notNullable().defaultTo('n/a');
+    table.increments();
+
+    //Fields
+    table.string('name', 60).notNullable();
   })
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('stage')
 };

@@ -1,28 +1,23 @@
-
-
-exports.up = function(knex, Promise)
-{
+exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('education',function(tb1)
-  {
+  .createTable('education', function (table) {
     //PK
-    tb1.increments();
+    table.increments();
 
     //Fields
-    tb1.string('degree', 60).notNullable().defaultTo('n/a');
-    tb1.string('university', 80).notNullable().defaultTo('n/a');
-    tb1.string('college', 80).notNullable().defaultTo('n/a');
-    tb1.date('passed_year').notNullable().defaultTo('n/a');
-    tb1.string('grade', 80).notNullable().defaultTo('n/a');
-    tb1.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
+    table.string('degree', 60).notNullable();
+    table.string('university', 80).notNullable();
+    table.string('college', 80).notNullable();
+    table.date('passed_year').notNullable();
+    table.string('grade', 80).notNullable();
 
-  })
+    //FK
+    table.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
 
-
+  });
 };
 
-exports.down = function(knex, Promise)
-{
+exports.down = function (knex, Promise) {
   return knex.schema.dropTableIfExists('education')
 };
