@@ -1,10 +1,16 @@
-"use strict";
 
-var express = require('express'),
-    router = express.Router();
+var ApplicantController = require('./controllers/ApplicantController');
 
-router.get('/', function (req, res) {
-    res.send('Hello Word')
-});
+var express = require('express')
+, router = express.Router();
+
+
+router.get('/', ApplicantController.Index);
+router.get('/applicants/index', ApplicantController.Index);
+
+
+router.get('/list', ApplicantController.List);
+
+router.get('/show', ApplicantController.Show);
 
 module.exports = router;
