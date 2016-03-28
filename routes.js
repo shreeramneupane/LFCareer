@@ -1,13 +1,12 @@
-var ApplicantController = require('./controllers/ApplicantController');
+;(function () {
+  "use strict";
 
-var express = require('express'),
-router = express.Router();
+  var PositionsController = require('./controllers/postionsController');
 
-router.get('/', ApplicantController.Index);
-router.get('/applicants/index', ApplicantController.Index);
+  var express = require('express'),
+  router = express.Router();
 
-router.get('/list', ApplicantController.List);
+  router.post('/positions', PositionsController.Create);
 
-router.get('/show', ApplicantController.Show);
-
-module.exports = router;
+  module.exports = router;
+})();

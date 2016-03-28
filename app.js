@@ -1,11 +1,17 @@
-var express = require('express');
-var app = express();
+;(function () {
+  "use strict";
 
-var databaseConfig = require('./knexfile');
-require('knex')(databaseConfig[app.settings.env]);
+  var express = require('express');
+  var app = express();
 
-app.use(require('./routes'));
+  require('./db');
 
-var port = 5000;
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.json());
 
-app.listen(port);
+  app.use(require('./routes'));
+
+  var port = 5000;
+
+  app.listen(port);
+})();
