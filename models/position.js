@@ -17,6 +17,19 @@
       });
     },
 
+    show: function (id, callback) {
+      db("position").where("id", id).first()
+      .then(function (response) {
+        if (typeof response === 'undefined'){
+          throw new Error();
+        }
+        callback(null, response);
+      })
+      .catch(function (error) {
+        callback(error, null);
+      });
+    },
+
     create: function (positionJSON, callback) {
       var position = {
         title: positionJSON.title,

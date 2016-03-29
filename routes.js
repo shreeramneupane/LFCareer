@@ -8,6 +8,7 @@
 
   // positions
   router.get('/positions', PositionsController.Index);
+  router.get('/positions/:id', PositionsController.Show);
   router.post('/positions', PositionsController.Create);
 
   module.exports = router;

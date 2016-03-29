@@ -15,6 +15,17 @@
       })
     },
 
+    Show: function (request, response) {
+      var id = request.params.id;
+
+      Position.show(id, function (error, position) {
+        if (error) {
+          response.status(HttpStatus.BAD_REQUEST).json({error: 'Can not fetch position with id: ' + id})
+        }
+        response.status(HttpStatus.OK).json(position)
+      })
+    },
+
     Create: function (request, response) {
       var position = request.body.position;
 
