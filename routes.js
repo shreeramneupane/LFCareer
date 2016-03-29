@@ -1,13 +1,19 @@
-var applicantsController = require('./controllers/applicantsController');
+;
+(function () {
+  "use strict";
 
-var express = require('express');
-var router = express.Router();
+  var applicantsController = require('./controllers/applicantsController');
+  var PositionsController = require('./controllers/postionsController');
 
-// Applicant
-router.get('/applicants', applicantsController.Index);
-router.post('/applicant', applicantsController.Create);
+  var express = require('express'),
+  router = express.Router();
 
+  // Position
+  router.post('/positions', PositionsController.Create);
 
-// Position
+  // Applicant
+  router.get('/applicants', applicantsController.Index);
+  router.post('/applicant', applicantsController.Create);
 
-module.exports = router;
+  module.exports = router;
+})();

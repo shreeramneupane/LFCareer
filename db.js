@@ -1,6 +1,9 @@
-"use strict";
+;
+(function () {
+  "use strict";
 
-var cfg = require("./knexfile");
-var knex = require("knex")(cfg.development);
+  var databaseConfig = require('./knexfile');
+  var knex = require('knex')(databaseConfig.development);
 
-module.exports = knex;
+  module.exports = knex;
+})();

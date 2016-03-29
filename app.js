@@ -1,7 +1,15 @@
-var express = require('express');
-var app = express();
-var port = 5000;
+;
+(function () {
+  "use strict";
 
-app.use('/api',require('./routes'));
+  var express = require('express');
+  var app = express();
+  var port = 5000;
 
-app.listen(port);
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.json());
+
+  app.use('/api', require('./routes'));
+
+  app.listen(port);
+})();
