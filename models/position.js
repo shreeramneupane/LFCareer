@@ -20,7 +20,7 @@
     show: function (id, callback) {
       db("position").where("id", id).first()
       .then(function (response) {
-        if (typeof response === 'undefined'){
+        if (typeof response === 'undefined') {
           throw new Error();
         }
         callback(null, response);
@@ -31,11 +31,7 @@
     },
 
     create: function (positionJSON, callback) {
-      var position = {
-        title: positionJSON.title,
-        description: positionJSON.description,
-        specification: positionJSON.specification
-      };
+      var position = positionJSON;
 
       validation.run(position)
       .then(function () {
@@ -47,11 +43,28 @@
           callback(null, position);
         })
         .catch(function (error) {
-          callback(error, position);
+          callback(error, null);
         });
       })
       .catch(function (error) {
-        callback(error, position);
+        callback(error, null);
+      });
+    },
+
+    update: function (id, positionJSON, callback) {
+
+      db('position')
+      .returning('id')
+      .where('id', id)
+      .update(positionJSON)
+      .then(function (response) {
+        db("position").where("id", response[0]).first()
+        .then(function (updatedPosition) {
+          callback(null, updatedPosition);
+        });
+      })
+      .catch(function (error) {
+        callback(error, null);
       });
     }
   };
