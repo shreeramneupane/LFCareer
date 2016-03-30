@@ -9,7 +9,7 @@
   var bodyParser = require('body-parser');
   app.use(bodyParser.json());
 
-  app.use('/api', require('./routes'));
+  app.use('/api', require('routes'));
 
   app.listen(port);
 })();
