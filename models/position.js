@@ -19,7 +19,6 @@
     show: function (id, callback) {
       db("position").where("id", id).first()
       .then(function (response) {
-        console.log("apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple ")
         if (typeof response === 'undefined') {
           throw new Error();
         }
@@ -38,6 +37,7 @@
         callback(null, position);
       })
       .catch(function (err) {
+        err = "Can not create new position with provided parameters.";
         callback(err, position);
       })
     },
@@ -54,6 +54,7 @@
         });
       })
       .catch(function (err) {
+        err = "Can not update position with provided parameters.";
         callback(err, null);
       });
     }
