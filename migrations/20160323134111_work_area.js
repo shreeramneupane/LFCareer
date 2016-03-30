@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
 
   .createTable('work_area', function (table) {
     //PK
-    table.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
     table.string('name', 60).notNullable();
