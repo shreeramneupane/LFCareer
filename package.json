@@ -5,22 +5,27 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "./node_packages/.bin/jasmine-node spec"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",
+    "chai": "^3.5.0",
     "checkit": "^0.6.0",
     "express": "^4.13.4",
+    "http": "0.0.0",
     "http-status-codes": "^1.0.6",
     "knex": "^0.10.0",
     "lodash": "^4.6.1",
+    "mocha": "^2.4.5",
     "moment": "^2.12.0",
     "pg": "^4.5.1",
     "prettyjson": "^1.1.3",
     "request": "^2.69.0",
-    "require-dir": "^0.3.0"
+    "require-dir": "^0.3.0",
+    "should": "^8.3.0",
+    "supertest": "^1.2.0"
   }
 }

@@ -1,5 +1,4 @@
-;
-(function () {
+;(function () {
   "use strict";
 
   var db = require('../db');
@@ -12,7 +11,7 @@
         callback(null, response);
       })
       .catch(function (err) {
-        err = "'Can not fetch positions'";
+        err = "Can not fetch positions";
         callback(err, null);
       });
     },
@@ -20,6 +19,7 @@
     show: function (id, callback) {
       db("position").where("id", id).first()
       .then(function (response) {
+        console.log("apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple apple ")
         if (typeof response === 'undefined') {
           throw new Error();
         }
