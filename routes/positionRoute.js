@@ -2,13 +2,13 @@
 (function () {
   "use strict";
 
-  var PositionsController = require('./controllers/postionsController');
+  var PositionsController = require('../controllers/postionsController');
 
   var express = require('express'),
   router = express.Router();
 
   // Position
-  router.post('/positions', PositionsController.Create);
+  router.post('/positions', PositionsController.create);
 
   module.exports = router;
 })();

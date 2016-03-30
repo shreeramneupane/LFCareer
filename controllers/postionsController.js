@@ -4,7 +4,7 @@
   var PositionService = require('../services/positionService');
   var HttpStatus = require('http-status-codes');
 
-  exports.Create = function (request, response) {
+  exports.create = function (request, response) {
     var position = request.body.position;
 
 //    var positionJSON = {

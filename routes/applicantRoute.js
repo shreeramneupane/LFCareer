@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  var applicantsController = require('./controllers/applicantsController');
+  var applicantsController = require('../controllers/applicantsController');
 
   var express = require('express'),
   router = express.Router();
