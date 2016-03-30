@@ -3,7 +3,7 @@
   "use strict";
 
   var checkit = require('checkit');
-  var uuid = require('node-uuid')
+  var uuid = require('node-uuid');
   var validation = new checkit(require('../validation/positionValidation'));
   var Position = require('../models/position');
 

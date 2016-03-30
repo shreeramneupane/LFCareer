@@ -6,6 +6,7 @@
 
 // Create new position
   exports.create = function (position, callback) {
+    console.log(position)
     db('position')
     .insert(position)
     .then(function (response) {

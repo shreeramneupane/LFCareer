@@ -9,7 +9,8 @@
 
   // Applicant
   router.get('/applicants', applicantsController.Index);
-  router.post('/applicant', applicantsController.Create);
+  router.post('/applicants', applicantsController.create);
+  router.post('/applicants/resume', applicantsController.upload_resume);
 
   module.exports = router;
 })();

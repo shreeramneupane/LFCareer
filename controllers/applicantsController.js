@@ -1,7 +1,7 @@
 ;(function () {
   "use strict";
 
-  var Applicant = require('../models/applicant');
+  var Applicant = require('../services/applicantService');
   var HttpStatus = require('http-status-codes');
   var moment = require('moment');
 
@@ -17,24 +17,23 @@
     })
   };
 
-  exports.Create = function (request, response) {
+  exports.create = function (request, response) {
     var applicant = request.body.applicant;
 
-    var applicantJSON = {
-      name: applicant.name.trim(),
-      email: applicant.email.trim(),
-      address: applicant.address.trim(),
-      phone_number: applicant.phone_number.trim(),
-//      linkedin: applicant.linkedin.trim(),
-//      profile_image: applicant.profile_image.trim(),
-//      resume: applicant.resume.trim(),
-      cover_letter: applicant.cover_letter.trim(),
-//      notification: applicant.notification.trim(),
-//      source: applicant.source.trim(),
-      applied_date: moment().format("YYYY-MM-DD")
-    };
+    Applicant.create(applicant, function (error, applicant) {
+      if (error) {
+        response.status(HttpStatus.BAD_REQUEST).json({error: error})
+      }
+      response.status(HttpStatus.OK).json(applicant)
+    })
+  };
 
-    Applicant.create(applicantJSON, function (error, applicant) {
+  exports.upload_resume = function (request, response) {
+    var applicant_resume = request;
+    console.log(applicant_resume)
+
+
+    Applicant.create(applicant, function (error, applicant) {
       if (error) {
         response.status(HttpStatus.BAD_REQUEST).json({error: error})
       }
