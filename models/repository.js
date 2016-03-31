@@ -1,40 +1,21 @@
 "use strict";
 
 var db = require('../db');
-var HttpStatus = require('http-status-codes');
 
 module.exports = {
-  list: function(table) {
+  list: function (table) {
     return db(table).select();
   },
 
-  show: function(table, id, callback) {
-    db(table).where("id", id).first()
-    .then(function (response) {
-      if (typeof response === 'undefined') {
-        throw new Error();
-      }
-      callback(null, response);
-    })
-    .catch(function (err) {
-      err = 'Can not fetch position with id: ' + id;
-      callback(err, null);
-    });
+  show: function (table, id) {
+    return db(table).where("id", id).first();
   },
 
-  create: function (table, entity, callback) {
-    db(table)
-    .insert(entity)
-    .then(function (response) {
-      callback(null, entity);
-    })
-    .catch(function (err) {
-      err = "Can not create new position with provided parameters.";
-      callback(err);
-    });
+  create: function (table, entity) {
+    return db(table).insert(entity);
   },
 
-  update: function(table, id, entity, callback) {
+  update: function (table, id, entity, callback) {
     db(table)
     .returning('id')
     .where('id', id)

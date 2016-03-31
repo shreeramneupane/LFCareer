@@ -7,18 +7,15 @@
   module.exports = {
 
     index: function () {
-      /**
-       * return all positions form position table
-       */
-     return repository.list('position');
+      return repository.list('position');
     },
 
-    show: function (id, callback) {
-      repository.show('position', id, callback);
+    show: function (id) {
+      return repository.show('position', id);
     },
 
-    create: function (position, callback) {
-      repository.create('position', position, callback);
+    create: function (position) {
+      return repository.create('position', position);
     },
 
     update: function (id, position, callback) {
