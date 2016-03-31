@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
 
   .createTable('applicant', function (table) {
     //PK
-    table.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
     table.string('name', 60).notNullable();
@@ -19,7 +19,7 @@ exports.up = function (knex, Promise) {
     table.date('applied_date').notNullable();
 
     //FK
-    table.integer('job_id', 30).references('id').inTable('job');
+    table.uuid('job_id').references('id').inTable('job');
   });
 
 };

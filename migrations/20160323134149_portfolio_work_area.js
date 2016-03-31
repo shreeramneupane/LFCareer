@@ -3,8 +3,8 @@ exports.up = function (knex, Promise) {
 
   .createTable('portfolio_work_area', function (table) {
     //Fields
-    table.integer('portfolio_id').notNullable().references('id').inTable('portfolio').onDelete('CASCADE');
-    table.integer('work_area_id').notNullable().references('id').inTable('work_area').onDelete('CASCADE');
+    table.uuid('portfolio_id').notNullable().references('id').inTable('portfolio').onDelete('CASCADE');
+    table.uuid('work_area_id').notNullable().references('id').inTable('work_area').onDelete('CASCADE');
     table.primary(['portfolio_id', 'work_area_id']);
   });
 };

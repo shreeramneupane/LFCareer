@@ -3,8 +3,8 @@ exports.up = function (knex, Promise) {
 
   .createTable('applicant_skill', function (table) {
     //Fields
-    table.integer('applicant_id').notNullable().references('id').inTable('applicant').onDelete('CASCADE');
-    table.integer('skill_id').notNullable().references('id').inTable('skill').onDelete('CASCADE');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicant').onDelete('CASCADE');
+    table.uuid('skill_id').notNullable().references('id').inTable('skill').onDelete('CASCADE');
     table.primary(['applicant_id', 'skill_id']);
   })
 

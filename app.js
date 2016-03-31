@@ -1,10 +1,24 @@
-var express = require('express');
-var app = express();
+;
+(function () {
+  "use strict";
 
-app.use(require('./routes'));
+  var express = require('express');
+  var requireDir = require('require-dir');
+  var bodyParser = require('body-parser'),multer = require('multer'),
+  s3 = require('multer-s3');
 
-var port = 5000;
+  var app = express();
+  var port = 5000;
 
-app.listen(port, function (err) {
-    console.log('running server on port ' + port)
-});
+  app.use(bodyParser.json());
+
+  var routes = requireDir('./routes');
+  for (var i in routes) app.use('/api', routes[i]);
+
+
+
+
+
+
+  app.listen(port);
+})();
