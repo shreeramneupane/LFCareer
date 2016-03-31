@@ -4,15 +4,8 @@ var db = require('../db');
 var HttpStatus = require('http-status-codes');
 
 module.exports = {
-  list: function(table, callback) {
-    db(table).select()
-    .then(function (response) {
-      callback(null, response);
-    })
-    .catch(function (err) {
-      err = "Can not fetch positions";
-      callback(err, null);
-    });
+  list: function(table) {
+    return db(table).select();
   },
 
   show: function(table, id, callback) {

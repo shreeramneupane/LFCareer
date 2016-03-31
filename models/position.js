@@ -6,8 +6,11 @@
 
   module.exports = {
 
-    index: function (callback) {
-      repository.list('position', callback);
+    index: function () {
+      /**
+       * return all positions form position table
+       */
+     return repository.list('position');
     },
 
     show: function (id, callback) {
