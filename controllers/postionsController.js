@@ -5,19 +5,14 @@
   var HttpStatus = require('http-status-codes');
 
   exports.create = function (request, response) {
-    var position = request.body.position;
+    var position = request.body;
 
-//    var positionJSON = {
-//      title: position.title.trim(),
-//      description: position.description.trim(),
-//      specification: position.specification.trim()
-//    };
-
-    PositionService.create(position, function (err, position) {
+    PositionService.create(position, function (err) {
       if (err) {
-        response.status(HttpStatus.BAD_REQUEST).json({error: err})
+        response.status(err.code).json(err.message);
+        return;
       }
-      response.status(HttpStatus.OK).json(position)
+      response.status(HttpStatus.OK).json(position);
     })
   };
 })();
