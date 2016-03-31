@@ -6,24 +6,41 @@
   var uuid = require('node-uuid');
   var validation = new checkit(require('../validation/positionValidation'));
   var Position = require('../models/position');
-  var HttpStatus = require('http-status-codes');
+  var _ = require('lodash');
 
-// Create new position
-  exports.create = function (position,callback) {
-    validation.run(position)
-    .then(function () {
-      position.id = uuid.v1();
+  module.exports = {
 
-      Position.create(position, function(err) {
-        callback(err);
+    index: function(callback) {
+      Position.index(callback);
+    },
+
+    show: function(id, callback) {
+      Position.show(id, callback);
+    },
+
+    create: function (position, callback) {
+      var position = _(position).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+
+      validation.run(position)
+      .then(function () {
+        position.id = uuid.v1();
+        Position.create(position, callback)
+      })
+      .catch(function (err) {
+        callback(err, null);
       });
-    })
-    .catch(function (err) {
-      var error = {
-        code: HttpStatus.BAD_REQUEST,
-        message: {'error': err}
-      };
-      callback(error);
-    });
-  };
+    },
+
+    update: function(id, position, callback) {
+      var position = _(position).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+
+      validation.run(position)
+      .then(function () {
+        Position.update(id, position, callback)
+      })
+      .catch(function (err) {
+        callback(err, null);
+      });
+    }
+  }
 })();
