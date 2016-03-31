@@ -7,12 +7,15 @@
   module.exports = {
 
     index: function (request, response) {
-      Position.index(function (err, positions) {
-        if (err) {
-          response.status(HttpStatus.BAD_REQUEST).json({error: err})
-        }
-        response.status(HttpStatus.OK).json(positions)
+      //Handling the promise here
+      Position.index()
+      .then(function (data) {
+        response.status(HttpStatus.OK).json(data);
       })
+      .catch(function (err) {
+        err = 'Cannot Fetch data';
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
     },
 
     show: function (request, response) {

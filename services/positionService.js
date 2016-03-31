@@ -10,8 +10,8 @@
 
   module.exports = {
 
-    index: function(callback) {
-      Position.index(callback);
+    index: function() {
+      return Position.index();
     },
 
     show: function(id, callback) {
