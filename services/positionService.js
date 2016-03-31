@@ -9,7 +9,7 @@
   var HttpStatus = require('http-status-codes');
 
 // Create new position
-  exports.create = function (position) {
+  exports.create = function (position,callback) {
     validation.run(position)
     .then(function () {
       position.id = uuid.v1();
@@ -21,7 +21,7 @@
     .catch(function (err) {
       var error = {
         code: HttpStatus.BAD_REQUEST,
-        message: err
+        message: {'error': err}
       };
       callback(error);
     });
