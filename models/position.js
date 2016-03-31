@@ -2,61 +2,24 @@
   "use strict";
 
   var db = require('../db');
+  var repository = require('./repository.js');
 
   module.exports = {
 
     index: function (callback) {
-      db("position").select()
-      .then(function (response) {
-        callback(null, response);
-      })
-      .catch(function (err) {
-        err = "Can not fetch positions";
-        callback(err, null);
-      });
+      repository.list('position', callback);
     },
 
     show: function (id, callback) {
-      db("position").where("id", id).first()
-      .then(function (response) {
-        if (typeof response === 'undefined') {
-          throw new Error();
-        }
-        callback(null, response);
-      })
-      .catch(function (err) {
-        err = 'Can not fetch position with id: ' + id;
-        callback(err, null);
-      });
+      repository.show('position', id, callback);
     },
 
     create: function (position, callback) {
-      db('position')
-      .insert(position)
-      .then(function (response) {
-        callback(null, position);
-      })
-      .catch(function (err) {
-        err = "Can not create new position with provided parameters.";
-        callback(err, position);
-      })
+      repository.create('position', position, callback);
     },
 
     update: function (id, position, callback) {
-      db('position')
-      .returning('id')
-      .where('id', id)
-      .update(position)
-      .then(function (response) {
-        db("position").where("id", response[0]).first()
-        .then(function (updatedPosition) {
-          callback(null, updatedPosition);
-        });
-      })
-      .catch(function (err) {
-        err = "Can not update position with provided parameters.";
-        callback(err, null);
-      });
+      repository.update('position', id, position, callback);
     }
   };
 })();

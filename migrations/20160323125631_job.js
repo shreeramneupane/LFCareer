@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
 
   .createTable('job', function (table) {
     //PK
-    table.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
     table.string('title', 60).notNullable();
@@ -15,7 +15,7 @@ exports.up = function (knex, Promise) {
     table.text('specification', 'longtext').notNullable();
 
     //FK
-    table.integer('position_id', 30).references('id').inTable('position');
+    table.uuid('position_id').references('id').inTable('position');
   });
 };
 

@@ -1,16 +1,16 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('job_applicant_stage_remark', function (tb1) {
+  .createTable('job_applicant_stage_remark', function (table) {
     //PK
-    tb1.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
-    tb1.date('created_date').notNullable();
-    tb1.text('remark', 'mediumtext').notNullable();
+    table.date('created_date').notNullable();
+    table.text('remark', 'mediumtext').notNullable();
 
     //FK
-    tb1.integer('applicant_stage_id', 30).references('id').inTable('applicant_stage');
+    table.uuid('applicant_stage_id').references('id').inTable('applicant_stage');
   });
 
 };

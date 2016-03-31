@@ -3,16 +3,16 @@ exports.up = function (knex, Promise) {
 
   .createTable('applicant_stage', function (table) {
     //PK
-    table.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
     table.date('created_date').notNullable();
     table.date('event_date').notNullable();
 
     //FK
-    table.integer('job_id').nullable().references('id').inTable('job').onDelete('CASCADE');
-    table.integer('applicant_id').notNullable().references('id').inTable('applicant').onDelete('CASCADE');
-    table.integer('stage_id').notNullable().references('id').inTable('stage').onDelete('CASCADE');
+    table.uuid('job_id').nullable().references('id').inTable('job').onDelete('CASCADE');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicant').onDelete('CASCADE');
+    table.uuid('stage_id').notNullable().references('id').inTable('stage').onDelete('CASCADE');
   });
 };
 

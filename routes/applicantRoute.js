@@ -8,7 +8,9 @@
   router = express.Router();
 
   // Applicant
-  router.post('/applicant', applicantsController.Create);
+  router.get('/applicants', applicantsController.Index);
+  router.post('/applicants', applicantsController.create);
+  router.post('/applicants/resume', applicantsController.upload_resume);
 
   module.exports = router;
 })();

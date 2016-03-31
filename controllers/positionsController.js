@@ -27,7 +27,7 @@
     },
 
     create: function (request, response) {
-      var position = request.body.position;
+      var position = request.body;
 
       Position.create(position, function (err, position) {
         if (err) {
@@ -39,7 +39,7 @@
 
     update: function (request, response) {
       var id = request.params.id;
-      var position = request.body.position;
+      var position = request.body;
 
       Position.update(id, position, function (err, position) {
         if (err) {
