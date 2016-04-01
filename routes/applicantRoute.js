@@ -2,15 +2,16 @@
 (function () {
   "use strict";
 
-  var applicantsController = require('../controllers/applicantsController');
+  var ApplicantsController = require('../controllers/applicantsController');
 
   var express = require('express'),
   router = express.Router();
 
-  // Applicant
-  router.get('/applicants', applicantsController.Index);
-  router.post('/applicants', applicantsController.create);
-  router.post('/applicants/resume', applicantsController.upload_resume);
+  router.get('/applicants', ApplicantsController.index);
+  router.get('/applicants/:id', ApplicantsController.show);
+  router.post('/applicants', ApplicantsController.create);
+  router.post('/applicants/upload', ApplicantsController.upload);
+  router.put('/applicants/:id', ApplicantsController.update);
 
   module.exports = router;
 })();

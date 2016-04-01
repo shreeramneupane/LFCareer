@@ -1,32 +1,25 @@
-;
-(function () {
+;(function () {
   "use strict";
 
-  var checkit = require('checkit');
   var db = require('../db');
-  var validation = new checkit(require('../validation/applicantValidation'));
+  var repository = require('./repository.js');
 
-  // List all Applicants
-  exports.Index = function (callback) {
-    db.select("name", "email", "address", "phone_number", "linkedin").from("applicant").then(function (response) {
-      callback(null, response);
-    })
-    .catch(function (error) {
-      callback(error, applicantJSON);
-    });
-  };
+  module.exports = {
 
-// Create new applicant
-  exports.create = function (applicant, callback) {
-    db('applicant')
-    .returning('id')
-    .insert(applicant)
-    .then(function (response) {
-      applicant.id = response[0];
-      callback(null, applicant);
-    })
-    .catch(function (error) {
-      callback(error, applicant);
-    });
+    index: function () {
+      return repository.list('applicant');
+    },
+
+    show: function (id) {
+      return repository.show('applicant', id);
+    },
+
+    create: function (position) {
+      return repository.create('applicant', position);
+    },
+
+    update: function (id, applicant, callback) {
+      return repository.update('applicant', id, applicant);
+    }
   };
 })();

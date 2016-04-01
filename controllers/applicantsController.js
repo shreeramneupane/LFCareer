@@ -1,48 +1,107 @@
 ;(function () {
   "use strict";
 
-  var Applicant = require('../services/applicantService');
+  var utilityService = require('../services/utilityService');
+  var applicantService = require('../services/applicantService');
+  var applicantService = require('../services/applicantUploadService');
   var HttpStatus = require('http-status-codes');
-  var moment = require('moment');
-  var multer = require('multer');
-  var s3 = require('multer-s3');
+  var Applicant = require('../models/applicant');
 
+  var _ = require('lodash');
 
-  exports.Index = function(request, response){
-    Applicant.Index(function (err, applicants) {
-      if(err){
-        console.log(err)
-      }
-      else
-      {
-        response.status(HttpStatus.OK).json(applicants)
-      }
-    })
-  };
+  module.exports = {
 
-  exports.create = function (request, response) {
-    var applicant = request.body.applicant;
+    index: function (request, response) {
+      //Handling the promise here
+      Applicant.index()
+      .then(function (data) {
+        response.status(HttpStatus.OK).json(data);
+      })
+      .catch(function (err) {
+        err = 'Cannot fetch applicants';
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
+    },
 
-    Applicant.create(applicant, function (error, applicant) {
-      if (error) {
-        response.status(HttpStatus.BAD_REQUEST).json({error: error})
-      }
-      response.status(HttpStatus.OK).json(applicant)
-    })
-  };
+    show: function (request, response) {
+      var id = request.params.id;
 
-  exports.upload_resume = function (req, response) {
+      Applicant.show(id)
+      .then(function (data) {
+        if (typeof data === 'undefined') {
+          throw new Error();
+        }
+        response.status(HttpStatus.OK).json(data);
+      })
+      .catch(function (err) {
+        err = 'Can not fetch applicant with id: ' + id;
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
+    },
 
+    create: function (request, response) {
+      var applicant = request.body;
 
-//    var applicant_resume = request.file;
-//    console.log(applicant_resume)
+      applicantService.validate(applicant)
+      .then(function () {
+        utilityService.addUUID(applicant);
+        Applicant.create(applicant)
+        .then(function (data) {
+          response.status(HttpStatus.OK).json(applicant)
+        })
+        .catch(function (err) {
+          err = "Can not create new applicant with provided parameters.";
+          response.status(HttpStatus.BAD_REQUEST).json({error: err});
+        });
+      })
+      .catch(function (err) {
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
+    },
 
+    upload: function (request, response) {
+      var applicant = request.body;
 
-//    Applicant.create(applicant, function (error, applicant) {
-//      if (error) {
-//        response.status(HttpStatus.BAD_REQUEST).json({error: error})
-//      }
-//      response.status(HttpStatus.OK).json(applicant)
-//    })
+      applicantService.validate(applicant)
+      .then(function () {
+        utilityService.addUUID(applicant);
+        Applicant.create(applicant)
+        .then(function (data) {
+          response.status(HttpStatus.OK).json(applicant)
+        })
+        .catch(function (err) {
+          err = "Can not create new applicant with provided parameters.";
+          response.status(HttpStatus.BAD_REQUEST).json({error: err});
+        });
+      })
+      .catch(function (err) {
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
+    },
+
+    update: function (request, response) {
+      var id = request.params.id;
+      var applicant = request.body;
+
+      applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+
+      applicantService.validate(applicant)
+      .then(function () {
+        Applicant.update(id, applicant)
+        .then(function (data) {
+          Applicant.show(data[0])
+          .then(function (updatedApplicant) {
+            response.status(HttpStatus.OK).json(updatedApplicant)
+          })
+        })
+        .catch(function (err) {
+          err = "Can not update applicant with provided parameters.";
+          response.status(HttpStatus.BAD_REQUEST).json({error: err});
+        });
+      })
+      .catch(function (err) {
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
+    }
   };
 })();
