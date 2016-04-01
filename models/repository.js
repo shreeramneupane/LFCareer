@@ -16,19 +16,9 @@ module.exports = {
   },
 
   update: function (table, id, entity, callback) {
-    db(table)
+    return db(table)
     .returning('id')
     .where('id', id)
     .update(entity)
-    .then(function (response) {
-      db(table).where("id", response[0]).first()
-      .then(function (updatedPosition) {
-        callback(null, updatedPosition);
-      });
-    })
-    .catch(function (err) {
-      err = "Can not update position with provided parameters.";
-      callback(err, null);
-    });
   }
 };

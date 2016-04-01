@@ -41,16 +41,15 @@
     create: function (request, response) {
       var position = request.body;
 
-      position = _(position).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
-
       positionService.validate(position)
       .then(function () {
         utilityService.addUUID(position);
         Position.create(position)
         .then(function (data) {
-          response.status(HttpStatus.OK).json(data)
+          response.status(HttpStatus.OK).json(position)
         })
         .catch(function (err) {
+          err = "Can not create new position with provided parameters.";
           response.status(HttpStatus.BAD_REQUEST).json({error: err});
         });
       })
@@ -63,12 +62,25 @@
       var id = request.params.id;
       var position = request.body;
 
-      Position.update(id, position, function (err, position) {
-        if (err) {
-          response.status(HttpStatus.BAD_REQUEST).json({error: err})
-        }
-        response.status(HttpStatus.OK).json(position)
+      position = _(position).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+
+      positionService.validate(position)
+      .then(function () {
+        Position.update(id, position)
+        .then(function (data) {
+          Position.show(data[0])
+          .then(function (updatedPosition) {
+            response.status(HttpStatus.OK).json(updatedPosition)
+          })
+        })
+        .catch(function (err) {
+          err = "Can not update position with provided parameters.";
+          response.status(HttpStatus.BAD_REQUEST).json({error: err});
+        });
       })
+      .catch(function (err) {
+        response.status(HttpStatus.BAD_REQUEST).json({error: err});
+      });
     }
   };
 })();

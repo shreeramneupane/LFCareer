@@ -19,7 +19,7 @@
     },
 
     update: function (id, position, callback) {
-      repository.update('position', id, position, callback);
+      return repository.update('position', id, position);
     }
   };
 })();
