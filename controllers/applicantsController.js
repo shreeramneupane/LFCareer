@@ -33,22 +33,6 @@
 
   exports.upload_resume = function (req, response) {
 
-  console.log(req.files)
-
-    var upload = multer({
-      storage: s3({
-        dirname: 'uploads/resume',
-        bucket: 'com.lftechnology.career',
-        secretAccessKey: 'qfwQWVUwt768xiDPAlCvUmRsOeFpcXK21HYAccKo',
-        accessKeyId: 'AKIAISAQ5F3H2CD42MRA',
-        region: 'us-east-1',
-        filename: function (req, file, cb) {
-          cb(null, Date.now())
-        }
-      })
-    });
-    var test = upload.array('photos', 3);
-    console.log(test)
 
 //    var applicant_resume = request.file;
 //    console.log(applicant_resume)
