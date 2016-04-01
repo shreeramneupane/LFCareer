@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
 
   .createTable('education', function (table) {
     //PK
-    table.increments();
+    table.uuid('id').notNullable().primary();
 
     //Fields
     table.string('degree', 60).notNullable();
@@ -13,7 +13,7 @@ exports.up = function (knex, Promise) {
     table.string('grade', 80).notNullable();
 
     //FK
-    table.integer('applicant_id', 30).notNullable().references('id').inTable('applicant');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicant');
 
   });
 };
