@@ -59,34 +59,6 @@ describe('List jobs, Controller action index, GET /jobs/', function () {
 
             });
         });
-
-
-
-
-
-        //var job1 = {
-        //    id: uuid.v1(),
-        //    title: "Title 1",
-        //    intro: "Job Intro 1",
-        //    number_of_opening: "3",
-        //    description: 'Description 1',
-        //    specification: 'Specification 1',
-        //    created_date: "2016-04-01T00:00:00.000Z",
-        //    valid_until: "2016-05-01T00:00:00.000Z"
-        //};
-        //before(function () {
-        //    var position = {
-        //        id: uuid.v1(),
-        //        title: 'Position 1',
-        //        description: 'Description',
-        //        specification: 'Specification'
-        //    };
-        //    return db('position').returning("id").insert(position).then(function (response) {
-        //        job1.position_id = response[0];
-        //        db('job').insert(job1).then();
-        //
-        //    });
-        //});
         it('should respond with array containing jobs', function (done) {
             request(app)
             .get('/jobs')
@@ -307,7 +279,6 @@ describe('Update job, Controller action update, PUT /jobs/:id', function () {
                 db('job').insert(job).then();
 
             });
-            //return db('job').returning('id').insert(job).then();
         });
 
         it('should update the job and respond with json containing job updated information', function (done) {
