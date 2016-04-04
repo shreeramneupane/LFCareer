@@ -143,9 +143,9 @@ describe('Create new position, Controller action create, POST /positions/', func
       specification: 'Specification 1'
     };
 
-    before(function () {
-      return db('position').whereNot('id', null).del().then();
-    });
+    //before(function () {
+    //  return db('position').whereNot('id', null).del().then();
+    //});
 
     it('should create the a position and respond with json containing position information', function (done) {
       request(app)
