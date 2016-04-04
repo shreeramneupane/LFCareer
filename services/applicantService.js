@@ -6,7 +6,6 @@
   var validation = new checkit(require('../validation/applicantValidation'));
 
   module.exports = {
-
     validate: function (applicant) {
       return validation.run(applicant);
     }
