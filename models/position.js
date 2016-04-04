@@ -18,7 +18,7 @@
       return repository.create('position', position);
     },
 
-    update: function (id, position, callback) {
+    update: function (id, position) {
       return repository.update('position', id, position);
     }
   };
