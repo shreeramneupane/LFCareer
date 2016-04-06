@@ -55,8 +55,8 @@ module.exports = {
       .update(entity)
       .then(function (response) {
         db(table).where("id", id).first()
-        .then(function (updatedStage) {
-          resolve(updatedStage);
+        .then(function (updatedData) {
+          resolve(updatedData);
         });
       })
       .catch(function (err) {
