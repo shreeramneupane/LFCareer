@@ -8,6 +8,7 @@
     var Stage = require('../models/stage');
     var _ = require('lodash');
     var Promise = require("bluebird");
+    var AppError = require('../error/AppError');
 
 
     module.exports = {
@@ -24,32 +25,56 @@
             });
         },
 
-        show: function(id, callback) {
-            Stage.show(id, callback);
-        },
-
-        create: function (stage, callback) {
-            var stage = _(stage).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
-
-            validation.run(stage)
-            .then(function () {
-                stage.id = uuid.v1();
-                Stage.create(stage, callback)
-            })
-            .catch(function (err) {
-                callback(err, null);
+        show: function(id) {
+            return new Promise(function (resolve, reject) {
+                Stage.show(id)
+                .then(function (response) {
+                    resolve(response);
+                })
+                .catch(function (err) {
+                    reject(err);
+                });
             });
         },
 
-        update: function(id, position, callback) {
+        create: function (stage) {
             var stage = _(stage).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+            return new Promise(function (resolve, reject) {
+                validation.run(stage)
+                .then(function () {
+                    stage.id = uuid.v1();
+                    Stage.create(stage)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+                })
+                .catch(function (err) {
+                   var error = AppError.validationError(err);
+                    reject(error);
+                });
+            });
+        },
 
-            validation.run(stage)
-            .then(function () {
-                Stage.update(id, position, callback)
-            })
-            .catch(function (err) {
-                callback(err, null);
+        update: function(id, stage) {
+            var stage = _(stage).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+            return new Promise(function (resolve, reject) {
+                validation.run(stage)
+                .then(function () {
+                    Stage.update(id, stage)
+                    .then(function (response) {
+                        resolve(response);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    });
+                })
+                .catch(function (err) {
+                    var error = AppError.validationError(err);
+                    reject(error);
+                });
             });
         }
     }
