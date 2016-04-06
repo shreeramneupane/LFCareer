@@ -2,5 +2,5 @@ node_modules
 .idea
 knexfile.js
 *.log
-secret.js
+secret-config.json
 

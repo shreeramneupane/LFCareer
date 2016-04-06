@@ -9,7 +9,6 @@
 
 
   var requireDir = require('require-dir');
-
   var bodyParser = require('body-parser');
   app.use(bodyParser.json());
 
