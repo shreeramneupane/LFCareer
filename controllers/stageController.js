@@ -17,13 +17,7 @@
                 response.status(HttpStatus.OK).json(data);
             })
             .catch(function (err) {
-                var statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-                var error = new AppError(err.root, err.message, err.type);
-                if (error instanceof AppError && err.code) {
-                    statusCode = HttpStatus.getStatusText(err.code); // convert type to http error code
-                    console.log(statusCode);
-                }
-                response.status(statusCode).json({error: {
+                response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
                     message: err.message, code: err.code, type: err.type
                 }});
             });

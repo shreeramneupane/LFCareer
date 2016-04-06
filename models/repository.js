@@ -2,34 +2,17 @@
 
 var db = require('../db');
 var Promise = require("bluebird");
-var AppError = require('../error/statusCode');
+var AppError = require('../error/AppError');
 
 module.exports = {
   list: function(table) {
     return new Promise(function (resolve, reject) {
       db(table).select()
       .then(function (response) {
-       resolve(response);
+        resolve(response);
       })
       .catch(function (err) {
-        var code;
-        var status;
-        var error = {
-          root: err,
-          message: 'Connection Error',
-          type: 'NETWORK_ERROR',
-          code: 500
-        };
-        if(err.code) {
-          code = err.code.substring(0, 2);
-          status = AppError.HTTPStatusCode(code);
-          error = {
-            root: err,
-            message: err.routine,
-            type: status.msg,
-            code: status.code
-          };
-        }
+        var error = AppError.renderError(err);
         reject(error);
       });
     });
