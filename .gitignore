@@ -3,4 +3,3 @@ node_modules
 knexfile.js
 *.log
 secret-config.json
-

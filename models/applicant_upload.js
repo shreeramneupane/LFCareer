@@ -5,7 +5,16 @@ var repository = require('./repository.js');
 
 module.exports = {
 
-  create: function (applicant_upload) {
-    return repository.create('applicant_upload', applicant_upload);
+  create: function (params) {
+    console.log(params)
+    return new Promise(function (resolve, reject) {
+      repository.create('applicant_upload',params).then(function(data){
+        resolve(data);
+      })
+      .catch(function(err){
+        console.log(err)
+        reject(err);
+      });
+    });
   }
 };
