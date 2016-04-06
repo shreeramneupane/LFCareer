@@ -39,7 +39,7 @@ module.exports = {
       db(table)
       .insert(entity)
       .then(function (response) {
-        resolve(response);
+        resolve(entity);
       })
       .catch(function (err) {
         var error = AppError.renderError(err);

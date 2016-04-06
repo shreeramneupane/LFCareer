@@ -1,9 +1,10 @@
 module.exports = {
 
   validationError: function (err) {
+    var error = Object.keys(err.errors)[0];
     var error = {
       root: err,
-      message: err.errors.name.message,
+      message: err.errors[error].message,
       code: 500,
       type: 'INTERNAL_SERVER_ERROR'
     };
