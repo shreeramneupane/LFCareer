@@ -1,6 +1,15 @@
 
 module.exports = {
 
+    validationError: function(err){
+        var error = {
+            root: err,
+            message: err.errors.name.message,
+            code: 500,
+            type: 'INTERNAL_SERVER_ERROR'
+        }
+        return error;
+    },
     renderError: function(err){
         var code = 1;
         if(err.code) {

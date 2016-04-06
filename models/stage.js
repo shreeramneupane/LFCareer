@@ -20,15 +20,36 @@
         },
 
         show: function (id) {
-            return repository.show('stage', id);
+            return new Promise(function (resolve, reject) {
+                repository.show('stage', id).then(function(data){
+                    resolve(data);
+                })
+                .catch(function(err){
+                    reject(err);
+                });
+            });
         },
 
         create: function (stage) {
-            return repository.create('stage', stage);
+            return new Promise(function (resolve, reject) {
+                repository.create('stage', stage).then(function(data){
+                    resolve(data);
+                })
+                .catch(function(err){
+                    reject(err);
+                });
+            });
         },
 
         update: function (id, stage) {
-            return repository.update('stage', id, stage);
+            return new Promise(function (resolve, reject) {
+                repository.update('stage', id, stage).then(function(data){
+                    resolve(data);
+                })
+                .catch(function(err){
+                    reject(err);
+                });
+            });
         }
     };
 })();
