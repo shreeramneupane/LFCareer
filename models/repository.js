@@ -37,8 +37,8 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       db(table)
       .insert(entity)
-      .then(function (response) {
-       resolve(response);
+      .then(function () {
+       resolve(entity);
       })
       .catch(function (err) {
         var error = AppError.renderError(err);
@@ -52,8 +52,26 @@ module.exports = {
       db(table)
       .where('id', id)
       .update(entity)
-      .then(function (response) {
+      .then(function () {
         db(table).where("id", id).first()
+        .then(function (updatedStage) {
+          resolve(updatedStage);
+        });
+      })
+      .catch(function (err) {
+        var error = AppError.renderError(err);
+        reject(error);
+      });
+    });
+  },
+
+  update_upload: function(table, id, entity) {
+    return new Promise(function (resolve, reject) {
+      db(table)
+      .where('applicant_id', id)
+      .update(entity)
+      .then(function () {
+        db(table).where("applicant_id", id).first()
         .then(function (updatedStage) {
           resolve(updatedStage);
         });
