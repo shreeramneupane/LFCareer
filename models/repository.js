@@ -5,7 +5,7 @@ var Promise = require("bluebird");
 var AppError = require('../error/AppError');
 
 module.exports = {
-  list: function(table) {
+  list: function (table) {
     return new Promise(function (resolve, reject) {
       db(table).select()
       .then(function (response) {
@@ -18,7 +18,7 @@ module.exports = {
     });
   },
 
-  show: function(table, id) {
+  show: function (table, id) {
     return new Promise(function (resolve, reject) {
       db(table).where("id", id).first()
       .then(function (response) {
@@ -47,15 +47,15 @@ module.exports = {
     })
   },
 
-  update: function(table, id, entity) {
+  update: function (table, id, entity) {
     return new Promise(function (resolve, reject) {
       db(table)
       .where('id', id)
       .update(entity)
       .then(function () {
         db(table).where("id", id).first()
-        .then(function (updatedStage) {
-          resolve(updatedStage);
+        .then(function (updatedData) {
+          resolve(updatedData);
         });
       })
       .catch(function (err) {
