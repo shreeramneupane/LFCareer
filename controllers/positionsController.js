@@ -4,7 +4,6 @@
   var utilityService = require('../services/utilityService');
   var positionService = require('../services/positionService');
   var HttpStatus = require('http-status-codes');
-  var Position = require('../models/position');
   var _ = require('lodash');
 
   module.exports = {

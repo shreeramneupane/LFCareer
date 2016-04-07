@@ -5,7 +5,6 @@
   var utilityService = require('../services/utilityService');
   var stageService = require('../services/stageService');
   var HttpStatus = require('http-status-codes');
-  var Stage = require('../models/stage');
   var _ = require('lodash');
 
   module.exports = {

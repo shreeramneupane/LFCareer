@@ -5,7 +5,6 @@
   var utilityService = require('../services/utilityService');
   var jobService = require('../services/jobService');
   var HttpStatus = require('http-status-codes');
-  var Job = require('../models/job');
   var _ = require('lodash');
 
   module.exports = {
