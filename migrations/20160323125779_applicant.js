@@ -11,8 +11,6 @@ exports.up = function (knex, Promise) {
     table.string('address', 60).notNullable();
     table.string('phone_number', 60).notNullable();
     table.string('linkedin', 60);
-    table.string('profile_image', 60);
-    table.string('resume', 60);
     table.text('cover_letter', 'mediumtext').notNullable();
     table.boolean('notification').notNullable().defaultTo(true);
     table.string('source', 60);

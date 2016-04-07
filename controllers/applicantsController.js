@@ -1,48 +1,87 @@
-;(function () {
-  "use strict";
+"use strict";
 
-  var Applicant = require('../services/applicantService');
-  var HttpStatus = require('http-status-codes');
-  var moment = require('moment');
-  var multer = require('multer');
-  var s3 = require('multer-s3');
+var applicantService = require('../services/applicantService');
+var applicantUploadService = require('../services/applicantUploadService');
+var HttpStatus = require('http-status-codes');
+var _ = require('lodash');
 
+module.exports = {
 
-  exports.Index = function(request, response){
-    Applicant.Index(function (err, applicants) {
-      if(err){
-        console.log(err)
-      }
-      else
-      {
-        response.status(HttpStatus.OK).json(applicants)
-      }
+  index: function (request, response) {
+    applicantService.list()
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data);
     })
-  };
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 
-  exports.create = function (request, response) {
-    var applicant = request.body.applicant;
+  show: function (request, response) {
+    var id = request.params.id;
 
-    Applicant.create(applicant, function (error, applicant) {
-      if (error) {
-        response.status(HttpStatus.BAD_REQUEST).json({error: error})
-      }
-      response.status(HttpStatus.OK).json(applicant)
+    applicantService.show(id)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data);
     })
-  };
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 
-  exports.upload_resume = function (req, response) {
+  create: function (request, response) {
+    var applicant = request.body;
+    applicantService.create(applicant)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data);
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 
+  upload_files: function (request, response) {
+    applicantUploadService.upload_files(request)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data)
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 
-//    var applicant_resume = request.file;
-//    console.log(applicant_resume)
+  update_files: function (request, response) {
+    var id = request.params.id;
+    applicantUploadService.update_files(id,request)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data)
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 
-
-//    Applicant.create(applicant, function (error, applicant) {
-//      if (error) {
-//        response.status(HttpStatus.BAD_REQUEST).json({error: error})
-//      }
-//      response.status(HttpStatus.OK).json(applicant)
-//    })
-  };
-})();
+  update: function (request, response) {
+    var id = request.params.id;
+    var applicant = request.body;
+    applicantService.update(id, applicant)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data);
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  }
+};

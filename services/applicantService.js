@@ -1,33 +1,78 @@
-;
-(function () {
-  "use strict";
+"use strict";
 
-  var checkit = require('checkit');
-  var uuid = require('node-uuid');
-  var validation = new checkit(require('../validation/applicantValidation'));
-  var Applicant = require('../models/applicant');
+var checkit = require('checkit');
+var uuid = require('node-uuid');
+var validation = new checkit(require('../validation/applicantValidation'));
+var Applicant = require('../models/applicant');
+var _ = require('lodash');
+var Promise = require("bluebird");
+var AppError = require('../error/AppError');
 
-// Create new applicant
-  exports.create = function (applicant, callback) {
-    validation.run(applicant)
-    .then(function () {
-      applicant.id = uuid.v1();
-      Applicant.create(applicant, callback)
-    })
-    .catch(function (error) {
-      callback(error, applicant);
+module.exports = {
+
+  list: function () {
+    return new Promise(function (resolve, reject) {
+      Applicant.list()
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
     });
-  };
+  },
 
-  // Upload resume
-  exports.upload_resume = function (position, callback) {
-    validation.run(position)
-    .then(function () {
-      position.id = uuid.v1();
-      Position.create(position, callback)
-    })
-    .catch(function (error) {
-      callback(error, position);
+  show: function (id) {
+    return new Promise(function (resolve, reject) {
+      Applicant.show(id)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
     });
-  };
-})();
+  },
+
+  create: function (applicant) {
+    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+    return new Promise(function (resolve, reject) {
+      validation.run(applicant)
+      .then(function () {
+        applicant.id = uuid.v1();
+        Applicant.create(applicant)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (err) {
+          reject(err);
+        });
+      })
+      .catch(function (err) {
+        var error = AppError.validationError(err);
+        reject(error);
+      });
+    });
+  },
+
+  update: function (id, applicant) {
+    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+    return new Promise(function (resolve, reject) {
+      validation.run(applicant)
+      .then(function () {
+        Applicant.update(id, applicant)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (err) {
+          reject(err);
+        });
+      })
+      .catch(function (err) {
+        var error = AppError.validationError(err);
+        reject(error);
+      });
+    });
+  }
+};
+
