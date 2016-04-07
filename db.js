@@ -1,11 +1,9 @@
-;(function () {
-  "use strict";
+"use strict";
 
-  var express = require('express');
-  var app = express();
+var express = require('express');
+var app = express();
 
-  var databaseConfig = require('./knexfile');
-  var knex = require('knex')(databaseConfig[app.settings.env]);
+var databaseConfig = require('./knexfile');
+var knex = require('knex')(databaseConfig[app.settings.env]);
 
-  module.exports = knex;
-})();
+module.exports = knex;

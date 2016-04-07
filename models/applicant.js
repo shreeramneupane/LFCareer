@@ -10,7 +10,7 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       db('applicant')
       .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
-      .select('applicant.id','applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture')
+      .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture')
       .then(function (data) {
         resolve(data);
       })
@@ -19,11 +19,12 @@ module.exports = {
       });
     });
   },
+
   show: function (id) {
     return new Promise(function (resolve, reject) {
       db('applicant')
       .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
-      .select('applicant.id','applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture').where("id", id).first()
+      .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture').where("id", id).first()
       .then(function (data) {
         resolve(data);
       })

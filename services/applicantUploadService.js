@@ -11,12 +11,12 @@ var fileName = "../secret-config.json";
 var config;
 
 try {
-  config = require(fileName)
+  config = require(fileName);
 }
 catch (err) {
   config = {};
-  console.log("unable to read file '" + fileName + "': ", err)
-  console.log("see secret-config-sample.json for an example")
+  console.log("unable to read file '" + fileName + "': ", err);
+  console.log("see secret-config-sample.json for an example");
 }
 
 var s3fsImpl = new S3FS(config['bucket_name'], {
@@ -26,7 +26,11 @@ var s3fsImpl = new S3FS(config['bucket_name'], {
 
 module.exports = {
   upload_files: function (request) {
-    var params = {'applicant_id': request.body.applicant_id, 'resume': request.files.resume, 'profile_picture': request.files.profile_picture};
+    var params = {
+      'applicant_id': request.body.applicant_id,
+      'resume': request.files.resume,
+      'profile_picture': request.files.profile_picture
+    };
     return new Promise(function (resolve, reject) {
       validation.run(params)
       .then(function () {
@@ -39,14 +43,14 @@ module.exports = {
         s3fsImpl.writeFile(resume.originalFilename, resume_stream, {ACL: 'public-read'}).then(function () {
           fs.unlink(resume.path, function (err) {
             if (err)
-              reject(err)
+              reject(err);
           });
         });
 
         s3fsImpl.writeFile(profile_picture.originalFilename, profile_picture_stream, {ACL: 'public-read'}).then(function () {
           fs.unlink(profile_picture.path, function (err) {
             if (err)
-              reject(err)
+              reject(err);
           });
         });
 
@@ -57,23 +61,27 @@ module.exports = {
       .then(function () {
         ApplicantUpload.create(params)
         .then(function (data) {
-          resolve(data)
+          resolve(data);
         })
         .catch(function (err) {
-          reject(err)
+          reject(err);
         });
       })
       .catch(function (err) {
-        reject(err)
+        reject(err);
       });
     });
   },
 
   update_files: function (id, request) {
 
-    var params = { 'applicant_id': id, 'resume': request.files.resume, 'profile_picture': request.files.profile_picture};
+    var params = {
+      'applicant_id': id,
+      'resume': request.files.resume,
+      'profile_picture': request.files.profile_picture
+    };
 
-    var params = _(params).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+    params = _(params).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
     return new Promise(function (resolve, reject) {
       validation.run(params)
       .then(function () {
@@ -86,14 +94,14 @@ module.exports = {
         s3fsImpl.writeFile(resume.originalFilename, resume_stream, {ACL: 'public-read'}).then(function () {
           fs.unlink(resume.path, function (err) {
             if (err)
-              reject(err)
+              reject(err);
           });
         });
 
         s3fsImpl.writeFile(profile_picture.originalFilename, profile_picture_stream, {ACL: 'public-read'}).then(function () {
           fs.unlink(profile_picture.path, function (err) {
             if (err)
-              reject(err)
+              reject(err);
           });
         });
 
@@ -104,12 +112,10 @@ module.exports = {
       .then(function () {
         ApplicantUpload.update(id, params)
         .then(function (data) {
-          resolve(data)
+          resolve(data);
         })
         .catch(function (err) {
-          console.log(err)
-
-          reject(err)
+          reject(err);
         });
       })
       .catch(function (err) {
