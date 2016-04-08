@@ -6,21 +6,20 @@ var AppError = require('../error/AppError');
 var _ = require('lodash');
 
 module.exports = {
-  list: function (table, associatedFields, searchParam) {
-
+  list: function (table, searchParam, associatedFields, filterParam) {
     return new Promise(function (resolve, reject) {
       var query = db(table);
-      associatedJoin(query, table, associatedFields)
+      search(query, searchParam)
       .then(function () {
-        if (!_.isEmpty(searchParam)) {
-          var qs = _.times(searchParam.fields.length, function () {
-            return searchParam.q;
-          });
-          query.whereRaw(searchQueryBuilder(searchParam.fields), qs);
-        }
-        query.select(table + '.*')
-        .then(function (response) {
-          resolve(response);
+        associatedJoin(query, table, associatedFields)
+        .then(function () {
+          filter(query, table, filterParam)
+          .then(function () {
+            query.select(table + '.*')
+            .then(function (response) {
+              resolve(response);
+            })
+          })
         })
       })
       .catch(function (err) {
@@ -101,19 +100,33 @@ module.exports = {
   }
 };
 
- function searchQueryBuilder (fields) {
-   console.log('sess');
-  var rawQuery = '';
-  for (var i = 0; i < fields.length; i++) {
-    if (i !== 0) {
-      rawQuery += " OR ";
-    }
-    rawQuery += "LOWER(" + fields[i] + ") like '%' || LOWER(?) || '%'"
-  }
-  console.log(rawQuery);
-  return rawQuery;
-}
+function search(query, searchParam) {
+  return new Promise(function (resolve, reject) {
+    if (!_.isEmpty(searchParam) && typeof searchParam.q !== 'undefined' && searchParam.q !== null) {
+      var rawQuery = '';
+      var fields = searchParam.fields;
+      var qs = _.times(fields.length, function () {
+        return searchParam.q;
+      });
 
+      for (var i = 0; i < fields.length; i++) {
+        if (i !== 0) {
+          rawQuery += " OR ";
+        }
+        rawQuery += "LOWER(" + fields[i] + ") like '%' || LOWER(?) || '%'"
+      }
+      query.whereRaw(rawQuery, qs)
+      .then(function (response) {
+        resolve(response);
+      })
+      .catch(function (err) {
+        var error = AppError.renderError(err);
+        reject(error);
+      });
+    }
+    resolve(true);
+  });
+};
 
 function associatedJoin(query, table, associatedFields) {
   return new Promise(function (resolve, reject) {
@@ -134,5 +147,38 @@ function associatedJoin(query, table, associatedFields) {
     }
     resolve(true);
   });
-}
+};
 
+function filter(query, table, filterParam) {
+  return new Promise(function (resolve, reject) {
+    if (!_.isEmpty(filterParam)) {
+      var filters = filterParam.query;
+      var nestedFieldsParams = filterParam.nested_fields;
+      if (typeof nestedFieldsParams !== 'undefined' && nestedFieldsParams !== null) {
+        for (var i = 0; i < nestedFieldsParams.length; i++) {
+          if (Object.keys(filterParam.query).indexOf(nestedFieldsParams[i].field) >= 0) {
+            var nestedFieldParams = nestedFieldsParams[i];
+            query.leftOuterJoin(nestedFieldParams.table, nestedFieldParams.table + '.id', nestedFieldParams.table + '_id');
+            query.where(nestedFieldParams.table + '.' + nestedFieldParams.attribute, filterParam.query[nestedFieldParams.field]);
+            filters = _.omit(filterParam.query, nestedFieldParams.field);
+          }
+        }
+      }
+      if (!_.isEmpty(filters)) {
+        filters = _.mapKeys(filters, function (value, key) {
+          return table + '.' + key;
+        });
+        query.where(filters);
+      }
+    }
+    query
+    .then(function (response) {
+      resolve(response);
+    })
+    .catch(function (err) {
+      var error = AppError.renderError(err);
+      reject(error);
+    });
+    resolve(true);
+  });
+};

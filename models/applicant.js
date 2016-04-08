@@ -1,15 +1,14 @@
 "use strict";
 
-var db = require('../db');
 var repository = require('./repository.js');
 var Promise = require("bluebird");
 
 module.exports = {
 
-  list: function (associatedFields, searchParam) {
+  list: function (searchParam, associatedFields, filterParam) {
     return new Promise(function (resolve, reject) {
-      
-      repository.list('applicant', associatedFields, searchParam)
+
+      repository.list('applicant', searchParam, associatedFields, filterParam)
       .then(function (data) {
         resolve(data);
       })
@@ -19,15 +18,8 @@ module.exports = {
     });
   },
 
-  show: function (id) {
+  show: function (id, associatedFields) {
     return new Promise(function (resolve, reject) {
-      /**
-       * Contains associated information of applicant  in applicant_upload table.
-       */
-      var associatedFields = [{
-        table_name: 'applicant_upload',
-        attributes: ['resume', 'profile_picture']
-      }];
       repository.show('applicant', id, associatedFields)
       .then(function (data) {
         resolve(data);

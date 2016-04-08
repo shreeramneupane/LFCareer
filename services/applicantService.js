@@ -11,18 +11,30 @@ var AppError = require('../error/AppError');
 module.exports = {
 
   list: function (params) {
-    return new Promise(function (resolve, reject) {
-      var associatedFields = [{
-        table_name: 'applicant_upload',
-        attributes: ['resume', 'profile_picture']
-      }];
-      
-      var searchParam = {
-        q: params.q,
-        fields: ['name', 'email', 'address', 'phone_number']
-      };
+    var searchParam = {
+      q: params.q,
+      fields: ['name', 'email', 'address', 'phone_number']
+    };
 
-      Applicant.list(associatedFields, searchParam)
+    /**
+     * Contains associated information of applicant in applicant_upload table.
+     */
+    var associatedFields = [{
+      table_name: 'applicant_upload',
+      attributes: ['resume', 'profile_picture']
+    }];
+
+    var filterParam = {
+      query: _.pick(params, ['name', 'job']),
+      nested_fields: [{
+        field: 'job',
+        table: 'job',
+        attribute: 'title'
+      }]
+    };
+
+    return new Promise(function (resolve, reject) {
+      Applicant.list(searchParam, associatedFields, filterParam)
       .then(function (response) {
         resolve(response);
       })
@@ -33,8 +45,13 @@ module.exports = {
   },
 
   show: function (id) {
+    var associatedFields = [{
+      table_name: 'applicant_upload',
+      attributes: ['resume', 'profile_picture']
+    }];
+
     return new Promise(function (resolve, reject) {
-      Applicant.show(id)
+      Applicant.show(id, associatedFields)
       .then(function (response) {
         resolve(response);
       })
