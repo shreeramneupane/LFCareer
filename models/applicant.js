@@ -22,9 +22,14 @@ module.exports = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      db('applicant')
-      .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
-      .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture').where("id", id).first()
+      // db('applicant')
+      // .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
+      // .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture').where("id", id).first()
+      var nestedFields = [{
+        table_name: 'applicant_upload',
+        attributes: ['resume', 'profile_picture']
+      }];
+      repository.show('applicant', id, nestedFields)
       .then(function (data) {
         resolve(data);
       })
@@ -36,7 +41,8 @@ module.exports = {
 
   create: function (applicant) {
     return new Promise(function (resolve, reject) {
-      repository.create('applicant', applicant).then(function (data) {
+      repository.create('applicant', applicant)
+      .then(function (data) {
         resolve(data);
       })
       .catch(function (err) {
@@ -47,7 +53,8 @@ module.exports = {
 
   update: function (id, applicant) {
     return new Promise(function (resolve, reject) {
-      repository.update('applicant', id, applicant).then(function (data) {
+      repository.update('applicant', id, applicant)
+      .then(function (data) {
         resolve(data);
       })
       .catch(function (err) {

@@ -3,6 +3,7 @@
 var db = require('../db');
 var Promise = require("bluebird");
 var AppError = require('../error/AppError');
+var _ = require('lodash');
 
 module.exports = {
   list: function (table) {
@@ -18,9 +19,22 @@ module.exports = {
     });
   },
 
-  show: function (table, id) {
+  show: function (table, id, nestedFields) {
     return new Promise(function (resolve, reject) {
-      db(table).where("id", id).first()
+      var query = db(table);
+      if (!_.isEmpty(nestedFields)) {
+        for (var i = 0; i < nestedFields.length; i++) {
+          var nestedField = nestedFields[i];
+          query.join(nestedField.table_name, table + '.' + nestedField.table_name + '_id', nestedField.table_name + '.id')
+          var nestedAttributes = nestedField.attributes.map(function (element) {
+            return nestedField.table_name + '.' + element;
+          });
+          query.select(nestedAttributes)
+        }
+      }
+      query.where("id", id).first().select('number_of_opening');
+
+      return query
       .then(function (response) {
         if (typeof response === 'undefined') {
           throw new Error();
@@ -33,12 +47,13 @@ module.exports = {
       });
     });
   },
+
   create: function (table, entity) {
     return new Promise(function (resolve, reject) {
       db(table)
       .insert(entity)
       .then(function () {
-       resolve(entity);
+        resolve(entity);
       })
       .catch(function (err) {
         var error = AppError.renderError(err);
@@ -65,7 +80,7 @@ module.exports = {
     });
   },
 
-  update_upload: function(table, id, entity) {
+  update_upload: function (table, id, entity) {
     return new Promise(function (resolve, reject) {
       db(table)
       .where('applicant_id', id)

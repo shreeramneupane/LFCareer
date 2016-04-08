@@ -18,8 +18,12 @@ module.exports = {
   },
 
   show: function (id) {
+    var nestedFields = [{
+      table_name: 'position',
+      attributes: ['title', 'specification']
+    }];
     return new Promise(function (resolve, reject) {
-      repository.show('job', id)
+      repository.show('job', id, nestedFields)
       .then(function (data) {
         resolve(data);
       })
