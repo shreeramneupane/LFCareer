@@ -8,7 +8,7 @@ var _ = require('lodash');
 module.exports = {
 
   index: function (request, response) {
-    applicantService.list()
+    applicantService.list(request.query)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

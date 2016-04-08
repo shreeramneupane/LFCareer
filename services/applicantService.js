@@ -10,9 +10,19 @@ var AppError = require('../error/AppError');
 
 module.exports = {
 
-  list: function () {
+  list: function (params) {
     return new Promise(function (resolve, reject) {
-      Applicant.list()
+      var associatedFields = [{
+        table_name: 'applicant_upload',
+        attributes: ['resume', 'profile_picture']
+      }];
+      
+      var searchParam = {
+        q: params.q,
+        fields: ['name', 'email', 'address', 'phone_number']
+      };
+
+      Applicant.list(associatedFields, searchParam)
       .then(function (response) {
         resolve(response);
       })

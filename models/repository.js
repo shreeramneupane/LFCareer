@@ -6,17 +6,27 @@ var AppError = require('../error/AppError');
 var _ = require('lodash');
 
 module.exports = {
-  list: function (table, associatedFields) {
+  list: function (table, associatedFields, searchParam) {
+
     return new Promise(function (resolve, reject) {
       var query = db(table);
       associatedJoin(query, table, associatedFields)
-      .then(function(){
-        query.select(table+'.*')
+      .then(function () {
+
+        if (!_.isEmpty(searchParam)) {
+          var qs = _.times(searchParam.fields.length, function () {
+            return searchParam.q;
+          });
+          
+          query.whereRaw(this.searchQueryBuilder(searchParam.fields), qs);
+        }
+
+        query.select(table + '.*')
         .then(function (response) {
           resolve(response);
         })
       })
-      .catch(function(){
+      .catch(function (err) {
         var error = AppError.renderError(err);
         reject(error);
       });
@@ -27,8 +37,8 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       var query = db(table);
       associatedJoin(query, table, associatedFields)
-      .then(function(){
-        query.where("id", id).first().select(table+'.*')
+      .then(function () {
+        query.where("id", id).first().select(table + '.*')
         .then(function (response) {
           if (typeof response === 'undefined') {
             throw new Error();
@@ -36,7 +46,7 @@ module.exports = {
           resolve(response);
         })
       })
-      .catch(function(){
+      .catch(function () {
         var error = AppError.renderError(err);
         reject(error);
       });
@@ -91,10 +101,22 @@ module.exports = {
         reject(error);
       });
     });
+  },
+
+  searchQueryBuilder: function (fields) {
+    var rawQuery = '';
+    for (var i = 0; i < fields.length; i++) {
+      if (i !== 0) {
+        rawQuery += " OR ";
+      }
+      rawQuery += "LOWER(" + fields[i] + ") like '%' || LOWER(?) || '%'"
+    }
+    console.log(rawQuery);
+    return rawQuery;
   }
 };
 
-function associatedJoin(query, table, associatedFields){
+function associatedJoin(query, table, associatedFields) {
   return new Promise(function (resolve, reject) {
     if (!_.isEmpty(associatedFields)) {
       for (var i = 0; i < associatedFields.length; i++) {
@@ -102,10 +124,10 @@ function associatedJoin(query, table, associatedFields){
         var nestedAttributes = associatedFields[i].attributes;
 
         query.join(nestedField.table_name, table + '.id', nestedField.table_name + '.' + table + '_id').select(nestedAttributes)
-        .then(function(response){
+        .then(function (response) {
           resolve(response);
         })
-        .catch(function(err){
+        .catch(function (err) {
           var error = AppError.renderError(err);
           reject(error);
         })

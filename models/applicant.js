@@ -6,13 +6,10 @@ var Promise = require("bluebird");
 
 module.exports = {
 
-  list: function () {
+  list: function (associatedFields, searchParam) {
     return new Promise(function (resolve, reject) {
-      var associatedFields = [{
-        table_name: 'applicant_upload',
-        attributes: ['resume', 'profile_picture']
-      }];
-      repository.list('applicant', associatedFields)
+      
+      repository.list('applicant', associatedFields, searchParam)
       .then(function (data) {
         resolve(data);
       })
