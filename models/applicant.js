@@ -8,9 +8,11 @@ module.exports = {
 
   list: function () {
     return new Promise(function (resolve, reject) {
-      db('applicant')
-      .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
-      .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture')
+      var associatedFields = [{
+        table_name: 'applicant_upload',
+        attributes: ['resume', 'profile_picture']
+      }];
+      repository.list('applicant', associatedFields)
       .then(function (data) {
         resolve(data);
       })
@@ -22,14 +24,14 @@ module.exports = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      // db('applicant')
-      // .join('applicant_upload', 'applicant.id', '=', 'applicant_upload.applicant_id')
-      // .select('applicant.id', 'applicant.name', 'applicant.email', 'applicant.address', 'applicant.phone_number', 'applicant.cover_letter', 'applicant.applied_date', 'applicant_upload.resume', 'applicant_upload.profile_picture').where("id", id).first()
-      var nestedFields = [{
+      /**
+       * Contains associated information of applicant  in applicant_upload table.
+       */
+      var associatedFields = [{
         table_name: 'applicant_upload',
         attributes: ['resume', 'profile_picture']
       }];
-      repository.show('applicant', id, nestedFields)
+      repository.show('applicant', id, associatedFields)
       .then(function (data) {
         resolve(data);
       })

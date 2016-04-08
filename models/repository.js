@@ -6,42 +6,37 @@ var AppError = require('../error/AppError');
 var _ = require('lodash');
 
 module.exports = {
-  list: function (table) {
+  list: function (table, associatedFields) {
     return new Promise(function (resolve, reject) {
-      db(table).select()
-      .then(function (response) {
-        resolve(response);
+      var query = db(table);
+      associatedJoin(query, table, associatedFields)
+      .then(function(){
+        query.select(table+'.*')
+        .then(function (response) {
+          resolve(response);
+        })
       })
-      .catch(function (err) {
+      .catch(function(){
         var error = AppError.renderError(err);
         reject(error);
       });
     });
   },
 
-  show: function (table, id, nestedFields) {
+  show: function (table, id, associatedFields) {
     return new Promise(function (resolve, reject) {
       var query = db(table);
-      if (!_.isEmpty(nestedFields)) {
-        for (var i = 0; i < nestedFields.length; i++) {
-          var nestedField = nestedFields[i];
-          query.join(nestedField.table_name, table + '.' + nestedField.table_name + '_id', nestedField.table_name + '.id')
-          var nestedAttributes = nestedField.attributes.map(function (element) {
-            return nestedField.table_name + '.' + element;
-          });
-          query.select(nestedAttributes)
-        }
-      }
-      query.where("id", id).first().select('number_of_opening');
-
-      return query
-      .then(function (response) {
-        if (typeof response === 'undefined') {
-          throw new Error();
-        }
-        resolve(response);
+      associatedJoin(query, table, associatedFields)
+      .then(function(){
+        query.where("id", id).first().select(table+'.*')
+        .then(function (response) {
+          if (typeof response === 'undefined') {
+            throw new Error();
+          }
+          resolve(response);
+        })
       })
-      .catch(function (err) {
+      .catch(function(){
         var error = AppError.renderError(err);
         reject(error);
       });
@@ -98,4 +93,25 @@ module.exports = {
     });
   }
 };
+
+function associatedJoin(query, table, associatedFields){
+  return new Promise(function (resolve, reject) {
+    if (!_.isEmpty(associatedFields)) {
+      for (var i = 0; i < associatedFields.length; i++) {
+        var nestedField = associatedFields[i];
+        var nestedAttributes = associatedFields[i].attributes;
+
+        query.join(nestedField.table_name, table + '.id', nestedField.table_name + '.' + table + '_id').select(nestedAttributes)
+        .then(function(response){
+          resolve(response);
+        })
+        .catch(function(err){
+          var error = AppError.renderError(err);
+          reject(error);
+        })
+      }
+    }
+    resolve(true);
+  });
+}
 
