@@ -12,15 +12,12 @@ module.exports = {
       var query = db(table);
       associatedJoin(query, table, associatedFields)
       .then(function () {
-
         if (!_.isEmpty(searchParam)) {
           var qs = _.times(searchParam.fields.length, function () {
             return searchParam.q;
           });
-          
-          query.whereRaw(this.searchQueryBuilder(searchParam.fields), qs);
+          query.whereRaw(searchQueryBuilder(searchParam.fields), qs);
         }
-
         query.select(table + '.*')
         .then(function (response) {
           resolve(response);
@@ -101,20 +98,22 @@ module.exports = {
         reject(error);
       });
     });
-  },
-
-  searchQueryBuilder: function (fields) {
-    var rawQuery = '';
-    for (var i = 0; i < fields.length; i++) {
-      if (i !== 0) {
-        rawQuery += " OR ";
-      }
-      rawQuery += "LOWER(" + fields[i] + ") like '%' || LOWER(?) || '%'"
-    }
-    console.log(rawQuery);
-    return rawQuery;
   }
 };
+
+ function searchQueryBuilder (fields) {
+   console.log('sess');
+  var rawQuery = '';
+  for (var i = 0; i < fields.length; i++) {
+    if (i !== 0) {
+      rawQuery += " OR ";
+    }
+    rawQuery += "LOWER(" + fields[i] + ") like '%' || LOWER(?) || '%'"
+  }
+  console.log(rawQuery);
+  return rawQuery;
+}
+
 
 function associatedJoin(query, table, associatedFields) {
   return new Promise(function (resolve, reject) {
