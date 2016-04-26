@@ -1,12 +1,13 @@
 import {Component} from 'angular2/core';
 import {
+    Router,
     RouteConfig,
     ROUTER_DIRECTIVES,
     ROUTER_PROVIDERS
 } from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {PositionListComponent} from './components/position/position.list.component';
 
 @Component({
@@ -33,4 +34,6 @@ import {PositionListComponent} from './components/position/position.list.compone
 ])
 
 export class AppComponent {
+    constructor(public router:Router) {
+    }
 }

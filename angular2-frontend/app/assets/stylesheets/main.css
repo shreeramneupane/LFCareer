@@ -322,7 +322,7 @@ header.navbar-inverse.navbar-fixed-bottom {
   background: rgba(108, 192, 104, 1);
 }
 
-.sidebar-nav a.active {
+.sidebar-nav a.active, .sidebar-nav a.router-link-active {
   background: rgba(0, 0, 0, .2);
   color: #fff;
 }
