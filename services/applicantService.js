@@ -7,7 +7,6 @@ var Applicant = require('../models/applicant');
 var _ = require('lodash');
 var Promise = require("bluebird");
 var AppError = require('../error/AppError');
-var helpers = require('../helpers/filterHelper');
 var ApplicantHelper = require('../helpers/applicantFilter');
 
 

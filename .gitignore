@@ -3,3 +3,10 @@ node_modules
 knexfile.js
 *.log
 secret-config.json
+
+
+# Angular Front end Gitignore
+views/dist
+views/node_modules
+views/typings
+views/npm-debug.log

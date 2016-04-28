@@ -1,0 +1,50 @@
+<html>
+<head>
+  <title>Leapfrog Recruitment System</title>
+  <meta name="description" content="Leapfrog Recruitment System">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="app/assets/images/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="app/assets/images/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="app/assets/images/favicon/apple-icon-114x114.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="app/assets/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="app/assets/images/favicon/favicon-96x96.png">
+  <link rel="shortcut icon" href="app/assets/images/favicon/favicon.ico">
+
+  <!-- Vendor stylesheets -->
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app/vendor/stylesheets/font-awesome.css" >
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="app/assets/stylesheets/main.css">
+  <link rel="stylesheet" href="app/assets/stylesheets/custom.css">
+
+  <!-- IE required polyfills, in this exact order -->
+  <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+  <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+  <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+
+  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+  <script src="node_modules/systemjs/dist/system.src.js"></script>
+  <script>
+    System.config({
+      defaultJSExtensions: true
+    });
+  </script>
+  <script src="node_modules/rxjs/bundles/Rx.js"></script>
+  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+
+  <script>
+    System.import('dist/main').catch(console.log.bind(console));
+  </script>
+</head>
+
+<body>
+<my-app>Loading...</my-app>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/vendor/javascripts/plugins.js"></script>
+<script src="app/assets/javascripts/app.js"></script>
+</body>
+</html>

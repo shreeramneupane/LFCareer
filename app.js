@@ -1,15 +1,23 @@
 "use strict";
 
-var express = require('express');
+  var express = require('express'),
+  app = express(),
+  port = 5000,
 
-var app = express();
-var port = 5000;
+  requireDir = require('require-dir'),
+  bodyParser = require('body-parser'),
 
-var requireDir = require('require-dir');
-var bodyParser = require('body-parser');
-app.use(bodyParser.json());
+  routes = requireDir('./routes');
+  for (var i in routes) app.use('/api', routes[i]);
 
-var routes = requireDir('./routes');
-for (var i in routes) app.use('/api', routes[i]);
+  app.use(bodyParser.json());
 
-app.listen(port);
+  app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+
+  app.listen(port);
