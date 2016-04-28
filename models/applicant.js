@@ -2,13 +2,20 @@
 
 var repository = require('./repository.js');
 var Promise = require("bluebird");
+var _ = require('lodash');
 
 module.exports = {
 
-  list: function (searchParam, associatedFields, filterParam) {
-    return new Promise(function (resolve, reject) {
+  list: function (parsedUrl) {
 
-      repository.list('applicant', searchParam, associatedFields, filterParam)
+    var searchStatement = _.find(parsedUrl, { 'type': 'search' });
+    var sortStatement = _.find(parsedUrl, { 'type': 'sort' });
+    var filterStatement = [];
+    filterStatement = _.filter(parsedUrl, { 'type': 'filter' });
+    var paginationAttribute =  _.find(parsedUrl, { 'type': 'paginate' });
+
+    return new Promise(function (resolve, reject) {
+      repository.list('applicant', searchStatement, filterStatement, sortStatement , paginationAttribute, jointFields)
       .then(function (data) {
         resolve(data);
       })
@@ -18,9 +25,9 @@ module.exports = {
     });
   },
 
-  show: function (id, associatedFields) {
+  show: function (id) {
     return new Promise(function (resolve, reject) {
-      repository.show('applicant', id, associatedFields)
+      repository.show('applicant', id, jointFields)
       .then(function (data) {
         resolve(data);
       })
@@ -52,5 +59,9 @@ module.exports = {
         reject(err);
       });
     });
-  }
+  },
 };
+var jointFields = [{
+  table_name: 'applicant_upload',
+  attributes: ['resume', 'profile_picture']
+}];

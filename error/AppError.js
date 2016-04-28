@@ -10,7 +10,7 @@ module.exports = {
     };
     return error;
   },
-  renderError: function (err) {
+  buildError: function (err) {
     var code = 1;
     if (err.code) {
       code = err.code.substring(0, 2);

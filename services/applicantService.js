@@ -7,34 +7,17 @@ var Applicant = require('../models/applicant');
 var _ = require('lodash');
 var Promise = require("bluebird");
 var AppError = require('../error/AppError');
+var helpers = require('../helpers/filterHelper');
+var ApplicantHelper = require('../helpers/applicantFilter');
+
 
 module.exports = {
-
   list: function (params) {
-    var searchParam = {
-      q: params.q,
-      fields: ['name', 'email', 'address', 'phone_number']
-    };
 
-    /**
-     * Contains associated information of applicant in applicant_upload table.
-     */
-    var associatedFields = [{
-      table_name: 'applicant_upload',
-      attributes: ['resume', 'profile_picture']
-    }];
-
-    var filterParam = {
-      query: _.pick(params, ['name', 'job']),
-      nested_fields: [{
-        field: 'job',
-        table: 'job',
-        attribute: 'title'
-      }]
-    };
+    var parsedUrl = ApplicantHelper.urlParser(params);
 
     return new Promise(function (resolve, reject) {
-      Applicant.list(searchParam, associatedFields, filterParam)
+      Applicant.list(parsedUrl)
       .then(function (response) {
         resolve(response);
       })
@@ -45,13 +28,9 @@ module.exports = {
   },
 
   show: function (id) {
-    var associatedFields = [{
-      table_name: 'applicant_upload',
-      attributes: ['resume', 'profile_picture']
-    }];
 
     return new Promise(function (resolve, reject) {
-      Applicant.show(id, associatedFields)
+      Applicant.show(id)
       .then(function (response) {
         resolve(response);
       })
@@ -101,5 +80,6 @@ module.exports = {
       });
     });
   }
+
 };
 

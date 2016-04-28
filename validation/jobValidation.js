@@ -29,6 +29,6 @@ module.exports = {
   },
   position_id: {
     rule: 'required',
-    message: 'Please provide job closing date.'
+    message: 'Please provide Position.'
   }
 };
