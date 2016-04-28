@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Position } from '../../models/position';
 
 @Injectable()
-export class PositionListService {
+export class PositionService {
     constructor(private http: Http) { }
 
     private _positionsURL: string = 'http://localhost:5000/api/positions';

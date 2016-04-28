@@ -2,6 +2,7 @@
   "name": "lfcareer-backend",
   "version": "1.0.0",
   "scripts": {
+    "prestart": "rm -rf dist/",
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "lite": "lite-server",
     "postinstall": "typings install",
