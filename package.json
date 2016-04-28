@@ -30,6 +30,9 @@
     "request": "^2.69.0",
     "require-dir": "^0.3.0",
     "should": "^8.3.0",
-    "supertest": "^1.2.0"
+    "supertest": "^1.2.0",
+    "nodemon": "^1.9.1",
+    "s3fs": "^2.4.5",
+    "connect-multiparty": "^2.0.0"
   }
 }
