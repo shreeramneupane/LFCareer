@@ -8,7 +8,7 @@ import {
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {PositionListComponent} from './components/position/position.list.component';
+import {PositionListComponent} from './components/position/list.component';
 
 @Component({
     selector: 'lfcareer-app',
