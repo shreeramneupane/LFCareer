@@ -11,7 +11,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {PositionListComponent} from './components/position/position.list.component';
 
 @Component({
-    selector: 'my-app',
+    selector: 'lfcareer-app',
     templateUrl: 'app/app.component.html',
     directives: [
         ROUTER_DIRECTIVES
