@@ -10,3 +10,4 @@ angular2-frontend/src
 angular2-frontend/node_modules
 angular2-frontend/typings
 angular2-frontend/npm-debug.log
+coverage
