@@ -1,7 +1,33 @@
 import {Component} from '@angular/core';
+import {
+    Router,
+    RouteConfig,
+    ROUTER_DIRECTIVES,
+    ROUTER_PROVIDERS
+} from '@angular/router-deprecated';
+import {HTTP_PROVIDERS} from '@angular/http';
+
+import {DashboardComponent} from './components/dashboard/dashboard.component';
 
 @Component({
     selector: 'lfcareer-app',
-    template: '<h1>Leapfrog Recruitment System</h1>'
+    templateUrl: 'app/app.component.html',
+    directives: [
+        ROUTER_DIRECTIVES
+    ],
+    providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS]
 })
-export class AppComponent { }
+
+@RouteConfig([
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: DashboardComponent,
+        useAsDefault: true
+    }
+])
+
+export class AppComponent {
+    constructor(public router:Router) {
+    }
+}
