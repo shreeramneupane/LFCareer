@@ -8,6 +8,7 @@ import {
 import {HTTP_PROVIDERS} from '@angular/http';
 
 import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {PositionsListComponent} from './components/position/list.component';
 
 @Component({
     selector: 'lfcareer-app',
@@ -24,6 +25,11 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
         name: 'Dashboard',
         component: DashboardComponent,
         useAsDefault: true
+    },
+    {
+        path: '/positions',
+        name: 'Positions',
+        component: PositionsListComponent,
     }
 ])
 
