@@ -30,7 +30,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="#position of positions;  #index = index">
+          <tr *ngFor="let position of positions;  let index = index">
             <td>{{index + 1}}</td>
             <td>{{position.title}}</td>
           </tr>

@@ -3,13 +3,14 @@ import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
 import {Position} from '../models/position';
+import {ENVR} from '../../env.config';
 
 @Injectable()
 export class PositionService {
     constructor(private http:Http) {
     }
 
-    private _positionsURL:string = 'http://localhost:5000/api/positions';
+    private _positionsURL:string =  ENVR.get('endPoint') + 'api/jobs';
 
     getPositions() {
         return this.http.get(this._positionsURL)
