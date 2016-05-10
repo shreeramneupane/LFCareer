@@ -1,0 +1,31 @@
+<!--<form *ngIf="active" (ngSubmit)="onSubmit()" #positionForm="ngForm">-->
+<form #positionForm="ngForm">
+  <div class="form-group">
+    <label for="title">Name</label>
+    <input type="text" class="form-control" required
+           [(ngModel)]="position.title"
+           ngControl="title" #title="ngForm">
+    <div [hidden]="title.valid || title.pristine"
+         class="alert alert-danger">
+      Title is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" rows="5"
+              [(ngModel)]="position.description"
+              ngControl="description"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="specification">Specification</label>
+    <textarea class="form-control" rows="5"
+              [(ngModel)]="position.specification"
+              ngControl="specification"></textarea>
+  </div>
+  <button type="submit" class="btn btn-default"
+          [disabled]="!positionForm.form.valid">Submit
+  </button>
+  <button [routerLink]="['Positions']" class="btn btn-default">Cancel</button>
+</form>

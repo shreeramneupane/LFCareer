@@ -5,7 +5,7 @@ import {Position} from '../../models/position';
 import {PositionService}   from '../../services/position.service';
 
 @Component({
-    selector: 'my-toh',
+    selector: 'positions-list',
     templateUrl: 'app/templates/position/list.component.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [

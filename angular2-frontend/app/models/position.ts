@@ -1,6 +1,8 @@
 export class Position {
-    id: number;
-    title: string;
-    description: string;
-    specification: string;
+  id:number;
+
+  constructor(public title:string,
+              public description:string,
+              public specification:string) {
+  }
 }
