@@ -5,30 +5,30 @@ import {Position} from '../../models/position';
 import {PositionService}   from '../../services/position.service';
 
 @Component({
-    selector: 'positions-list',
-    templateUrl: 'app/templates/position/list.component.html',
-    directives: [ROUTER_DIRECTIVES],
-    providers: [
-        HTTP_PROVIDERS,
-        PositionService,
-    ]
+  selector   : 'positions-list',
+  templateUrl: 'app/templates/position/list.component.html',
+  directives : [ROUTER_DIRECTIVES],
+  providers  : [
+    HTTP_PROVIDERS,
+    PositionService,
+  ]
 })
 
 export class PositionsListComponent implements OnInit {
-    constructor(private _positionListService:PositionService) {
-    }
+  constructor(private _positionListService:PositionService) {
+  }
 
-    errorMessage:string;
-    positions:Position[];
+  positions:Position[];
 
-    ngOnInit() {
-        this.getPositions();
-    }
+  ngOnInit() {
+    this.getPositions();
+  }
 
-    getPositions() {
-        this._positionListService.getPositions()
-            .subscribe(
-                positions => this.positions = positions,
-                error => this.errorMessage = <any>error);
-    }
+  getPositions() {
+    this._positionListService.getPositions()
+    .subscribe(
+    positions => this.positions = positions,
+    error => toastr.error(error)
+    );
+  }
 }
