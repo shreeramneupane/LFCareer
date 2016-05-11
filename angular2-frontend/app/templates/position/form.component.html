@@ -4,27 +4,34 @@
     <input type="text" class="form-control" required
            [(ngModel)]="position.title"
            ngControl="title" #title="ngForm">
-    <div [hidden]="title.valid || title.pristine"
-         class="alert alert-danger">
-      Title is required
-    </div>
+    <span [hidden]="title.valid || title.untouched"
+          class="text-danger">Please provide position title.</span>
   </div>
 
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control" rows="5"
+    <textarea class="form-control" required rows="5"
               [(ngModel)]="position.description"
-              ngControl="description"></textarea>
+              ngControl="description" #description="ngForm"></textarea>
+    <span [hidden]="description.valid || description.untouched"
+          class="text-danger">Please provide position description.</span>
   </div>
 
   <div class="form-group">
     <label for="specification">Specification</label>
-    <textarea class="form-control" rows="5"
+    <textarea class="form-control" required rows="5"
               [(ngModel)]="position.specification"
-              ngControl="specification"></textarea>
+              ngControl="specification" #specification="ngForm"></textarea>
+    <span [hidden]="specification.valid || specification.untouched"
+          class="text-danger">Please provide position specification.</span>
   </div>
-  <button type="submit" class="btn btn-default"
-          [disabled]="!positionForm.form.valid">Submit
-  </button>
-  <button [routerLink]="['Positions']" class="btn btn-default">Cancel</button>
+
+  <div class="form-group form-actions clearfix">
+    <div class="pull-right">
+      <button class="btn btn-sm btn-success" type="submit"
+              [disabled]="!positionForm.form.valid">
+        <i class="fa fa-angle-right"></i>Submit
+      </button>
+    </div>
+  </div>
 </form>
