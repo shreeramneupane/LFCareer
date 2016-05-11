@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import {ROUTER_DIRECTIVES, Router} from '@angular/router-deprecated';
 
+import {Position} from '../../models/position'
 import {PositionService}   from '../../services/position.service';
 import {PositionFormComponent}   from './form.component';
 
@@ -12,13 +13,19 @@ import {PositionFormComponent}   from './form.component';
 })
 
 export class PositionNewComponent {
-  constructor(private _positionService:PositionService) {
+  position = this._positionService.newPosition();
+  public errorMessage:string;
+  router:Router;
+
+  constructor(private _positionService:PositionService, private _router:Router) {
+    this.router = _router;
   }
 
-  position  = this._positionService.newPosition();
-  submitted = false;
-
-  onSubmit() {
-    this.submitted = true;
+  onSubmit(position:Position) {
+    this._positionService.createPosition(position)
+    .subscribe(
+    position => this.router.navigate(['Positions']),
+    error => this.errorMessage = <any>error
+    );
   }
 }

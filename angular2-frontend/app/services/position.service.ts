@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 
 import {Position} from '../models/position';
@@ -21,8 +21,22 @@ export class PositionService {
     return new Position('', '', '');
   }
 
-  private _handleError(error:Response) {
-    console.error(error);
-    return Observable.throw(error.json().error || 'Server error');
+  createPosition(position:Position):Observable<Position> {
+    let body    = JSON.stringify(position);
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.post(this._positionsURL, body, options)
+    .map(res => <Position> res.json())
+    .catch(this._handleError)
+  }
+
+  private _handleError(response:any) {
+    let error = {
+      message: "Server Error",
+      code   : 500,
+      type   : "INTERNAL_SERVER_ERROR"
+    };
+    return Observable.throw(JSON.parse(response['_body']).error.message || error.message);
   }
 }

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {
-Router,
 RouteConfig,
 ROUTER_DIRECTIVES,
 ROUTER_PROVIDERS
@@ -40,6 +39,4 @@ import {PositionNewComponent} from './components/position/new.component';
 ])
 
 export class AppComponent {
-  constructor(public router:Router) {
-  }
 }
