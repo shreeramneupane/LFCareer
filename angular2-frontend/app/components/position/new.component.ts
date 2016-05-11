@@ -14,7 +14,6 @@ import {PositionFormComponent}   from './form.component';
 
 export class PositionNewComponent {
   position = this._positionService.newPosition();
-  public errorMessage:string;
   router:Router;
 
   constructor(private _positionService:PositionService, private _router:Router) {
@@ -24,8 +23,11 @@ export class PositionNewComponent {
   onSubmit(position:Position) {
     this._positionService.createPosition(position)
     .subscribe(
-    position => this.router.navigate(['Positions']),
-    error => this.errorMessage = <any>error
+    position => {
+      this.router.navigate(['Positions']);
+      toastr.success('New Position Created Successfully!');
+    },
+    error => toastr.error(error)
     );
   }
 }

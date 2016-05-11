@@ -32,11 +32,6 @@ export class PositionService {
   }
 
   private _handleError(response:any) {
-    let error = {
-      message: "Server Error",
-      code   : 500,
-      type   : "INTERNAL_SERVER_ERROR"
-    };
-    return Observable.throw(JSON.parse(response['_body']).error.message || error.message);
+    return Observable.throw(JSON.parse(response['_body']).error.message || 'Server Error');
   }
 }
