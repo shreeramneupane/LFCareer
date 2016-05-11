@@ -5,7 +5,7 @@ import {Position} from '../../models/position';
 import {PositionService}   from '../../services/position.service';
 
 @Component({
-  selector   : 'positions-list',
+  selector   : 'position-list',
   templateUrl: 'app/templates/position/list.component.html',
   directives : [ROUTER_DIRECTIVES],
   providers  : [
@@ -14,18 +14,18 @@ import {PositionService}   from '../../services/position.service';
   ]
 })
 
-export class PositionsListComponent implements OnInit {
+export class PositionListComponent implements OnInit {
   constructor(private _positionListService:PositionService) {
   }
 
   positions:Position[];
 
   ngOnInit() {
-    this.getPositions();
+    this.listPosition();
   }
 
-  getPositions() {
-    this._positionListService.getPositions()
+  listPosition() {
+    this._positionListService.listPosition()
     .subscribe(
     positions => this.positions = positions,
     error => toastr.error(error)

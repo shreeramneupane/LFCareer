@@ -6,7 +6,7 @@ import {PositionService}   from '../../services/position.service';
 import {PositionFormComponent}   from './form.component';
 
 @Component({
-  selector   : 'position-new-form',
+  selector   : 'position-new',
   templateUrl: 'app/templates/position/new.component.html',
   providers  : [PositionService],
   directives : [ROUTER_DIRECTIVES, PositionFormComponent]

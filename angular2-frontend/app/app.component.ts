@@ -7,7 +7,7 @@ ROUTER_PROVIDERS
 import {HTTP_PROVIDERS} from '@angular/http';
 
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {PositionsListComponent} from './components/position/list.component';
+import {PositionListComponent} from './components/position/list.component';
 import {PositionNewComponent} from './components/position/new.component';
 
 @Component({
@@ -28,8 +28,8 @@ import {PositionNewComponent} from './components/position/new.component';
   },
   {
     path     : '/positions',
-    name     : 'Positions',
-    component: PositionsListComponent
+    name     : 'PositionList',
+    component: PositionListComponent
   },
   {
     path     : '/positions/new',

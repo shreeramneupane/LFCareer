@@ -11,7 +11,7 @@ export class PositionService {
 
   private _positionsURL:string = 'http://localhost:5000/api/positions';
 
-  getPositions() {
+  listPosition() {
     return this.http.get(this._positionsURL)
     .map(res => <Position[]> res.json())
     .catch(this._handleError);
