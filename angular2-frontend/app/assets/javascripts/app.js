@@ -151,6 +151,7 @@ var App = function () {
 
   /* Sidebar Functionality */
   var handleSidebar = function (mode, extra) {
+    var page = $('#page-container');
     if (mode === 'init') {
       // Init sidebars scrolling (if we have a fixed header)
       if (header.hasClass('navbar-fixed-top') || header.hasClass('navbar-fixed-bottom')) {
@@ -301,6 +302,7 @@ var App = function () {
   };
   return {
     init: function () {
+      console.log('asdfdd')
       uiInit(); // Initialize UI Code
       //pageLoading(); // Initialize Page Loading
     },
