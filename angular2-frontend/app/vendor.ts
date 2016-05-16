@@ -12,8 +12,6 @@ import './assets/stylesheets/bootstrap.min.css';
 import './assets/stylesheets/main.css';
 import './assets/stylesheets/custom.css';
 
-import '../node_modules/jquery/dist/jquery.min.js';
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './assets/vendor/javascripts/plugins.js';
-import './assets/javascripts/app';
 import '../node_modules/toastr/build/toastr.min.css';

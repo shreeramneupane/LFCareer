@@ -1,32 +1,18 @@
 <div id="page-container"
      class="header-fixed-top sidebar-partial sidebar-visible-lg footer-fixed">
-  <div id="sidebar">
-    <div class="sidebar-scroll">
-      <div class="sidebar-content">
-        <h1><a href="index.html" class="sidebar-brand">Leapfrog Recruitment
-          System</a></h1>
-        <ul class="sidebar-nav">
-          <li>
-            <a [routerLink]="['Dashboard']"
-               [class.active]="router.isRouteActive('Dashboard')"><i
-            class="fa fa-dashboard fa-fw"></i><span
-            class="xn-text">Dashboard</span> </a>
-          </li>
-        </ul>
-      </div>
+    <sidebar></sidebar>
+    <!--  sidebar-->
+    <!-- main-container-->
+    <div id="main-container">
+        <header-top></header-top>
+        <div id="page-content">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- Footer -->
+        <footer class="clearfix"><span></span> &copy;
+            <a href="http://www.lftechnology.com/" target="_blank">Leapfrog Technology Inc.</a>
+        </footer>
+        <!-- END Footer -->
     </div>
-  </div>
-  <!--  sidebar-->
-  <!-- main-container-->
-  <div id="main-container">
-    <header-top></header-top>
-    <div id="page-content">
-      <router-outlet></router-outlet>
-    </div>
-    <!-- Footer -->
-    <footer class="clearfix"><span></span> &copy; <a href="#" target="_blank">Leapfrog
-      Technology Inc</a></footer>
-    <!-- END Footer -->
-  </div>
-  <!-- main-container-->
+    <!-- main-container-->
 </div>
