@@ -1,18 +1,18 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable }                     from '@angular/core';
+import { Headers, Http, RequestOptions }  from '@angular/http';
+import { Observable }                     from 'rxjs/Rx';
 
-import {Position} from '../models/position';
+import {Position} from './position';
 
 @Injectable()
 export class PositionService {
   constructor(private http:Http) {
   }
 
-  private _positionsURL:string = 'http://localhost:5000/api/positions';
+  private positionsURL:string = 'http://localhost:5000/api/positions';
 
   listPosition() {
-    return this.http.get(this._positionsURL)
+    return this.http.get(this.positionsURL)
     .map(res => <Position[]> res.json())
     .catch(this._handleError);
   }
@@ -26,12 +26,12 @@ export class PositionService {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
 
-    return this.http.post(this._positionsURL, body, options)
+    return this.http.post(this.positionsURL, body, options)
     .map(res => <Position> res.json())
-    .catch(this._handleError)
+    .catch(this.handleError)
   }
 
-  private _handleError(response:any) {
+  private handleError(response:any) {
     return Observable.throw(JSON.parse(response['_body']).error.message || 'Server Error');
   }
 }
