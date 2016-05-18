@@ -7,3 +7,13 @@
 .ng-invalid.ng-touched {
   border: 1px solid #a94442;
 }
+
+.pre-line {
+  white-space: pre-line;
+}
+
+textarea {
+  min-height: 100px;
+  overflow-y: auto;
+  word-wrap:break-word
+}

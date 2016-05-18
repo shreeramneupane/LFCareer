@@ -32,12 +32,21 @@
           <tr>
             <th>SN</th>
             <th>Title</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let position of positions;  let index = index">
             <td>{{index + 1}}</td>
             <td>{{position.title}}</td>
+            <td class="text-center">
+              <div class="btn-group">
+                <a [routerLink]="['PositionEdit', {id: position.id}]" data-toggle="tooltip" title="Edit Position" class="btn btn-sm btn-default">
+                  <i class="fa fa-pencil"></i></a>
+                <a [routerLink]="['PositionShow', {id: position.id}]" data-toggle="tooltip" title="Position Detail" class="btn btn-sm btn-default">
+                  <i class="glyphicon glyphicon-list-alt"></i></a>
+              </div>
+            </td>
           </tr>
           </tbody>
         </table>

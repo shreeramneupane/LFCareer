@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit(position)" #positionForm="ngForm">
+<form *ngIf="position" (ngSubmit)="submit(position)" #positionForm="ngForm">
   <div class="form-group">
     <label for="title">Name</label>
     <input type="text" class="form-control" required

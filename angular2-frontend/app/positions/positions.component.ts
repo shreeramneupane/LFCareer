@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component }  from '@angular/core';
 import {
 RouteConfig,
 ROUTER_DIRECTIVES,
 } from '@angular/router-deprecated';
 
 import { PositionListComponent }  from './position-list/position-list.component';
+import { PositionShowComponent }  from './position-show/position-show.component';
 import { PositionNewComponent }   from './position-new/position-new.component';
+import { PositionEditComponent }  from './position-edit/position-edit.component';
 
 @Component({
   selector   : 'lfcareer-positions',
@@ -21,9 +23,19 @@ import { PositionNewComponent }   from './position-new/position-new.component';
     useAsDefault: true
   },
   {
+    path     : '/:id',
+    name     : 'PositionShow',
+    component: PositionShowComponent
+  },
+  {
     path     : '/new',
     name     : 'PositionNew',
     component: PositionNewComponent
+  },
+  {
+    path     : '/edit/:id',
+    name     : 'PositionEdit',
+    component: PositionEditComponent
   }
 ])
 
