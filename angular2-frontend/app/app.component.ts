@@ -6,7 +6,7 @@ ROUTER_PROVIDERS
 } from '@angular/router-deprecated';
 import { HTTP_PROVIDERS } from '@angular/http';
 
-import { DashboardComponent }     from './components/dashboard/dashboard.component';
+import { DashboardComponent }     from './dashboard/dashboard.component';
 import { PositionsComponent }  from './positions/positions.component';
 
 @Component({

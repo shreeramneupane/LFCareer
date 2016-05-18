@@ -14,7 +14,7 @@ export class PositionService {
   listPosition() {
     return this.http.get(this.positionsURL)
     .map(res => <Position[]> res.json())
-    .catch(this._handleError);
+    .catch(this.handleError);
   }
 
   newPosition() {
