@@ -26,7 +26,7 @@ export class PositionEditComponent implements OnInit {
     let id = this.routeParams.get('id');
     this.positionService.getPosition(id).subscribe(
     position => this.position = position,
-    error => console.log(error)
+    error => toastr.error(error)
     );
   }
 
@@ -35,7 +35,7 @@ export class PositionEditComponent implements OnInit {
     .subscribe(
     position => {
       this.router.navigate(['PositionShow', {id: this.position.id}]);
-      console.log('Position Updated Successfully!');
+      toastr.success('Position Updated Successfully!');
     },
     error => toastr.error(error)
     );
