@@ -743,3 +743,7 @@ footer a, footer a:hover {
   -webkit-transform: translate(0px, 60%);
   -moz-transform: translate(0px, 60%);
 }
+
+.datepicker-dropdown {
+  display: table !important;
+}
