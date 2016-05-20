@@ -7,6 +7,7 @@ ROUTER_DIRECTIVES
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PositionsComponent } from './positions/positions.component';
 import { StagesComponent }    from './stages/stages.component';
+import { JobsComponent }      from './jobs/jobs.component';
 
 @Component({
   selector   : 'lfcareer-app',
@@ -30,6 +31,11 @@ import { StagesComponent }    from './stages/stages.component';
     path     : '/stages/...',
     name     : 'Stage',
     component: StagesComponent
+  },
+  {
+    path     : '/jobs/...',
+    name     : 'Job',
+    component: JobsComponent
   }
 ])
 
