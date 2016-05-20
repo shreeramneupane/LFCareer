@@ -10,7 +10,7 @@ import { JobEditComponent } from './job-edit/job-edit.component';
 import { JobShowComponent } from './job-show/job-show.component';
 
 @Component({
-  selector: 'job',
+  selector: 'lfcareer-jobs',
   templateUrl: 'app/jobs/jobs.component.html',
   directives: [
     ROUTER_DIRECTIVES
