@@ -1,0 +1,76 @@
+<form *ngIf="job" (ngSubmit)="submit(job)" #jobForm="ngForm">
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" required
+           [(ngModel)]="job.title"
+           ngControl="title" #title="ngForm">
+    <span [hidden]="title.valid || title.untouched"
+          class="text-danger">Please provide job title.</span>
+  </div>
+
+
+  <div class="form-group">
+    <label>Introduction</label>
+    <textarea class="form-control" required rows="5"
+              [(ngModel)]="job.intro"
+              ngControl="intro" #intro="ngForm"></textarea>
+    <span [hidden]="intro.valid || intro.untouched"
+          class="text-danger">Please provide job introduction.</span>
+  </div>
+
+  <div class="form-group clearfix">
+    <div class="row multiple-element">
+      <div class="col-md-6 col-lg-4 element">
+        <label>Valid Upto</label>
+        <input class="form-control" type="date" required [(ngModel)]="job.valid_until"
+               ngControl="valid_until" #valid_until="ngForm"/>
+                <span [hidden]="valid_until.valid || valid_until.untouched"
+                      class="text-danger">Please provide valid date.</span>
+
+      </div>
+
+      <div class="col-md-6 col-lg-4 element">
+        <label>Number of opening</label>
+        <input class="form-control" type="number" pattern="\d+" required [(ngModel)]="job.number_of_opening"
+               ngControl="number_of_opening" #number_of_opening="ngForm"/>
+                <span [hidden]="number_of_opening.valid || number_of_opening.untouched"
+                      class="text-danger">{{(!job.number_of_opening)?'Please provide number of opening.': 'Please provide valid number.'}}</span>
+      </div>
+
+      <div class="col-md-6 col-lg-4 element">
+        <label>Position</label>
+        <select class="form-control" required (change)="changeSpecAndDescription($event.target.value)"
+                [(ngModel)]="job.position_id">
+          <option *ngFor="let position of positions" [value]="position.id">{{position.title}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <textarea class="form-control" required rows="5"
+              [(ngModel)]="job.description"
+              ngControl="description" #description="ngForm"></textarea>
+    <span [hidden]="description.valid || description.untouched"
+          class="text-danger">Please provide job description.</span>
+  </div>
+
+  <div class="form-group">
+    <label>Specification</label>
+    <textarea class="form-control" required rows="5"
+              [(ngModel)]="job.specification"
+              ngControl="specification" #specification="ngForm"></textarea>
+    <span [hidden]="specification.valid || specification.untouched"
+          class="text-danger">Please provide position specification.</span>
+  </div>
+
+  <div class="form-group form-actions clearfix">
+    <div class="pull-right">
+      <button class="btn btn-sm btn-success" type="submit"
+              [disabled]="!jobForm.form.valid">
+        <i class="fa fa-angle-right"></i>Submit
+      </button>
+    </div>
+  </div>
+</form>
