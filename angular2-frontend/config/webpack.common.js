@@ -11,6 +11,9 @@ module.exports = {
     },
 
     resolve: {
+        alias: {
+            config: '../config/' + process.env.NODE_ENV
+        },
         extensions: ['', '.js', '.ts']
     },
 

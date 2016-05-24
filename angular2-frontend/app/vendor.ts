@@ -9,10 +9,10 @@ import '@angular/router-deprecated';
 // RxJS
 import 'rxjs';
 
-import 'shared/stylesheets/bootstrap.min.css';
-import 'shared/stylesheets/main.css';
-import 'shared/stylesheets/custom.css';
+import './shared/stylesheets/bootstrap.min.css';
+import './shared/stylesheets/main.css';
+import './shared/stylesheets/custom.css';
+import '../node_modules/toastr/build/toastr.min.css';
 
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
-import 'shared/vendor/javascripts/plugins.js';
-import '../node_modules/toastr/build/toastr.min.css';
+import './shared/vendor/javascripts/plugins.js';

@@ -42,10 +42,10 @@ var App = function () {
         });
 
         // Initialize Tooltips
-        $('[data-toggle="tooltip"], .enable-tooltip').tooltip({
+        /*$('[data-toggle="tooltip"], .enable-tooltip').tooltip({
             container: 'body',
             animation: false
-        });
+        });*/
 
         // Initialize Popovers
         $('[data-toggle="popover"], .enable-popover').popover({

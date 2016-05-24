@@ -5,4 +5,7 @@ import {Component} from '@angular/core';
     template: '<p>Dashboard</p>'
 })
 export class DashboardComponent {
+    constructor(){
+        console.log()
+    }
 }

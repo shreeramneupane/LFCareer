@@ -7,7 +7,7 @@ ROUTER_DIRECTIVES
 
 @Component({
   selector: 'sidebar',
-  templateUrl: 'app/components/commons/sidebar/sidebar.component.html',
+  templateUrl: 'app/shared/sidebar/sidebar.component.html',
   directives: [
     ROUTER_DIRECTIVES
   ]
