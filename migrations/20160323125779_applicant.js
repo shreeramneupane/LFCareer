@@ -14,7 +14,7 @@ exports.up = function (knex, Promise) {
     table.text('cover_letter', 'mediumtext').notNullable();
     table.boolean('notification').notNullable().defaultTo(true);
     table.string('source', 60);
-    table.date('applied_date').notNullable();
+    table.date('created_date').notNullable();
 
     //FK
     table.uuid('job_id').references('id').inTable('job');

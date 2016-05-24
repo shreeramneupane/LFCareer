@@ -7,6 +7,7 @@ exports.up = function (knex, Promise) {
 
     //Fields
     table.string('name', 60).notNullable();
+    table.date('created_date').notNullable();
   });
 };
 

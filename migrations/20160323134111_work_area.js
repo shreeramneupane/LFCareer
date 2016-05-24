@@ -4,6 +4,7 @@ exports.up = function (knex, Promise) {
   .createTable('work_area', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
+    table.date('created_date').notNullable();
 
     //Fields
     table.string('name', 60).notNullable();

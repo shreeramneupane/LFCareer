@@ -5,6 +5,9 @@ exports.up = function (knex, Promise) {
     //Fields
     table.uuid('applicant_stage_id').notNullable().references('id').inTable('applicant_stage').onDelete('CASCADE');
     table.uuid('interviewer_id').notNullable().references('id').inTable('interviewer').onDelete('CASCADE');
+    table.date('created_date').notNullable();
+    
+    //PK
     table.primary(['applicant_stage_id', 'interviewer_id']);
   });
 };
