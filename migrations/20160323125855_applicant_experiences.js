@@ -1,7 +1,7 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('experience', function (table) {
+  .createTable('applicant_experiences', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
 
@@ -12,10 +12,10 @@ exports.up = function (knex, Promise) {
     table.date('to_date').notNullable();
 
     //FK
-    table.uuid('applicant_id').notNullable().references('id').inTable('applicant');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicants');
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('experience')
+  return knex.schema.dropTableIfExists('applicant_experiences')
 };
