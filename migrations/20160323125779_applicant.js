@@ -14,6 +14,7 @@ exports.up = function (knex, Promise) {
     table.text('cover_letter', 'mediumtext').notNullable();
     table.boolean('notification').notNullable().defaultTo(true);
     table.string('source', 60);
+    table.integer('job_type');
     table.date('created_date').notNullable();
 
     //FK
