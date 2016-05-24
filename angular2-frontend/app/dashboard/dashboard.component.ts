@@ -2,10 +2,7 @@ import {Component} from '@angular/core';
 
 @Component({
     selector: 'dashboard',
-    template: '<p>Dashboard</p>'
+    templateUrl: 'app/dashboard/dashboard.component.html'
 })
 export class DashboardComponent {
-    constructor(){
-        console.log()
-    }
 }

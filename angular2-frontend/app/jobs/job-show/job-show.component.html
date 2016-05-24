@@ -1,0 +1,54 @@
+<page-header [pageHeader]="'Job Details'"></page-header>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="block clearfix">
+      <div class="block-title-border">{{job?.title}}
+        <div class="block-options">
+          <a class="btn btn-alt btn-sm btn-default" [routerLink]="['JobEdit', {id: job?.id}]"><i
+          class="fa fa-pencil"></i></a></div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="common-view"><span class="view-label"> Job Introduction</span>
+              <p class="pre-line">{{job?.intro}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row multiple-element">
+          <div class="col-sm-6">
+            <div class="common-view"><span class="view-label">Number of openings</span>
+              <p class="pre-line">{{job?.number_of_opening}}</p>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="common-view"><span class="view-label">Valid upto</span>
+              <p class="pre-line">{{job?.valid_until}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="common-view"><span class="view-label"> Job Description</span>
+              <p class="pre-line">{{job?.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="common-view"><span class="view-label"> Job Specification</span>
+              <p class="pre-line">{{job?.specification}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

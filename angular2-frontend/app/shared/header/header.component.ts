@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component }    from '@angular/core';
 import { DropDownList } from './drop-down-list/dropDownList.component.ts';
-import { Searchbar } from './searchbar/searchbar.component.ts';
-import { Hamburger } from './hamburger/hamburger.component.ts';
+import { Searchbar }    from './searchbar/searchbar.component.ts';
+import { Hamburger }    from './hamburger/hamburger.component.ts';
 
 @Component({
   selector: 'header-top',

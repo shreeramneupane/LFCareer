@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+.ng-valid.ng-touched {
+  border: 1px solid #42A948;
+}
+
+.ng-invalid.ng-touched {
+  border: 1px solid #a94442;
+}
+
+.pre-line {
+  white-space: pre-line;
+}
+
+textarea {
+  min-height: 100px;
+  overflow-y: auto;
+  word-wrap:break-word
+}

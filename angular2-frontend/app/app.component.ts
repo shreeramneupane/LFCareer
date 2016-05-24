@@ -1,23 +1,23 @@
-import {Component} from '@angular/core';
+import { Component }  from '@angular/core';
 import {
-Router,
 RouteConfig,
-ROUTER_DIRECTIVES,
-ROUTER_PROVIDERS
+ROUTER_DIRECTIVES
 } from '@angular/router-deprecated';
-import {HTTP_PROVIDERS} from '@angular/http';
 
-import { Header } from './shared/header/header.component';
-import { Sidebar } from './shared/sidebar/sidebar.component';
+import { Header }             from './shared/header/header.component';
+import { Sidebar }            from './shared/sidebar/sidebar.component';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { JobsComponent }      from './jobs/jobs.component';
+import { PositionsComponent } from './positions/positions.component';
+import { StagesComponent }    from './stages/stages.component';
 
 @Component({
   selector: 'lfcareer-app',
   templateUrl: 'app/app.component.html',
   directives: [
     ROUTER_DIRECTIVES, Header, Sidebar
-  ],
-  providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS]
+  ]
 })
 
 @RouteConfig([
@@ -26,10 +26,23 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     name: 'Dashboard',
     component: DashboardComponent,
     useAsDefault: true
+  },
+  {
+    path: '/positions/...',
+    name: 'Position',
+    component: PositionsComponent
+  },
+  {
+    path: '/stages/...',
+    name: 'Stage',
+    component: StagesComponent
+  },
+  {
+    path: '/jobs/...',
+    name: 'Job',
+    component: JobsComponent
   }
 ])
 
 export class AppComponent {
-  constructor(public router:Router) {
-  }
 }
