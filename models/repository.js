@@ -33,7 +33,9 @@ module.exports = {
       });
     });
   },
+  
   create: function (table, entity) {
+    console.log(entity);
     return new Promise(function (resolve, reject) {
       db(table)
       .insert(entity)
