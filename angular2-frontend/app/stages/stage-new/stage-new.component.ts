@@ -15,7 +15,6 @@ import { StageService }        from '../shared/stage.service';
 
 export class StageNewComponent {
   stage = this.stageService.newStage();
-  pageHeader:string = 'Create Stage';
 
   constructor(private stageService:StageService, private router:Router) {
   }

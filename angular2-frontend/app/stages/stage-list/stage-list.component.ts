@@ -14,7 +14,6 @@ import { PageHeader } from '../../shared/components/page-header/pageHeader.compo
 })
 
 export class StageListComponent implements OnInit {
-  pageHeader:string = 'Stages List';
   stages:Stage[];
 
   constructor(private stageService:StageService) {
