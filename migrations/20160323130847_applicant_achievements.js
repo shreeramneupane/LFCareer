@@ -9,6 +9,7 @@ exports.up = function (knex, Promise) {
     table.string('title', 60).notNullable();
     table.text('description', 'mediumtext').notNullable();
     table.string('year', 80).notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants');

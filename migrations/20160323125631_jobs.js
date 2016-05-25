@@ -12,7 +12,7 @@ exports.up = function (knex, Promise) {
     table.date('valid_until').notNullable();
     table.text('description', 'longtext').notNullable();
     table.text('specification', 'longtext').notNullable();
-    table.date('created_date').notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
     table.uuid('position_id').references('id').inTable('positions');

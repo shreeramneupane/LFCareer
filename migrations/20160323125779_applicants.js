@@ -15,7 +15,7 @@ exports.up = function (knex, Promise) {
     table.boolean('notification').notNullable().defaultTo(true);
     table.string('source', 60);
     table.integer('job_type');
-    table.date('created_date').notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
     table.uuid('job_id').references('id').inTable('jobs');

@@ -4,7 +4,7 @@ exports.up = function (knex, Promise) {
   .createTable('stages', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
-    table.date('created_date').notNullable();
+    table.timestamp('created_date').notNullable();
 
     //Fields
     table.string('name', 60).notNullable();

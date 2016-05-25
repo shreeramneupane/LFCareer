@@ -5,6 +5,7 @@ exports.up = function (knex, Promise) {
     //Fields
     table.uuid('applicant_portfolio_id').notNullable().references('id').inTable('applicant_portfolios').onDelete('CASCADE');
     table.uuid('work_area_id').notNullable().references('id').inTable('work_areas').onDelete('CASCADE');
+    table.timestamp('created_date').notNullable();
 
     //PK
     table.primary(['applicant_portfolio_id', 'work_area_id']);

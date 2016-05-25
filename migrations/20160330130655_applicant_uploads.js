@@ -6,7 +6,7 @@ exports.up = function (knex, Promise) {
     //Fields
     table.string('resume').notNullable();
     table.string('profile_picture').notNullable();
-    table.date('created_date').notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
     table.uuid('applicant_id').references('id').inTable('applicants');

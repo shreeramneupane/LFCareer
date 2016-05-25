@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
     table.string('title', 60).notNullable();
     table.text('description', 'longtext').notNullable();
     table.text('specification', 'longtext').notNullable();
-    table.date('created_date').notNullable();
+    table.timestamp('created_date').notNullable();
   });
 };
 
