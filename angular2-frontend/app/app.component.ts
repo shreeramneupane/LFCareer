@@ -15,34 +15,34 @@ import { StagesComponent }    from './stages/stages.component';
 import { ApiService }   from './shared/utils/api.util';
 import { Converter }    from './shared/utils/converter.util';
 @Component({
-  selector: 'lfcareer-app',
+  selector   : 'lfcareer-app',
   templateUrl: 'app/app.component.html',
-  directives: [
+  directives : [
     ROUTER_DIRECTIVES, Header, Sidebar
   ],
-  providers: [ApiService, Converter]
+  providers  : [ApiService, Converter]
 })
 
 @RouteConfig([
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    component: DashboardComponent,
+    path        : '/dashboard',
+    name        : 'Dashboard',
+    component   : DashboardComponent,
     useAsDefault: true
   },
   {
-    path: '/positions/...',
-    name: 'Position',
+    path     : '/positions/...',
+    name     : 'Position',
     component: PositionsComponent
   },
   {
-    path: '/stages/...',
-    name: 'Stage',
+    path     : '/stages/...',
+    name     : 'Stage',
     component: StagesComponent
   },
   {
-    path: '/jobs/...',
-    name: 'Job',
+    path     : '/jobs/...',
+    name     : 'Job',
     component: JobsComponent
   }
 ])

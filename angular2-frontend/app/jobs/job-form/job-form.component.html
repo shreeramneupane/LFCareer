@@ -22,15 +22,15 @@
     <div class="row multiple-element">
       <div class="col-md-6 col-lg-4 element">
         <label>Valid Upto</label>
-        <div class="input-group date" id="datetimepicker1">
-          <input type="text" class="form-control" id="datepicker" required [(ngModel)]="job.valid_until"
+        <div class="input-group date" id="datepicker">
+          <input type="text" class="form-control" id="datepicker-input" required [(ngModel)]="job.valid_until"
                  ngControl="valid_until" #valid_until="ngForm"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
         </div>
         <span [hidden]="valid_until.valid || valid_until.untouched"
-              class="text-danger">{{(!job.number_of_opening)?'Please provide number of opening.': 'Please provide valid number.'}}</span>
+              class="text-danger">Please provide valid period.</span>
       </div>
 
       <div class="col-md-6 col-lg-4 element">
@@ -75,21 +75,6 @@
               [disabled]="!jobForm.form.valid">
         <i class="fa fa-angle-right"></i>Submit
       </button>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class='col-sm-6'>
-        <div class="form-group">
-          <div class="input-group date" id="datetimepicker2">
-            <input type="text" class="form-control"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </form>

@@ -10,33 +10,33 @@ import { JobNewComponent }  from './job-new/job-new.component';
 import { JobShowComponent } from './job-show/job-show.component';
 
 @Component({
-  selector: 'lfcareer-jobs',
+  selector   : 'lfcareer-jobs',
   templateUrl: 'app/jobs/jobs.component.html',
-  directives: [
+  directives : [
     ROUTER_DIRECTIVES
   ]
 })
 
 @RouteConfig([
   {
-    path: '/',
-    name: 'JobList',
-    component: JobList,
+    path        : '/',
+    name        : 'JobList',
+    component   : JobList,
     useAsDefault: true
   },
   {
-    path: '/new',
-    name: 'JobAdd',
+    path     : '/new',
+    name     : 'JobAdd',
     component: JobNewComponent
   },
   {
-    path: '/edit/:id',
-    name: 'JobEdit',
+    path     : '/edit/:id',
+    name     : 'JobEdit',
     component: JobEditComponent
   },
   {
-    path: '/show/:id',
-    name: 'JobShow',
+    path     : '/show/:id',
+    name     : 'JobShow',
     component: JobShowComponent
   }
 ])

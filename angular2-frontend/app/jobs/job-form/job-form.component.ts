@@ -29,8 +29,8 @@ export class JobFormComponent {
 
   ngAfterViewInit() {
     var that = this;
-    $('#datetimepicker1').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function (event) {
-      that.job.valid_until = $('#datepicker').val();
+    $('#datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function () {
+      that.job.valid_until = $('#datepicker-input').val();
     });
   }
 
