@@ -1,7 +1,7 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('reference', function (table) {
+  .createTable('applicant_references', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
 
@@ -12,13 +12,14 @@ exports.up = function (knex, Promise) {
     table.string('email', 80).notNullable();
     table.string('phone_number', 20).notNullable();
     table.string('relationship', 80).notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
-    table.uuid('applicant_id').notNullable().references('id').inTable('applicant');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicants');
 
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('reference')
+  return knex.schema.dropTableIfExists('applicant_references')
 };

@@ -1,7 +1,7 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('applicant', function (table) {
+  .createTable('applicants', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
 
@@ -14,14 +14,15 @@ exports.up = function (knex, Promise) {
     table.text('cover_letter', 'mediumtext').notNullable();
     table.boolean('notification').notNullable().defaultTo(true);
     table.string('source', 60);
-    table.date('applied_date').notNullable();
+    table.integer('job_type');
+    table.timestamp('created_date').notNullable();
 
     //FK
-    table.uuid('job_id').references('id').inTable('job');
+    table.uuid('job_id').references('id').inTable('jobs');
   });
 
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('applicant')
+  return knex.schema.dropTableIfExists('applicants')
 };

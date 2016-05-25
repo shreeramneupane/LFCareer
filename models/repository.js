@@ -2,6 +2,7 @@
 
 var db = require('../db');
 var Promise = require("bluebird");
+
 var AppError = require('../error/AppError');
 
 module.exports = {
@@ -33,12 +34,15 @@ module.exports = {
       });
     });
   },
+
   create: function (table, entity) {
+    entity.created_date = new Date();
     return new Promise(function (resolve, reject) {
       db(table)
       .insert(entity)
-      .then(function () {
-       resolve(entity);
+      .returning('*')
+      .then(function (response) {
+        resolve(response[0]);
       })
       .catch(function (err) {
         var error = AppError.renderError(err);
@@ -65,7 +69,7 @@ module.exports = {
     });
   },
 
-  update_upload: function(table, id, entity) {
+  update_upload: function (table, id, entity) {
     return new Promise(function (resolve, reject) {
       db(table)
       .where('applicant_id', id)

@@ -10,7 +10,7 @@
 
         list: function () {
             return new Promise(function (resolve, reject) {
-                repository.list('job').then(function (data) {
+                repository.list('jobs').then(function (data) {
                     resolve(data);
                 })
                 .catch(function (err) {
@@ -21,7 +21,7 @@
 
         show: function (id) {
             return new Promise(function (resolve, reject) {
-                repository.show('job', id).then(function (data) {
+                repository.show('jobs', id).then(function (data) {
                     resolve(data);
                 })
                 .catch(function (err) {
@@ -32,7 +32,7 @@
 
         create: function (job) {
             return new Promise(function (resolve, reject) {
-                repository.create('job', job).then(function (data) {
+                repository.create('jobs', job).then(function (data) {
                     resolve(data);
                 })
                 .catch(function (err) {
@@ -43,7 +43,7 @@
 
         update: function (id, job) {
             return new Promise(function (resolve, reject) {
-                repository.update('job', id, job).then(function (data) {
+                repository.update('jobs', id, job).then(function (data) {
                     resolve(data);
                 })
                 .catch(function (err) {

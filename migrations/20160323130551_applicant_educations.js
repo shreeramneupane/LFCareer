@@ -1,7 +1,7 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('education', function (table) {
+  .createTable('applicant_educations', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
 
@@ -11,13 +11,14 @@ exports.up = function (knex, Promise) {
     table.string('college', 80).notNullable();
     table.date('passed_year').notNullable();
     table.string('grade', 80).notNullable();
+    table.timestamp('created_date').notNullable();
 
     //FK
-    table.uuid('applicant_id').notNullable().references('id').inTable('applicant');
+    table.uuid('applicant_id').notNullable().references('id').inTable('applicants');
 
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('education')
+  return knex.schema.dropTableIfExists('application_educations')
 };

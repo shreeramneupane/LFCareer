@@ -25,7 +25,7 @@ import { JobShowComponent } from './job-show/job-show.component';
     useAsDefault: true
   },
   {
-    path: '/add',
+    path: '/new',
     name: 'JobAdd',
     component: JobNewComponent
   },
@@ -42,5 +42,4 @@ import { JobShowComponent } from './job-show/job-show.component';
 ])
 
 export class JobsComponent {
-
 }

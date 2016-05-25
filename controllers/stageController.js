@@ -2,7 +2,6 @@
 (function () {
   "use strict";
 
-  var utilityService = require('../services/utilityService');
   var stageService = require('../services/stageService');
   var HttpStatus = require('http-status-codes');
   var _ = require('lodash');

@@ -1,8 +1,7 @@
 exports.up = function (knex, Promise) {
   return knex.schema
 
-  .createTable('position', function (table) {
-
+  .createTable('positions', function (table) {
     // PK
     table.uuid('id').notNullable().primary();
 
@@ -10,10 +9,10 @@ exports.up = function (knex, Promise) {
     table.string('title', 60).notNullable();
     table.text('description', 'longtext').notNullable();
     table.text('specification', 'longtext').notNullable();
-
+    table.timestamp('created_date').notNullable();
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('position')
+  return knex.schema.dropTableIfExists('positions')
 };
