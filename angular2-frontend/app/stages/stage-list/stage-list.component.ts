@@ -4,7 +4,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { Stage }        from '../shared/stage';
 import { StageService } from '../shared/stage.service';
 
-import { PageHeader } from '../../shared/page-header/pageHeader.component';
+import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
   selector   : 'stage-list',

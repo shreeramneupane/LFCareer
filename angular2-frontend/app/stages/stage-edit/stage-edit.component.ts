@@ -5,7 +5,7 @@ RouteParams,
 Router
 } from '@angular/router-deprecated';
 
-import { PageHeader }          from '../../shared/page-header/pageHeader.component';
+import { PageHeader }          from '../../shared/components/page-header/pageHeader.component';
 import { Stage }               from '../shared/stage';
 import { StageFormComponent }  from '../stage-form/stage-form.component';
 import { StageService }        from '../shared/stage.service';

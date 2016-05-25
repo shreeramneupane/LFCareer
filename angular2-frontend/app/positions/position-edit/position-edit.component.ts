@@ -5,7 +5,7 @@ RouteParams,
 Router
 } from '@angular/router-deprecated';
 
-import { PageHeader }             from '../../shared/page-header/pageHeader.component';
+import { PageHeader }             from '../../shared/components/page-header/pageHeader.component';
 import { Position }               from '../shared/position';
 import { PositionFormComponent }  from '../position-form/position-form.component';
 import { PositionService }        from '../shared/position.service';

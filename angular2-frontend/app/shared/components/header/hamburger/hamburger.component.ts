@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'hamburger',
-  templateUrl: 'app/shared/header/hamburger/hamburger.component.html'
+  templateUrl: 'app/shared/components/header/hamburger/hamburger.component.html'
 })
 
 export class Hamburger {

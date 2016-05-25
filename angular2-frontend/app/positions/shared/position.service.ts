@@ -2,52 +2,33 @@ import { Injectable }                     from '@angular/core';
 import { Headers, Http, RequestOptions }  from '@angular/http';
 import { Observable }                     from 'rxjs/Rx';
 
-import { Position } from './position';
+import { ApiService }   from '../../shared/utils/api.util';
+import { AppConstants } from '../../shared/constants/app.constants';
+import { Converter }    from '../../shared/utils/converter.util';
+import { Position }     from './position';
 
 @Injectable()
 export class PositionService {
-  constructor(private http:Http) {
-  }
-
-  private positionsURL:string = 'http://localhost:5000/api/positions/';
-
-  listPosition() {
-    return this.http.get(this.positionsURL)
-    .map(res => <Position[]> res.json())
-    .catch(this.handleError);
-  }
-
-  getPosition(id:string): Observable<Position>  {
-    return this.http.get(this.positionsURL + id)
-    .map(res => res.json())
-    .catch(this.handleError);
+  constructor(private apiService:ApiService, private converter:Converter) {
   }
 
   newPosition() {
     return new Position('', '', '');
   }
 
+  listPosition() {
+    return this.apiService.fetch(AppConstants.POSITIONS);
+  }
+
+  getPosition(id:string):Observable<Position> {
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.POSITIONS, id]));
+  }
+
   createPosition(position:Position):Observable<Position> {
-    let body    = JSON.stringify(position);
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.post(this.positionsURL, body, options)
-    .map(res => <Position> res.json())
-    .catch(this.handleError)
+    return this.apiService.create(AppConstants.POSITIONS, position);
   }
 
-  updatePosition(position:Position) : Observable<Position>  {
-    let body = JSON.stringify(position);
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.put(this.positionsURL + position.id, body, options)
-    .map(res =>  <Position> res.json())
-    .catch(this.handleError)
-  }
-
-  private handleError(response:any) {
-    return Observable.throw(JSON.parse(response['_body']).error.message || 'Server Error');
+  updatePosition(position:Position):Observable<Position> {
+    return this.apiService.update(this.converter.getPathParam([AppConstants.POSITIONS, position.id]), position);
   }
 }

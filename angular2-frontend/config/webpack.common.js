@@ -12,7 +12,7 @@ module.exports = {
 
   resolve: {
     alias     : {
-      config: '../config/' + process.env.NODE_ENV
+      config: helpers.root('config' , process.env.NODE_ENV)
     },
     extensions: ['', '.js', '.ts']
   },

@@ -3,7 +3,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Job }        from '../shared/job';
 import { JobService } from '../shared/job.service';
-import { PageHeader } from '../../shared/page-header/pageHeader.component';
+import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
   selector: 'job-list',
@@ -24,8 +24,8 @@ export class JobList implements OnInit {
 
   listJobs() {
     this.jobService.listJobs()
-    .subscribe(
-    jobs => this.jobs = jobs,
+   .subscribe(
+    jobs => {console.log('asdf', jobs);this.jobs = jobs},
     error => toastr.error(error)
     );
   }

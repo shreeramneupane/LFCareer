@@ -3,7 +3,7 @@ import { ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
 import { Job }         from '../shared/job'
 import { JobService }  from '../shared/job.service';
-import { PageHeader }  from '../../shared/page-header/pageHeader.component';
+import { PageHeader }  from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
   selector   : 'job-show',

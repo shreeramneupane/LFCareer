@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import { PageHeader }       from '../../shared/page-header/pageHeader.component';
+import { PageHeader }       from '../../shared/components/page-header/pageHeader.component';
 import { Position }         from '../shared/position';
 import { PositionService }  from '../shared/position.service';
 

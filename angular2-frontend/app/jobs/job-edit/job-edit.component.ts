@@ -8,7 +8,7 @@ Router
 import { Job }               from '../shared/job';
 import { JobFormComponent }  from '../job-form/job-form.component';
 import { JobService }        from '../shared/job.service';
-import { PageHeader }        from '../../shared/page-header/pageHeader.component';
+import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
   selector: 'job-edit',
@@ -24,6 +24,10 @@ export class JobEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getJob();
+  }
+
+  getJob(){
     let id = this.routeParams.get('id');
     this.jobService.getJob(id).subscribe(
     job => {

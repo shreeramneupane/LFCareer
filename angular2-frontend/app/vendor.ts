@@ -10,11 +10,11 @@ import '@angular/router-deprecated';
 import 'rxjs';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './shared/stylesheets/forms.css';
-import './shared/stylesheets/main.css';
-import './shared/stylesheets/custom.css';
+import './shared/assets/stylesheets/forms.css';
+import './shared/assets/stylesheets/main.css';
+import './shared/assets/stylesheets/custom.css';
 import '../node_modules/toastr/build/toastr.min.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
-import './shared/vendor/javascripts/plugins.js';
+import './shared/assets/vendor/javascripts/plugins.js';
