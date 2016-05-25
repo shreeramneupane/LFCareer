@@ -2,8 +2,11 @@
   "ambientDependencies": {
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
     "jasmine": "registry:dt/jasmine#2.2.0+20160412134438",
-    "node": "registry:dt/node#4.0.0+20160509154515",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "node": "registry:dt/node#4.0.0+20160509154515",
     "toastr": "registry:dt/toastr#2.0.1+20160316155526"
+  },
+  "dependencies": {
+    "moment": "registry:npm/moment#2.10.5+20160211003958"
   }
 }

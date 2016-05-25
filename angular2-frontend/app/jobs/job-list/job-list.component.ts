@@ -25,7 +25,7 @@ export class JobList implements OnInit {
   listJobs() {
     this.jobService.listJobs()
    .subscribe(
-    jobs => {console.log('asdf', jobs);this.jobs = jobs},
+    jobs => this.jobs = jobs,
     error => toastr.error(error)
     );
   }

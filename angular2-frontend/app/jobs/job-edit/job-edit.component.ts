@@ -30,11 +30,7 @@ export class JobEditComponent implements OnInit {
   getJob(){
     let id = this.routeParams.get('id');
     this.jobService.getJob(id).subscribe(
-    job => {
-      let date = new Date(job.valid_until);
-      job.valid_until = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-      this.job = job;
-    },
+    job => this.job = job,
     error => toastr.error(error)
     );
   }
