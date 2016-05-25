@@ -1,15 +1,15 @@
 exports.up = function (knex, Promise) {
   return knex.schema
-
-  .createTable('skill', function (table) {
+  .createTable('interviewers', function (table) {
     //PK
     table.uuid('id').notNullable().primary();
 
     //Fields
     table.string('name', 60).notNullable();
+    table.timestamp('created_date').notNullable();
   });
 };
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('skill')
+  return knex.schema.dropTableIfExists('interviewers')
 };

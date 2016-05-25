@@ -10,7 +10,7 @@
 
     list: function () {
       return new Promise(function (resolve, reject) {
-        repository.list('stage').then(function (data) {
+        repository.list('stages').then(function (data) {
           resolve(data);
         })
         .catch(function (err) {
@@ -21,7 +21,7 @@
 
     show: function (id) {
       return new Promise(function (resolve, reject) {
-        repository.show('stage', id).then(function (data) {
+        repository.show('stages', id).then(function (data) {
           resolve(data);
         })
         .catch(function (err) {
@@ -32,7 +32,7 @@
 
     create: function (stage) {
       return new Promise(function (resolve, reject) {
-        repository.create('stage', stage).then(function (data) {
+        repository.create('stages', stage).then(function (data) {
           resolve(data);
         })
         .catch(function (err) {
@@ -43,7 +43,7 @@
 
     update: function (id, stage) {
       return new Promise(function (resolve, reject) {
-        repository.update('stage', id, stage).then(function (data) {
+        repository.update('stages', id, stage).then(function (data) {
           resolve(data);
         })
         .catch(function (err) {
