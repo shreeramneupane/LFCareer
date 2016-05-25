@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'lfcareer-dashboard',
-  templateUrl: 'app/dashboard/dashboard.component.html'
+    selector: 'dashboard',
+    templateUrl: 'app/dashboard/dashboard.component.html'
 })
 export class DashboardComponent {
 }

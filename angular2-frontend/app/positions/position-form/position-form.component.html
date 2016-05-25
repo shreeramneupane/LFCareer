@@ -1,6 +1,6 @@
 <form *ngIf="position" (ngSubmit)="submit(position)" #positionForm="ngForm">
   <div class="form-group">
-    <label for="title">Name</label>
+    <label>Name</label>
     <input type="text" class="form-control" required
            [(ngModel)]="position.title"
            ngControl="title" #title="ngForm">
@@ -9,7 +9,7 @@
   </div>
 
   <div class="form-group">
-    <label for="description">Description</label>
+    <label>Description</label>
     <textarea class="form-control" required rows="5"
               [(ngModel)]="position.description"
               ngControl="description" #description="ngForm"></textarea>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="form-group">
-    <label for="specification">Specification</label>
+    <label>Specification</label>
     <textarea class="form-control" required rows="5"
               [(ngModel)]="position.specification"
               ngControl="specification" #specification="ngForm"></textarea>

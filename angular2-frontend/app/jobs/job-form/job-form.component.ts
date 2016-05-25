@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { NgForm }                                 from '@angular/common';
-import { ROUTER_DIRECTIVES }                      from '@angular/router-deprecated';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgForm }                                         from '@angular/common';
+import { ROUTER_DIRECTIVES }                              from '@angular/router-deprecated';
 
-import { Job } from '../shared/job';
-import { Position } from '../../positions/shared/position';
+import { Job }             from '../shared/job';
+import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { PositionService } from '../../positions/shared/position.service';
   directives: [ROUTER_DIRECTIVES]
 })
 
-export class JobFormComponent implements OnInit {
+export class JobFormComponent {
   @Input() job:Job;
   @Output() onSubmit = new EventEmitter<Job>();
 
@@ -27,9 +27,15 @@ export class JobFormComponent implements OnInit {
     this.getPositions();
   }
 
+  ngAfterViewInit() {
+    var that = this;
+    $('#datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function () {
+      that.job.valid_until = $('#datepicker-input').val();
+    });
+  }
+
   getPositions() {
     this.positionService.listPosition()
-
     .subscribe(
     positions => {
       this.positions = positions;
@@ -42,8 +48,6 @@ export class JobFormComponent implements OnInit {
   }
 
   submit(job:Job) {
-    let date = new Date(job.valid_until);
-    this.job.valid_until =  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     this.onSubmit.emit(job);
   }
 

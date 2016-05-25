@@ -1,6 +1,7 @@
 import { Component }                  from '@angular/core';
 import { ROUTER_DIRECTIVES, Router }  from '@angular/router-deprecated';
 
+import { PageHeader }          from '../../shared/components/page-header/pageHeader.component';
 import { Stage }               from '../shared/stage'
 import { StageFormComponent }  from '../stage-form/stage-form.component';
 import { StageService }        from '../shared/stage.service';
@@ -9,7 +10,7 @@ import { StageService }        from '../shared/stage.service';
   selector   : 'stage-new',
   templateUrl: 'app/stages/stage-new/stage-new.component.html',
   providers  : [StageService],
-  directives : [ROUTER_DIRECTIVES, StageFormComponent]
+  directives : [ROUTER_DIRECTIVES, StageFormComponent, PageHeader]
 })
 
 export class StageNewComponent {

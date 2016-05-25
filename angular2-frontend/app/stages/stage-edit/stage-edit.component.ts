@@ -5,6 +5,7 @@ RouteParams,
 Router
 } from '@angular/router-deprecated';
 
+import { PageHeader }          from '../../shared/components/page-header/pageHeader.component';
 import { Stage }               from '../shared/stage';
 import { StageFormComponent }  from '../stage-form/stage-form.component';
 import { StageService }        from '../shared/stage.service';
@@ -13,7 +14,7 @@ import { StageService }        from '../shared/stage.service';
   selector   : 'stage-edit',
   templateUrl: 'app/stages/stage-edit/stage-edit.component.html',
   providers  : [StageService],
-  directives : [ROUTER_DIRECTIVES, StageFormComponent]
+  directives : [ROUTER_DIRECTIVES, PageHeader, StageFormComponent]
 })
 
 export class StageEditComponent implements OnInit {

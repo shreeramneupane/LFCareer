@@ -22,11 +22,15 @@
     <div class="row multiple-element">
       <div class="col-md-6 col-lg-4 element">
         <label>Valid Upto</label>
-        <input class="form-control" type="date" required [(ngModel)]="job.valid_until"
-               ngControl="valid_until" #valid_until="ngForm"/>
-                <span [hidden]="valid_until.valid || valid_until.untouched"
-                      class="text-danger">Please provide valid date.</span>
-
+        <div class="input-group date" id="datepicker">
+          <input type="text" class="form-control" id="datepicker-input" required [(ngModel)]="job.valid_until"
+                 ngControl="valid_until" #valid_until="ngForm"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+        </div>
+        <span [hidden]="valid_until.valid || valid_until.untouched"
+              class="text-danger">Please provide valid period.</span>
       </div>
 
       <div class="col-md-6 col-lg-4 element">

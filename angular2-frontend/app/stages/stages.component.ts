@@ -4,9 +4,9 @@ RouteConfig,
 ROUTER_DIRECTIVES,
 } from '@angular/router-deprecated';
 
+import { StageEditComponent }  from './stage-edit/stage-edit.component';
 import { StageListComponent }  from './stage-list/stage-list.component';
 import { StageNewComponent }   from './stage-new/stage-new.component';
-import { StageEditComponent }  from './stage-edit/stage-edit.component';
 
 @Component({
   selector   : 'lfcareer-stages',
