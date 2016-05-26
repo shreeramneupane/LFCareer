@@ -7,13 +7,15 @@ ROUTER_DIRECTIVES
 import { Header }             from './shared/components/header/header.component';
 import { Sidebar }            from './shared/components/sidebar/sidebar.component';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { JobsComponent }      from './jobs/jobs.component';
-import { PositionsComponent } from './positions/positions.component';
-import { StagesComponent }    from './stages/stages.component';
+import { ApplicantsComponent } from './applicants/applicants.component';
+import { DashboardComponent }  from './dashboard/dashboard.component';
+import { JobsComponent }       from './jobs/jobs.component';
+import { PositionsComponent }  from './positions/positions.component';
+import { StagesComponent }     from './stages/stages.component';
 
 import { ApiService }   from './shared/utils/api.util';
 import { Converter }    from './shared/utils/converter.util';
+
 @Component({
   selector   : 'lfcareer-app',
   templateUrl: 'app/app.component.html',
@@ -44,6 +46,11 @@ import { Converter }    from './shared/utils/converter.util';
     path     : '/jobs/...',
     name     : 'Job',
     component: JobsComponent
+  },
+  {
+    path     : '/applicants/...',
+    name     : 'Applicant',
+    component: ApplicantsComponent
   }
 ])
 
