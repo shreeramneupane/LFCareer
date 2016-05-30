@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { NgForm }                                         from '@angular/common';
 import { ROUTER_DIRECTIVES }                              from '@angular/router-deprecated';
 
@@ -7,13 +7,13 @@ import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
 
 @Component({
-  selector: 'job-form',
+  selector   : 'job-form',
   templateUrl: 'app/jobs/job-form/job-form.component.html',
-  providers: [NgForm, PositionService],
-  directives: [ROUTER_DIRECTIVES]
+  providers  : [NgForm, PositionService],
+  directives : [ROUTER_DIRECTIVES]
 })
 
-export class JobFormComponent {
+export class JobFormComponent implements OnInit {
   @Input() job:Job;
   @Output() onSubmit = new EventEmitter<Job>();
 

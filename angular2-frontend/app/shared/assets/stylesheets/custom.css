@@ -747,3 +747,30 @@ footer a, footer a:hover {
 .datepicker-dropdown {
   display: table !important;
 }
+
+html, body, #page-container, #main-container, #sidebar {
+  height: 100%;
+}
+
+#page-content {
+  min-height: 100%;
+}
+
+.applicant-form {
+  padding: 0 5px;
+}
+
+.tagit-label {
+  color: green;
+}
+
+.ui-widget-content {
+  background: #ffffff;
+}
+
+.ui-state-focus {
+  background: none !important;
+  background-color: #F8F8F8 !important;
+  border: inherit !important;
+  color: #000000 !important;
+}

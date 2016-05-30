@@ -1,1 +1,39 @@
-<p>Dashboard</p>
+<page-header [pageHeader]="'Applicants List'"></page-header>
+<div class="block full">
+  <div class="block-title">
+    <h2>Applicant Details</h2>
+    <div class="block-options pull-right">
+      <a [routerLink]="['ApplicantAdd']"
+         title="Add Applicant"
+         class="btn btn-sm btn-success btn-ghost text-uppercase"><i
+      class="fa fa-plus"></i> Add Applicant</a>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-vcenter table-bordered table-hover table-striped">
+      <thead>
+      <tr>
+        <th>S.No.</th>
+        <th>Applicant</th>
+        <th class="text-center">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let applicant of applicants;  let index = index">
+        <td>{{index + 1}}</td>
+        <td>{{applicant.name}}</td>
+        <td class="text-center">
+          <div class="btn-group">
+            <a [routerLink]="['ApplicantEdit', {id: job.id}]"
+               title="Edit"
+               class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> </a>
+            <a [routerLink]="['ApplicantShow', {id: applicant.id}]" data-toggle="tooltip" title="Applicant Detail"
+               class="btn btn-sm btn-default">
+              <i class="glyphicon glyphicon-list-alt"></i></a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
