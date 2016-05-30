@@ -49,8 +49,6 @@ export class ApplicantFormComponent implements OnInit {
       availableTags: ["football", "music", "cricket", "reading"],
       autocomplete : {delay: 0, minLength: 2}
     });
-
-
   }
 
   ngAfterViewChecked() {
@@ -93,6 +91,12 @@ export class ApplicantFormComponent implements OnInit {
       case 'education':
         this.applicant.educations.push(new Education());
         break;
+      case 'training':
+        this.applicant.trainings.push(new Training());
+        break;
+      case 'reference':
+        this.applicant.references.push(new Reference());
+        break;
     }
   }
 
@@ -106,60 +110,15 @@ export class ApplicantFormComponent implements OnInit {
         this.applicant.portfolios.splice(index, 1);
         break;
       case 'education':
-        this.applicant.portfolios.splice(index, 1);
+        this.applicant.educations.splice(index, 1);
+        break;
+      case 'training':
+        this.applicant.trainings.splice(index, 1);
+        break;
+      case 'reference':
+        this.applicant.references.splice(index, 1);
         break;
     }
-  }
-
-  addExperience(e) {
-    console.log(e);
-    e.preventDefault();
-    this.experiences.push(new Experience());
-  }
-
-  deleteExperience(event, index) {
-    event.preventDefault();
-    this.experiences.splice(index, 1);
-  }
-
-  addPortfolio(e, index) {
-    e.preventDefault();
-    this.portfolios.push(new Portfolio());
-  }
-
-  deletePortfolio(event, index) {
-    event.preventDefault();
-    this.portfolios.splice(index, 1);
-  }
-
-  addEducation(e) {
-    e.preventDefault();
-    this.educations.push(new Education());
-  }
-
-  deleteEducation(event, index) {
-    event.preventDefault();
-    this.educations.splice(index, 1);
-  }
-
-  addTraining(e) {
-    e.preventDefault();
-    this.trainings.push(new Training());
-  }
-
-  deleteTraining(event, index) {
-    event.preventDefault();
-    this.trainings.splice(index, 1);
-  }
-
-  addReference(e) {
-    e.preventDefault();
-    this.references.push(new Reference());
-  }
-
-  deleteReference(event, index) {
-    event.preventDefault();
-    this.references.splice(index, 1);
   }
 
   uploadProfilePhoto(event) {
@@ -180,6 +139,7 @@ export class ApplicantFormComponent implements OnInit {
 
   submit(applicant:Applicant) {
     this.applicant.skills = $("#myTags").tagit("assignedTags");
+    this.applicant.hobbies = $('#hobbyTags').tagit('assignedTags');
     this.applicant.portfolios.forEach(function (entry, index) {
       entry.technologies = $('#portfolioTags' + index).tagit("assignedTags");
     });

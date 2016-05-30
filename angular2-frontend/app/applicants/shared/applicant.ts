@@ -17,6 +17,9 @@ export class Applicant {
   hobbies:Array<string>;
   references:Array<Reference> = [];
   coverLetter:string;
+  source:string;
+  notifications:boolean;
+  agreement:boolean;
 
   constructor() {
     this.profile = new Profile();

@@ -204,28 +204,28 @@
       <i class="fa fa-fw fa-trophy fa-lg" aria-hidden="true"></i>
       Certificates, Trainings and Publications
       <div class="block-options">
-        <a href="#" (click)="addTrainings($event)"
+        <a href="#" (click)="addObject('training', $event)"
            class="btn btn-alt btn-sm btn-default">
           <i class="fa fa-plus"></i>
         </a>
       </div>
     </div>
-    <div *ngFor="let training of trainings let index=index" class="form-group clearfix">
+    <div *ngFor="let training of applicant.trainings let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-3 element">
           <label>Title</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.trainings[index].title"/>
         </div>
         <div class="col-sm-6 element">
           <label>Description</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.trainings[index].description"/>
         </div>
         <div class="col-sm-2 element">
           <label>Passed Year</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.trainings[index].passedYear"/>
         </div>
-        <a *ngIf="trainings.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
-           (click)="deleteTraining($event, index)"><i class="glyphicon glyphicon-trash"></i></a>
+        <a *ngIf="applicant.trainings.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
+           (click)="deleteObject('training', index, $event)"><i class="glyphicon glyphicon-trash"></i></a>
       </div>
     </div>
   </div>
@@ -242,40 +242,40 @@
       <i class="fa fa-fw fa-thumbs-up fa-lg" aria-hidden="true"></i>
       References
       <div class="block-options">
-        <a href="#" (click)="addReference($event)"
+        <a href="#" (click)="addObject('reference', $event)"
            class="btn btn-alt btn-sm btn-default">
           <i class="fa fa-plus"></i>
         </a>
       </div>
     </div>
-    <div *ngFor="let reference of references let index=index" class="form-group clearfix">
+    <div *ngFor="let reference of applicant.references let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-4 element">
           <label>Full Name</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].name"/>
         </div>
         <div class="col-sm-4 element">
           <label>Organization</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].organization"/>
         </div>
         <div class="col-sm-3 element">
           <label>Designation</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].designation"/>
         </div>
         <div class="col-sm-4 element">
           <label>Email</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].email"/>
         </div>
         <div class="col-sm-4 element">
           <label>Phone Number</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].phoneNumber"/>
         </div>
         <div class="col-sm-3 element">
           <label>Relationship</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].relationship"/>
         </div>
         <a *ngIf="references.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
-           (click)="deleteReference($event, index)"><i class="glyphicon glyphicon-trash"></i></a>
+           (click)="deleteObject('reference', index, $event)"><i class="glyphicon glyphicon-trash"></i></a>
       </div>
     </div>
   </div>
@@ -287,7 +287,7 @@
     <div class="col-lg-12">
       <textarea class="form-control"
                 placeholder="Tell us something about you and your interest to join Leapfrog. (Not exceeding 250 words)"
-      >
+                [(ngModel)]="applicant.coverLetter">
       </textarea>
     </div>
   </div>
@@ -306,7 +306,7 @@
       Where did you hear about us?
     </div>
     <div class="col-sm-4">
-      <select class="form-control">
+      <select class="form-control" [(ngModel)]="applicant.source">
         <option value="website">Leapfrog Website</option>
         <option value="newspaper">Newspaper</option>
         <option value="social">Social Media</option>
@@ -318,13 +318,13 @@
     <div class="checkbox-elements">
       <div class="checkbox checkbox-styled">
         <label>
-          <input type="hidden" value="0"/><input type="checkbox" value="1"/>
+          <input type="hidden" value="0"/><input type="checkbox" value="1" [(ngModel)]="applicant.notifications"/>
           <span>I would like to get occasional notifications from Leapfrog</span>
         </label>
       </div>
       <div class="checkbox checkbox-styled">
         <label>
-          <input type="hidden" value="0"/><input id="agreement" type="checkbox" value="1"/>
+          <input type="hidden" value="0"/><input id="agreement" type="checkbox" value="1" [(ngModel)]="applicant.agreement"/>
           <span>By clicking submit, I agree <a>terms and conditions</a></span>
         </label>
       </div>
