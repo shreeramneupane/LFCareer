@@ -12,7 +12,7 @@ exports.up = function (knex, Promise) {
     table.string('email', 80).notNullable();
     table.string('phone_number', 20).notNullable();
     table.string('relationship', 80).notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants');

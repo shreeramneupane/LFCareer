@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
 
     //Fields
     table.date('event_date').notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants').onDelete('CASCADE');
