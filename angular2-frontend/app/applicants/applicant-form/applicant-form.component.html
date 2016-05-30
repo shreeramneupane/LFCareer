@@ -21,7 +21,7 @@
         <div class="form-group">
           <label>Full Name</label>
           <input class="form-control" data-role="tags-input" type="text" [(ngModel)]="applicant.profile.name"
-                 ngControl="profile_name" #profile_name="ngForm" />
+                 ngControl="profile_name" #profile_name="ngForm"/>
           <span [hidden]="profile_name.valid || profile_name.untouched"
                 class="text-danger">{{'Please provide your name.'}}</span>
         </div>
@@ -30,14 +30,14 @@
             <div class="col-md-6 col-lg-6 element">
               <label>Email</label>
               <input class="form-control" type="email" [(ngModel)]="applicant.profile.email"
-                     ngControl="profile_email" #profile_email="ngForm" />
+                     ngControl="profile_email" #profile_email="ngForm"/>
               <span [hidden]="profile_email.valid || profile_email.untouched"
                     class="text-danger">{{'Please provide your correct email.'}}</span>
             </div>
             <div class="col-md-6 col-lg-6 element">
               <label>Address</label>
               <input class="form-control" type="text" [(ngModel)]="applicant.profile.address"
-                     ngControl="profile_address" #profile_address="ngForm" />
+                     ngControl="profile_address" #profile_address="ngForm"/>
               <span [hidden]="profile_address.valid || profile_address.untouched"
                     class="text-danger">{{'Please provide your address.'}}</span>
             </div>
@@ -53,7 +53,7 @@
             <div class="col-md-6 col-lg-6 element">
               <label>Phone Number</label>
               <input class="form-control" type="text" [(ngModel)]="applicant.profile.phoneNumber"
-                     ngControl="profile_phone" #profile_phone="ngForm" />
+                     ngControl="profile_phone" #profile_phone="ngForm"/>
               <span [hidden]="profile_phone.valid || profile_phone.untouched"
                     class="text-danger">{{'Please provide your phone number.'}}</span>
             </div>
@@ -96,16 +96,17 @@
       <div class="row multiple-element relative">
         <div class="col-sm-4 element">
           <label>Company</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company" />
+          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company"/>
         </div>
         <div class="col-sm-3 element">
           <label>Designation</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].designation" />
+          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].designation"/>
         </div>
         <div class="col-sm-2 element">
           <label>From</label>
           <div class="input-group date datepicker1">
-            <input type="text" class="form-control experience-from" [(ngModel)]="applicant.experiences[index].startDate" />
+            <input type="text" class="form-control experience-from"
+                   [(ngModel)]="applicant.experiences[index].startDate"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -114,7 +115,7 @@
         <div class="col-sm-2 element">
           <label>To</label>
           <div class="input-group date datepicker2">
-            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].endDate" />
+            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].endDate"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -140,15 +141,15 @@
       <div class="row multiple-element relative">
         <div class="col-sm-3 element">
           <label>Project Name</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].title" />
+          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].title"/>
         </div>
         <div class="col-sm-3 element">
           <label>Link</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].link" />
+          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].link"/>
         </div>
         <div class="col-sm-5 element">
           <label>Description</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].description" />
+          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].description"/>
         </div>
         <div class="col-sm-11">
           <label>Area/Technology</label>
@@ -165,36 +166,36 @@
       <i class="fa fa-fw fa-graduation-cap fa-lg" aria-hidden="true"></i>
       Your Educational Background
       <div class="block-options">
-        <a href="#" (click)="addEducation($event)"
+        <a href="#" (click)="addObject('education', $event)"
            class="btn btn-alt btn-sm btn-default">
           <i class="fa fa-plus"></i>
         </a>
       </div>
     </div>
-    <div *ngFor="let education of educations let index=index" class="form-group clearfix">
+    <div *ngFor="let education of applicant.educations let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-3 element">
           <label>Degree</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].degree"/>
         </div>
         <div class="col-sm-2 element">
           <label>University</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].university"/>
         </div>
         <div class="col-sm-2 element">
           <label>College</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].college"/>
         </div>
         <div class="col-sm-2 element">
           <label>Grade</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].grade"/>
         </div>
         <div class="col-sm-2 element">
           <label>Passed Year</label>
-          <input class="form-control" type="text"/>
+          <input class="form-control" type="number" [(ngModel)]="applicant.educations[index].passedYear"/>
         </div>
-        <a *ngIf="educations.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
-           (click)="deleteEducation($event, index)"><i class="glyphicon glyphicon-trash"></i></a>
+        <a *ngIf="applicant.educations.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
+           (click)="deleteObject('education', index, $event)"><i class="glyphicon glyphicon-trash"></i></a>
       </div>
     </div>
   </div>

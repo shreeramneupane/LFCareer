@@ -90,6 +90,9 @@ export class ApplicantFormComponent implements OnInit {
       case 'portfolio':
         this.applicant.portfolios.push(new Portfolio());
         break;
+      case 'education':
+        this.applicant.educations.push(new Education());
+        break;
     }
   }
 
@@ -98,8 +101,13 @@ export class ApplicantFormComponent implements OnInit {
     switch (type) {
       case 'experience':
         this.applicant.experiences.splice(index, 1);
+        break;
       case 'portfolio':
         this.applicant.portfolios.splice(index, 1);
+        break;
+      case 'education':
+        this.applicant.portfolios.splice(index, 1);
+        break;
     }
   }
 
