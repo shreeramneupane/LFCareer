@@ -10,7 +10,7 @@ exports.up = function (knex, Promise) {
     table.string('designation', 80).notNullable();
     table.date('from_date').notNullable();
     table.date('to_date').notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants');

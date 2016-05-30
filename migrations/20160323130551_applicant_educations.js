@@ -11,7 +11,7 @@ exports.up = function (knex, Promise) {
     table.string('college', 80).notNullable();
     table.date('passed_year').notNullable();
     table.string('grade', 80).notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants');
