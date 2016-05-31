@@ -8,7 +8,7 @@ exports.up = function (knex, Promise) {
     //Fields
     table.string('title', 60).notNullable();
     table.text('description', 'mediumtext').notNullable();
-    table.string('year', 80).notNullable();
+    table.integer('year').notNullable();
     table.timestamps();
 
     //FK
