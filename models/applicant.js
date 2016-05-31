@@ -9,8 +9,7 @@ module.exports = {
   list: function () {
     return new Promise(function (resolve, reject) {
       db('applicants')
-      .join('applicant_uploads', 'applicants.id', '=', 'applicant_uploads.applicant_id')
-      .select('applicants.id','applicants.name', 'applicants.email', 'applicants.address', 'applicants.phone_number', 'applicants.cover_letter', 'applicants.applied_date', 'applicant_uploads.resume', 'applicant_uploads.profile_picture')
+      .select('*')
       .then(function (data) {
         resolve(data);
       })
@@ -19,11 +18,12 @@ module.exports = {
       });
     });
   },
+
   show: function (id) {
     return new Promise(function (resolve, reject) {
       db('applicants')
       .join('applicant_uploads', 'applicants.id', '=', 'applicant_uploads.applicant_id')
-      .select('applicants.id','applicants.name', 'applicants.email', 'applicants.address', 'applicants.phone_number', 'applicants.cover_letter', 'applicants.applied_date', 'applicant_uploads.resume', 'applicant_uploads.profile_picture').where("id", id).first()
+      .select('applicants.id','applicants.name', 'applicants.email', 'applicants.address', 'applicants.phone_number', 'applicants.cover_letter').where("id", id).first()
       .then(function (data) {
         resolve(data);
       })

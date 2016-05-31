@@ -36,7 +36,6 @@ module.exports = {
   },
 
   create: function (table, entity) {
-    entity.created_date = new Date();
     return new Promise(function (resolve, reject) {
       db(table)
       .insert(entity)

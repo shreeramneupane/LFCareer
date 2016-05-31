@@ -1,15 +1,20 @@
 "use strict";
 
 var checkit = require('checkit');
-var uuid = require('node-uuid');
-var validation = new checkit(require('../validation/applicantValidation'));
-var Applicant = require('../models/applicant');
-var _ = require('lodash');
+var uuid = require('node-uuid');var _ = require('lodash');
 var Promise = require("bluebird");
+
+var Applicant = require('../models/applicant');
+var validation = new checkit(require('../validation/applicantValidation'));
+
+var ApplicantAchievementService = require('../services/applicantAchievementService');
+var ApplicantEducationService = require('../services/applicantEducationService');
+var ApplicantExperienceService = require('../services/applicantExperienceService');
+var ApplicantReferenceService = require('../services/applicantReferenceService');
+
 var AppError = require('../error/AppError');
 
-module.exports = {
-
+var ApplicantService = {
   list: function () {
     return new Promise(function (resolve, reject) {
       Applicant.list()
@@ -34,29 +39,29 @@ module.exports = {
     });
   },
 
-  create: function (applicant) {
-    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+  create: function (applicantParams) {
+    var applicant = _.pick(applicantParams, ['name', 'email', 'address', 'linkedin', 'phone_number', 'cover_letter', 'source', 'notification']);
     return new Promise(function (resolve, reject) {
       validation.run(applicant)
       .then(function () {
         applicant.id = uuid.v1();
+        applicant.created_at = new Date();
         Applicant.create(applicant)
-        .then(function (response) {
-          resolve(response);
+        .then(function () {
+          ApplicantService.createNestedRecords(applicant.id, applicantParams)
+          .then(function () {
+            resolve();
+          })
         })
-        .catch(function (err) {
-          reject(err);
-        });
       })
       .catch(function (err) {
         var error = AppError.validationError(err);
         reject(error);
-      });
+      })
     });
   },
 
   update: function (id, applicant) {
-    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
     return new Promise(function (resolve, reject) {
       validation.run(applicant)
       .then(function () {
@@ -73,6 +78,15 @@ module.exports = {
         reject(error);
       });
     });
+  },
+
+  createNestedRecords: function (applicantID, applicantParams) {
+    return Promise.join(
+    ApplicantAchievementService.create(applicantID, applicantParams['achievements']),
+    ApplicantEducationService.create(applicantID, applicantParams['educations']),
+    ApplicantExperienceService.create(applicantID, applicantParams['experiences']),
+    ApplicantReferenceService.create(applicantID, applicantParams['references']))
   }
 };
 
+module.exports = ApplicantService;
