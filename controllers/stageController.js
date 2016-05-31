@@ -1,7 +1,7 @@
 "use strict";
 
-var stageService = require('../services/stageService');
 var HttpStatus = require('http-status-codes');
+var stageService = require('../services/stageService');
 
 module.exports = {
 

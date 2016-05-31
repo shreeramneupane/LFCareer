@@ -1,7 +1,7 @@
 "use strict";
 
-var positionService = require('../services/positionService');
 var HttpStatus = require('http-status-codes');
+var positionService = require('../services/positionService');
 
 module.exports = {
 

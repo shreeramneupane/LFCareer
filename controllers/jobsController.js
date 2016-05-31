@@ -1,9 +1,10 @@
 "use strict";
 
-var jobService = require('../services/jobService');
 var HttpStatus = require('http-status-codes');
+var jobService = require('../services/jobService');
 
 module.exports = {
+
   index: function (request, response) {
     jobService.list()
     .then(function (data) {

@@ -1,7 +1,8 @@
 "use strict";
 
-var db = require('../db');
+var Database = require('../db');
 var Promise = require("bluebird");
+
 var AppError = require('../error/AppError');
 var _ = require('lodash');
 
@@ -13,6 +14,7 @@ module.exports = {
     sortStatement = sortStatement || {'orderBy':'id'};
 
     return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
       var query = db(table);
       filter(query,  filterStatement)
       .then(function () {
@@ -28,6 +30,11 @@ module.exports = {
             })
           })
         })
+=======
+      Database(table).select()
+      .then(function (response) {
+        resolve(response);
+>>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function (err) {
         var error = AppError.buildError(err);
@@ -38,6 +45,7 @@ module.exports = {
 
   show: function (table, id, jointFields) {
     return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
       var query = db(table);
       joinTable(query, table, jointFields)
       .then(function () {
@@ -48,6 +56,14 @@ module.exports = {
           }
           resolve(response);
         })
+=======
+      Database(table).where("id", id).first()
+      .then(function (response) {
+        if (typeof response === 'undefined') {
+          throw new Error();
+        }
+        resolve(response);
+>>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function () {
         var error = AppError.buildError(err);
@@ -58,10 +74,16 @@ module.exports = {
 
   create: function (table, entity) {
     return new Promise(function (resolve, reject) {
-      db(table)
+      Database(table)
       .insert(entity)
+<<<<<<< HEAD
       .then(function () {
         resolve(entity);
+=======
+      .returning('*')
+      .then(function (response) {
+        resolve(response[0]);
+>>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function (err) {
         var error = AppError.buildError(err);
@@ -72,11 +94,11 @@ module.exports = {
 
   update: function (table, id, entity) {
     return new Promise(function (resolve, reject) {
-      db(table)
+      Database(table)
       .where('id', id)
       .update(entity)
       .then(function () {
-        db(table).where("id", id).first()
+        Database(table).where("id", id).first()
         .then(function (updatedData) {
           resolve(updatedData);
         });
@@ -90,11 +112,11 @@ module.exports = {
 
   update_upload: function (table, id, entity) {
     return new Promise(function (resolve, reject) {
-      db(table)
+      Database(table)
       .where('applicant_id', id)
       .update(entity)
       .then(function () {
-        db(table).where("applicant_id", id).first()
+        Database(table).where("applicant_id", id).first()
         .then(function (updatedStage) {
           resolve(updatedStage);
         });

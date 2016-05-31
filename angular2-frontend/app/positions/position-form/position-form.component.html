@@ -1,0 +1,37 @@
+<form *ngIf="position" (ngSubmit)="submit(position)" #positionForm="ngForm">
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" required
+           [(ngModel)]="position.title"
+           ngControl="title" #title="ngForm">
+    <span [hidden]="title.valid || title.untouched"
+          class="text-danger">Please provide position title.</span>
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <textarea class="form-control" required rows="5"
+              [(ngModel)]="position.description"
+              ngControl="description" #description="ngForm"></textarea>
+    <span [hidden]="description.valid || description.untouched"
+          class="text-danger">Please provide position description.</span>
+  </div>
+
+  <div class="form-group">
+    <label>Specification</label>
+    <textarea class="form-control" required rows="5"
+              [(ngModel)]="position.specification"
+              ngControl="specification" #specification="ngForm"></textarea>
+    <span [hidden]="specification.valid || specification.untouched"
+          class="text-danger">Please provide position specification.</span>
+  </div>
+
+  <div class="form-group form-actions clearfix">
+    <div class="pull-right">
+      <button class="btn btn-sm btn-success" type="submit"
+              [disabled]="!positionForm.form.valid">
+        <i class="fa fa-angle-right"></i>Submit
+      </button>
+    </div>
+  </div>
+</form>

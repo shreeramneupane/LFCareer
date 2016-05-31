@@ -1,7 +1,7 @@
 module.exports = {
   applicant_id: {
     rule: 'required',
-    message: 'Applicant UUID missing'
+    message: "Applicant's id missing to upload files."
   },
   resume: {
     rule: 'required',
