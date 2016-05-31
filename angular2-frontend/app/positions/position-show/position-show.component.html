@@ -1,42 +1,26 @@
-<div *ngIf="position">
-  <div class="row">
-    <div class="col-lg-12">
-      <ul class="breadcrumb breadcrumb-top">
-        <li>
-          <a [routerLink]="['/Dashboard']">Home</a>
-        </li>
-        <li>
-          <a [routerLink]="['PositionList']">Positions</a>
-        </li>
-        <li>
-          {{position.title}}
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="block clearfix">
-        <div class="block-title-border">{{position.title}}
-          <div class="block-options">
-            <a class="btn btn-alt btn-sm btn-default" [routerLink]="['PositionEdit', {id: position.id}]"><i
-            class="fa fa-pencil"></i></a></div>
-        </div>
-        <div class="block-wrapper">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="common-view"><span class="view-label"> Position Description</span>
-                <p class="pre-line">{{position.description}}</p>
-              </div>
+<page-header [pageHeader]="'Position Details'"></page-header>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="block clearfix">
+      <div class="block-title-border">{{position?.title}}
+        <div class="block-options">
+          <a class="btn btn-alt btn-sm btn-default" [routerLink]="['PositionEdit', {id: position?.id}]"><i
+          class="fa fa-pencil"></i></a></div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="common-view"><span class="view-label"> Position Description</span>
+              <p class="pre-line">{{position?.description}}</p>
             </div>
           </div>
         </div>
-        <div class="block-wrapper">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="common-view"><span class="view-label"> Position Specification</span>
-                <p class="pre-line">{{position.specification}}</p>
-              </div>
+      </div>
+      <div class="block-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="common-view"><span class="view-label"> Position Specification</span>
+              <p class="pre-line">{{position?.specification}}</p>
             </div>
           </div>
         </div>

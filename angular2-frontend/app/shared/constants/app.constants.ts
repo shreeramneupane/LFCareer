@@ -1,3 +1,5 @@
 export class AppConstants {
-  public static get JOBS():string { return "Jobs"; }
+  public static get JOBS():string { return "jobs"; }
+  public static get POSITIONS():string { return "positions"; }
+  public static get STAGES():string { return "stages"; }
 }

@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import { Position } from '../shared/position';
-import { PositionService }   from '../shared/position.service';
+import { PageHeader }       from '../../shared/components/page-header/pageHeader.component';
+import { Position }         from '../shared/position';
+import { PositionService }  from '../shared/position.service';
 
 @Component({
   selector   : 'position-list',
   templateUrl: 'app/positions/position-list/position-list.component.html',
-  directives : [ROUTER_DIRECTIVES],
+  directives : [ROUTER_DIRECTIVES, PageHeader],
   providers  : [PositionService]
 })
 
 export class PositionListComponent implements OnInit {
+  positions:Position[];
+
   constructor(private positionListService:PositionService) {
   }
-
-  positions:Position[];
 
   ngOnInit() {
     this.listPosition();

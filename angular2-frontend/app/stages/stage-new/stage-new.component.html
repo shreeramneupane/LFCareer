@@ -1,24 +1,4 @@
-<div class="row" *ngIf="stage">
-  <div class="col-lg-12">
-    <div class="content-header">
-      <div class="header-section">
-        <h1>New Stage</h1>
-      </div>
-    </div>
-    <ul class="breadcrumb breadcrumb-top">
-      <li>
-        <a [routerLink]="['/Dashboard']">Home</a>
-      </li>
-      <li>
-        <a [routerLink]="['StageList']">Stages</a>
-      </li>
-      <li>
-        New Stage
-      </li>
-    </ul>
-  </div>
-</div>
-
+<page-header [pageHeader]="'Create Stage'"></page-header>
 <div class="row">
   <div class="col-lg-12">
     <div class="block full">

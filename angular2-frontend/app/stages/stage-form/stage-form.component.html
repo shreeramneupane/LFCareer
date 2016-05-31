@@ -1,6 +1,6 @@
 <form *ngIf="stage" (ngSubmit)="submit(stage)" #stageForm="ngForm">
   <div class="form-group">
-    <label for="name">Name</label>
+    <label>Name</label>
     <input type="text" class="form-control" required
            [(ngModel)]="stage.name"
            ngControl="name" #name="ngForm">
@@ -12,7 +12,7 @@
     <div class="pull-right">
       <button class="btn btn-sm btn-success" type="submit"
               [disabled]="!stageForm.form.valid">
-        <i class="fa fa-angle-right"></i>Create
+        <i class="fa fa-angle-right"></i>Submit
       </button>
     </div>
   </div>

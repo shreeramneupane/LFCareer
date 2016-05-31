@@ -1,6 +1,7 @@
 import { Component, OnInit }              from '@angular/core';
 import { ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
+import { PageHeader }       from '../../shared/components/page-header/pageHeader.component';
 import { Position }         from '../shared/position'
 import { PositionService }  from '../shared/position.service';
 
@@ -8,7 +9,7 @@ import { PositionService }  from '../shared/position.service';
   selector   : 'position-show',
   templateUrl: 'app/positions/position-show/position-show.component.html',
   providers  : [PositionService],
-  directives : [ROUTER_DIRECTIVES]
+  directives : [ROUTER_DIRECTIVES, PageHeader]
 })
 
 export class PositionShowComponent implements OnInit {
