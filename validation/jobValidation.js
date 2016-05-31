@@ -9,7 +9,7 @@ module.exports = {
   },
   number_of_opening: {
     rule: 'required',
-    message: 'Please provide number of openings.'
+    message: 'Please provide number of opening.'
   },
   description: {
     rule: 'required',
@@ -25,6 +25,6 @@ module.exports = {
   },
   position_id: {
     rule: 'required',
-    message: 'Please provide job closing date.'
+    message: "Please set position."
   }
 };
