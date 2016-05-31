@@ -1,15 +1,13 @@
-;(function () {
-  "use strict";
+"use strict";
 
-  var PositionsController = require('../controllers/positionsController');
+var PositionsController = require('../controllers/positionsController');
 
-  var express = require('express'),
-  router = express.Router();
+var express = require('express'),
+router = express.Router();
 
-  router.get('/positions', PositionsController.index);
-  router.get('/positions/:id', PositionsController.show);
-  router.post('/positions', PositionsController.create);
-  router.put('/positions/:id', PositionsController.update);
+router.get('/positions', PositionsController.index);
+router.get('/positions/:id', PositionsController.show);
+router.post('/positions', PositionsController.create);
+router.put('/positions/:id', PositionsController.update);
 
-  module.exports = router;
-})();
+module.exports = router;

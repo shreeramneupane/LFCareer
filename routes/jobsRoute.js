@@ -1,15 +1,13 @@
-;(function () {
-    "use strict";
+"use strict";
 
-    var JobsController = require('../controllers/jobsController');
+var JobsController = require('../controllers/jobsController');
 
-    var express = require('express'),
-    router = express.Router();
+var express = require('express'),
+router = express.Router();
 
-    router.get('/jobs', JobsController.index);
-    router.get('/jobs/:id', JobsController.show);
-    router.post('/jobs', JobsController.create);
-    router.put('/jobs/:id', JobsController.update);
+router.get('/jobs', JobsController.index);
+router.get('/jobs/:id', JobsController.show);
+router.post('/jobs', JobsController.create);
+router.put('/jobs/:id', JobsController.update);
 
-    module.exports = router;
-})();
+module.exports = router;
