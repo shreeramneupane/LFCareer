@@ -1,55 +1,55 @@
-;
-(function () {
-    "use strict";
+"use strict";
 
-    var db = require('../db');
-    var repository = require('./repository.js');
-    var Promise = require("bluebird");
+var Promise = require("bluebird");
 
-    module.exports = {
+var Repository = require('./repository.js');
 
-        list: function () {
-            return new Promise(function (resolve, reject) {
-                repository.list('jobs').then(function (data) {
-                    resolve(data);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-            });
-        },
+module.exports = {
+  list: function () {
+    return new Promise(function (resolve, reject) {
+      Repository.list('jobs')
+      .then(function (data) {
+        resolve(data);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
 
-        show: function (id) {
-            return new Promise(function (resolve, reject) {
-                repository.show('jobs', id).then(function (data) {
-                    resolve(data);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-            });
-        },
+  show: function (id) {
+    return new Promise(function (resolve, reject) {
+      Repository.show('jobs', id)
+      .then(function (data) {
+        resolve(data);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
 
-        create: function (job) {
-            return new Promise(function (resolve, reject) {
-                repository.create('jobs', job).then(function (data) {
-                    resolve(data);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-            });
-        },
+  create: function (job) {
+    return new Promise(function (resolve, reject) {
+      Repository.create('jobs', job)
+      .then(function (data) {
+        resolve(data);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
 
-        update: function (id, job) {
-            return new Promise(function (resolve, reject) {
-                repository.update('jobs', id, job).then(function (data) {
-                    resolve(data);
-                })
-                .catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    };
-})();
+  update: function (id, job) {
+    return new Promise(function (resolve, reject) {
+      Repository.update('jobs', id, job)
+      .then(function (data) {
+        resolve(data);
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  }
+};

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import { PageHeader } from '../../shared/page-header/pageHeader.component';
-
-import { Job } from '../shared/job';
-import { JobService }   from '../shared/job.service';
+import { Job }        from '../shared/job';
+import { JobService } from '../shared/job.service';
+import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
   selector: 'job-list',
@@ -14,7 +13,6 @@ import { JobService }   from '../shared/job.service';
 })
 
 export class JobList implements OnInit {
-  pageHeader:string = 'Job List';
   jobs:any = [];
 
   constructor(private jobService:JobService) {
@@ -26,7 +24,7 @@ export class JobList implements OnInit {
 
   listJobs() {
     this.jobService.listJobs()
-    .subscribe(
+   .subscribe(
     jobs => this.jobs = jobs,
     error => toastr.error(error)
     );

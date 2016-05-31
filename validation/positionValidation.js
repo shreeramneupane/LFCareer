@@ -1,14 +1,14 @@
 module.exports = {
   title: {
     rule: 'required',
-    message: 'Please provide job title.'
+    message: 'Please provide position title.'
   },
   description: {
     rule: 'required',
-    message: 'Please provide job description.'
+    message: 'Please provide position description.'
   },
   specification: {
     rule: 'required',
-    message: 'Please provide job specification.'
+    message: 'Please provide position specification.'
   }
 };

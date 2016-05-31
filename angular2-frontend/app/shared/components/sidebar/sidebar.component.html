@@ -1,0 +1,28 @@
+<div id="sidebar">
+    <div class="sidebar-scroll">
+        <div class="sidebar-content">
+            <h1><a href="index.html" class="sidebar-brand">Leapfrog Recruitment
+                System</a></h1>
+            <ul class="sidebar-nav">
+                <li>
+                    <a [routerLink]="['Dashboard']"
+                       [class.active]="router.isRouteActive(router.generate(['/Dashboard']))"><i
+                            class="fa fa-dashboard fa-fw"></i><span
+                            class="xn-text">Dashboard</span> </a>
+                    <a [routerLink]="['Position']"
+                       [class.active]="router.isRouteActive(router.generate(['/Position']))"><i
+                    class="fa fa-dashboard fa-fw"></i><span
+                    class="xn-text">Position</span> </a>
+                    <a [routerLink]="['Stage']"
+                       [class.active]="router.isRouteActive(router.generate(['/Stage']))"><i
+                    class="fa fa-dashboard fa-fw"></i><span
+                    class="xn-text">Stage</span> </a>
+                    <a [routerLink]="['Job']"
+                       [class.active]="router.isRouteActive(router.generate(['/Job']))"><i
+                    class="fa fa-dashboard fa-fw"></i><span
+                    class="xn-text">Job</span> </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

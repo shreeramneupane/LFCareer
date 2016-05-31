@@ -1,21 +1,20 @@
 import { Component, OnInit }              from '@angular/core';
 import { ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
+import * as moment                        from 'moment';
 
 import { Job }         from '../shared/job'
 import { JobService }  from '../shared/job.service';
-
-import { PageHeader } from '../../shared/page-header/pageHeader.component';
+import { PageHeader }  from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
-  selector   : 'job-show',
+  selector: 'job-show',
   templateUrl: 'app/jobs/job-show/job-show.component.html',
-  providers  : [JobService],
-  directives : [PageHeader, ROUTER_DIRECTIVES]
+  providers: [JobService],
+  directives: [PageHeader, ROUTER_DIRECTIVES]
 })
 
 export class JobShowComponent implements OnInit {
   public job:Job;
-  pageHeader:string = 'Job Details';
 
   constructor(private jobService:JobService, private routeParams:RouteParams) {
   }
@@ -29,8 +28,7 @@ export class JobShowComponent implements OnInit {
     this.jobService.getJob(id).subscribe(
     job => {
       this.job = job;
-      var date = new Date(this.job.valid_until);
-      this.job.valid_until =  date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+      this.job.valid_until = moment(job.valid_until).format('Do MMMM YYYY');
     },
     error => toastr.error(error)
     );

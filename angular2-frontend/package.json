@@ -2,12 +2,10 @@
   "name": "leapfrog_recruitment_system",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "lite": "lite-server",
-    "postinstall": "typings install",
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "typings": "typings"
+    "start": "NODE_ENV=development webpack-dev-server --inline --progress --port 3000",
+    "test": "karma start",
+    "build": "rm -rf dist && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "postinstall": "typings install && cp -r app/shared/custom-typings/* typings/browser/ambient/"
   },
   "license": "ISC",
   "dependencies": {
@@ -22,8 +20,12 @@
     "@angular/upgrade": "2.0.0-rc.1",
     "angular2-in-memory-web-api": "0.0.7",
     "bootstrap": "^3.3.6",
+    "bootstrap-datepicker": "^1.6.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.15.35",
     "es6-shim": "^0.35.0",
+    "font-awesome": "^4.6.1",
     "jquery": "^2.2.3",
+    "ng2-bootstrap": "^1.0.16",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.6",
     "systemjs": "0.19.27",
@@ -32,8 +34,28 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.15.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
     "lite-server": "^2.2.0",
+    "null-loader": "^0.1.1",
+    "phantomjs-prebuilt": "^2.1.7",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.8.1",
     "typescript": "^1.8.10",
-    "typings": "^0.8.1"
+    "typings": "^0.8.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.9.0"
   }
 }
