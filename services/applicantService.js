@@ -42,7 +42,7 @@ var ApplicantService = {
   },
 
   create: function (applicantParams) {
-    var applicant = _.pick(applicantParams, ['name', 'email', 'address', 'linkedin', 'phone_number', 'cover_letter', 'source', 'notification']);
+    var applicant = _.pick(applicantParams, ['name', 'email', 'address', 'linkedin', 'phone_number', 'cover_letter', 'hobbies', 'source', 'notification']);
     return new Promise(function (resolve, reject) {
       validation.run(applicant)
       .then(function () {
