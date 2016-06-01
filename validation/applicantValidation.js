@@ -7,8 +7,14 @@ module.exports = {
     rule: 'required',
     message: 'Please provide your address.'
   },
-  email: {
-    rule: 'required',
-    message: 'Please provide applicant email.'
-  }
+  email: [
+    {
+      rule: 'required',
+      message: 'Please provide applicant email.'
+    },
+    {
+      rule: 'email',
+      message: 'Please provide valid email.'
+    }
+  ]
 };
