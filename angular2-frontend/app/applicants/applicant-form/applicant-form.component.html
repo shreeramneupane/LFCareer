@@ -1,16 +1,5 @@
 <div class="block-title-border">Applicant Details</div>
 <form class="applicant-form" (ngSubmit)="submit(applicant)" #stageForm="ngForm">
-  <div class="form-group subform clearfix">
-    <div class="row multiple-element">
-      <div class="col-md-6 col-lg-4 element">
-        <label>Job Type</label>
-        <select class="form-control"
-                [(ngModel)]="applicant.job_id">
-          <option *ngFor="let job of jobs" [value]="job.id">{{job.title}}</option>
-        </select>
-      </div>
-    </div>
-  </div>
   <div class="subform">
     <div class="subform-title block-title-border">
       <i class="fa fa-user" aria-hidden="true"></i>
@@ -64,7 +53,7 @@
         <div class="passport-photo"><img id="passport-photo" src="app/shared/assets/images/avatar2.png"/></div>
         <div>
           <input type="file" class="file-upload" size="chars" (change)="upload($event)">
-          <button class="btn btn-sm btn-success text-uppercase" (click)="uploadProfilePhoto($event)"><i
+          <button class="btn btn-sm btn-success text-uppercase" (click)="triggerPhotoUploadClickEvent($event)"><i
           class="fa fa-file" aria-hidden="true"></i>Upload
             Picture
           </button>
@@ -299,7 +288,13 @@
       Upload Your Resume
     </div>
     <div class="col-sm-4">
-      <input id="resume" type="file"/>
+      <div class="input-group">
+        <input type="file" id="resume-upload" size="chars" (change)="uploadResume($event)"/>
+        <input type="text" class="form-control" id="resume-input" readonly/>
+        <span class="input-group-addon" (click)="triggerResumeUploadClickEvent($event)">
+        <span class="fa fa-file-word-o"></span>
+      </span>
+      </div>
     </div>
   </div>
   <div class="subform clearfix">
@@ -309,11 +304,24 @@
     </div>
     <div class="col-sm-4">
       <select class="form-control" [(ngModel)]="applicant.source">
-        <option value="website">Leapfrog Website</option>
+        <option value="website" selected>Leapfrog Website</option>
         <option value="newspaper">Newspaper</option>
         <option value="social">Social Media</option>
         <option value="friend">LeapFrog's Friend</option>
         <option value="other">Others</option>
+      </select>
+    </div>
+    <div class="col-sm-4" *ngIf="applicant.source=='other'">
+      <input class="form-control" placeholder="source"/>
+    </div>
+    <div class="col-sm-4" *ngIf="applicant.source=='friend'">
+      <input class="form-control" placeholder="Friend's name"/>
+    </div>
+    <div class="col-sm-4" *ngIf="applicant.source=='social'">
+      <select class="form-control">
+        <option value="facebook" selected>Facebook</option>
+        <option value="linkedin">LinkedIn</option>
+        <option value="tweeter">Tweeter</option>
       </select>
     </div>
 

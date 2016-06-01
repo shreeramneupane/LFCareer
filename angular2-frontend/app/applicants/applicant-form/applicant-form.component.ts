@@ -121,9 +121,14 @@ export class ApplicantFormComponent implements OnInit {
     }
   }
 
-  uploadProfilePhoto(event) {
+  triggerPhotoUploadClickEvent(event) {
     event.preventDefault();
     $('.file-upload').click();
+  }
+
+  triggerResumeUploadClickEvent(event) {
+    event.preventDefault();
+    $('#resume-upload').click();
   }
 
   upload(event) {
@@ -135,6 +140,18 @@ export class ApplicantFormComponent implements OnInit {
     }
     reader.readAsDataURL(event.target.files[0]);
     this.applicant.profile.profilePic = event.target.files[0];
+  }
+
+  uploadResume(event) {
+    var reader = new FileReader();
+    reader.onload = function (e:any) {
+      console.log(e)
+      /*$('#resume-input')
+      .attr('src', e.target.result)
+      this.profilePic = e.target.result;*/
+    }
+    $('#resume-input').val(event.target.files[0].name);
+    reader.readAsDataURL(event.target.files[0]);
   }
 
   submit(applicant:Applicant) {

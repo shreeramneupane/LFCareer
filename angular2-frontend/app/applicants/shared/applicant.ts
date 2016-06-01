@@ -17,7 +17,7 @@ export class Applicant {
   hobbies:Array<string>;
   references:Array<Reference> = [];
   coverLetter:string;
-  source:string;
+  source:string = 'website';
   notifications:boolean;
   agreement:boolean;
 
