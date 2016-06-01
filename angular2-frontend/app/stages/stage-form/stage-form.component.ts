@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Control, ControlGroup, Validators }                                 from '@angular/common';
+import { Control, ControlGroup, Validators }      from '@angular/common';
 import { ROUTER_DIRECTIVES }                      from '@angular/router-deprecated';
+
 import { ControlMessages } from '../../shared/components/control-messages';
-import { Stage } from '../shared/stage';
+import { Stage }           from '../shared/stage';
 
 @Component({
   selector   : 'stage-form',
