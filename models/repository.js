@@ -2,7 +2,6 @@
 
 var Database = require('../db');
 var Promise = require("bluebird");
-
 var AppError = require('../error/AppError');
 var _ = require('lodash');
 
@@ -14,8 +13,7 @@ module.exports = {
     sortStatement = sortStatement || {'orderBy':'id'};
 
     return new Promise(function (resolve, reject) {
-<<<<<<< HEAD
-      var query = db(table);
+      var query = Database(table);
       filter(query,  filterStatement)
       .then(function () {
         joinTable(query, table, jointFields)
@@ -30,11 +28,6 @@ module.exports = {
             })
           })
         })
-=======
-      Database(table).select()
-      .then(function (response) {
-        resolve(response);
->>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function (err) {
         var error = AppError.buildError(err);
@@ -45,8 +38,7 @@ module.exports = {
 
   show: function (table, id, jointFields) {
     return new Promise(function (resolve, reject) {
-<<<<<<< HEAD
-      var query = db(table);
+      var query = Database(table);
       joinTable(query, table, jointFields)
       .then(function () {
         query.where("id", id).first().select(table + '.*')
@@ -56,14 +48,6 @@ module.exports = {
           }
           resolve(response);
         })
-=======
-      Database(table).where("id", id).first()
-      .then(function (response) {
-        if (typeof response === 'undefined') {
-          throw new Error();
-        }
-        resolve(response);
->>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function () {
         var error = AppError.buildError(err);
@@ -76,14 +60,9 @@ module.exports = {
     return new Promise(function (resolve, reject) {
       Database(table)
       .insert(entity)
-<<<<<<< HEAD
-      .then(function () {
-        resolve(entity);
-=======
       .returning('*')
       .then(function (response) {
         resolve(response[0]);
->>>>>>> a1c658d348d186b619afb9ce742ee6085eb53c75
       })
       .catch(function (err) {
         var error = AppError.buildError(err);
@@ -131,6 +110,7 @@ module.exports = {
 };
 
 function filter(query, filters){
+  console.log(filters);
   return new Promise(function(resolve, reject){
     if(filters === undefined){
       resolve(true);
@@ -139,10 +119,10 @@ function filter(query, filters){
     for(var i = 0 ; i < filters.length; i++ ){
       var entity = filters[i];
       if(entity.join){
-        query.leftOuterJoin(entity.table, entity.table + '.id', entity.table + '_id');
+        query.leftOuterJoin(entity.table, entity.table + '.id', filters[0].foreign_key);
       }
       query.where(
-      db.raw('LOWER(' + entity.table + '.' + entity.attribute + ') = LOWER(?)', entity.searchKey)
+      Database.raw('LOWER(' + entity.table + '.' + entity.attribute + ') = LOWER(?)', entity.searchKey)
       );
     }
     query.then(function (response) {
@@ -161,7 +141,7 @@ function search(query, search){
 
   return new Promise(function(resolve, reject){
     if(search === undefined){
-     resolve(true);
+      resolve(true);
     }
     var rawQuery='';
     var searchWord = _.times(search.attribute.length, function () {
@@ -196,7 +176,7 @@ function joinTable(query, table, jointFields) {
         var nestedAttributes = jointFields[i].attributes;
         var tableName = nestedField.table_name;
 
-        query.join(tableName, table + '.id', tableName + '.' + table + '_id').select(nestedAttributes)
+        query.join(tableName, table + '.id', tableName + '.' + jointFields[0].foreign_key).select(nestedAttributes)
         .then(function (response) {
           resolve(response);
         })

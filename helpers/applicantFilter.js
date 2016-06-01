@@ -31,7 +31,7 @@ params['q'] = function(key) {
   var searchStatement = {
     "searchKey": key,
     "attribute": ["name", "email", "address", "phone_number"],
-    "table": "applicant",
+    "table": "applicants",
     "join": false,
     "type": 'search'
   };
@@ -43,7 +43,7 @@ params['name'] = function(key){
   var selectStatement ={
     "searchKey": key,
     "attribute": "name",
-    "table": "applicant",
+    "table": "applicants",
     "join": false,
     "type": 'filter'
   };
@@ -54,25 +54,31 @@ params['job'] = function(key){
   var filterStatement = {
     "searchKey": key,
     "field": 'job',
-    "table": 'job',
+    "table": 'jobs',
     "attribute": "title",
     "join": true,
-    "type": 'filter'
+    "type": 'filter',
+    "foreign_key": 'job_id'
   };
   return filterStatement;
 };
 
 params['sort'] = function(key) {
+  var l = console.log;
   var sortParams = typeof (key) === 'string' ? [key] : key;
   var sortStatement = '';
+  l(sortParams);
   for(var i = 0 ; i < sortParams.length; i++){
     var column = sortParams[i];
-    var order = column.startsWith('-') ? 'desc' : 'asc';
+    l(column);
+    l(_.startsWith('abc', 'a'));
+    var order = _.startsWith(column, '-') ? 'desc' : 'asc';
     column = column.replace(/^-+/, "");
     sortStatement += column + ' ' + order;
     if(i < sortParams.length - 1){
       sortStatement += ', ';
     }
+
   }
 
   return {
