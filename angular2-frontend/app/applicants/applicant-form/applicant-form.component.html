@@ -174,15 +174,17 @@
     </div>
     <div *ngFor="let education of applicant.educations let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
-        <div class="col-sm-3 element">
+        <div class="col-sm-6 element">
           <label>Degree</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].degree"/>
         </div>
-        <div class="col-sm-2 element">
+        <div class="col-sm-5 element">
           <label>University</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].university"/>
         </div>
-        <div class="col-sm-2 element">
+      </div>
+      <div class="row multiple-element relative">
+        <div class="col-sm-6 element">
           <label>College</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].college"/>
         </div>
@@ -190,7 +192,7 @@
           <label>Grade</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].grade"/>
         </div>
-        <div class="col-sm-2 element">
+        <div class="col-sm-3 element">
           <label>Passed Year</label>
           <input class="form-control" type="number" [(ngModel)]="applicant.educations[index].passedYear"/>
         </div>
@@ -274,7 +276,7 @@
           <label>Relationship</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.references[index].relationship"/>
         </div>
-        <a *ngIf="references.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
+        <a *ngIf="applicant.references.length > 1" class="btn btn-sm btn-default delete-subform" href="#"
            (click)="deleteObject('reference', index, $event)"><i class="glyphicon glyphicon-trash"></i></a>
       </div>
     </div>
@@ -324,7 +326,8 @@
       </div>
       <div class="checkbox checkbox-styled">
         <label>
-          <input type="hidden" value="0"/><input id="agreement" type="checkbox" value="1" [(ngModel)]="applicant.agreement"/>
+          <input type="hidden" value="0"/><input id="agreement" type="checkbox" value="1"
+                                                 [(ngModel)]="applicant.agreement"/>
           <span>By clicking submit, I agree <a>terms and conditions</a></span>
         </label>
       </div>

@@ -11,16 +11,6 @@
   font-size      : 18px;
 }
 
-.basic-info {
-  width : 65%;
-  float : left;
-}
-
-.passport-pic {
-  float : left;
-  width : 35%;
-}
-
 .passport-photo {
   margin : 0 auto;
   height : 200px;
@@ -45,16 +35,6 @@
   font-size  : 12px;
 }
 
-.delete-subform {
-  position : absolute;
-  bottom   : 5px;
-}
-
-.delete-portfolio {
-  position : absolute;
-  bottom   : 13px;
-}
-
 .checkbox-elements {
   clear        : both;
   padding-left : 15px;
@@ -74,4 +54,48 @@ button {
   visibility : hidden;
   width      : 0;
   height     : 0;
+}
+
+@media screen and (min-width : 480px) {
+  .delete-subform {
+    margin-left : 15px;
+  }
+
+  .delete-portfolio {
+    margin-left : 15px;
+  }
+}
+
+@media screen and (min-width : 768px) {
+  .input-group-addon {
+    display : none;
+  }
+
+  .delete-portfolio, .delete-subform {
+    position    : absolute;
+    bottom      : 13px;
+    margin-left : 0;
+  }
+
+  .basic-info {
+    width : 65%;
+    float : left;
+  }
+
+  .passport-pic {
+    float : left;
+    width : 35%;
+  }
+}
+
+@media screen and (min-width : 1200px) {
+  .delete-subform {
+    bottom : 5px;
+  }
+}
+
+@media screen and (min-width : 1280px) {
+  .input-group-addon {
+    display : table-cell;
+  }
 }
