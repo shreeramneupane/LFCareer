@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
 
     //Fields
     table.string('project_name', 60).notNullable();
-    table.string('link', 80).notNullable();
+    table.string('link', 80);
     table.text('description', 'mediumtext').notNullable();
     table.timestamps();
 

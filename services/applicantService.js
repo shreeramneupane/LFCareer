@@ -1,8 +1,9 @@
 "use strict";
 
 var checkit = require('checkit');
-var uuid = require('node-uuid');var _ = require('lodash');
+var uuid = require('node-uuid');
 var Promise = require("bluebird");
+var _ = require('lodash');
 
 var Applicant = require('../models/applicant');
 var validation = new checkit(require('../validation/applicantValidation'));
@@ -11,6 +12,7 @@ var ApplicantAchievementService = require('../services/applicantAchievementServi
 var ApplicantEducationService = require('../services/applicantEducationService');
 var ApplicantExperienceService = require('../services/applicantExperienceService');
 var ApplicantReferenceService = require('../services/applicantReferenceService');
+var ApplicantPortfolioService = require('../services/applicantPortfolioService');
 
 var AppError = require('../error/AppError');
 
@@ -85,7 +87,8 @@ var ApplicantService = {
     ApplicantAchievementService.create(applicantID, applicantParams['achievements']),
     ApplicantEducationService.create(applicantID, applicantParams['educations']),
     ApplicantExperienceService.create(applicantID, applicantParams['experiences']),
-    ApplicantReferenceService.create(applicantID, applicantParams['references']))
+    ApplicantReferenceService.create(applicantID, applicantParams['references']),
+    ApplicantPortfolioService.create(applicantID, applicantParams['portfolios']))
   }
 };
 

@@ -84,6 +84,26 @@ module.exports = {
         reject(error);
       });
     });
+  },
+
+  getID: function(param) {
+    return new Promise(function (resolve, reject) {
+      Database(param.tableName)
+      .where(param.fieldName, '=', param.value)
+      .select('id')
+      .then(function (response) {
+        if(response.length) {
+          resolve(response[0].id);
+        }
+        else {
+          resolve('undefined')
+        }
+      })
+      .catch(function (err) {
+        var error = AppError.renderError(err);
+        reject(error);
+      });
+    });
   }
 };
 
