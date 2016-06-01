@@ -11,8 +11,9 @@ var validation = new checkit(require('../validation/applicantValidation'));
 var ApplicantAchievementService = require('../services/applicantAchievementService');
 var ApplicantEducationService = require('../services/applicantEducationService');
 var ApplicantExperienceService = require('../services/applicantExperienceService');
-var ApplicantReferenceService = require('../services/applicantReferenceService');
 var ApplicantPortfolioService = require('../services/applicantPortfolioService');
+var ApplicantReferenceService = require('../services/applicantReferenceService');
+var ApplicantSkillService = require('../services/applicantSkillService');
 
 var AppError = require('../error/AppError');
 
@@ -88,7 +89,9 @@ var ApplicantService = {
     ApplicantEducationService.create(applicantID, applicantParams['educations']),
     ApplicantExperienceService.create(applicantID, applicantParams['experiences']),
     ApplicantReferenceService.create(applicantID, applicantParams['references']),
-    ApplicantPortfolioService.create(applicantID, applicantParams['portfolios']))
+    ApplicantPortfolioService.create(applicantID, applicantParams['portfolios']),
+    ApplicantSkillService.create(applicantID, applicantParams['skills'])
+    )
   }
 };
 
