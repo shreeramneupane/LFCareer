@@ -1,23 +1,35 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { NgForm }                                         from '@angular/common';
+import { Control, ControlGroup, Validators }              from '@angular/common';
 import { ROUTER_DIRECTIVES }                              from '@angular/router-deprecated';
 
+import { ControlMessages } from '../../shared/components/control-messages';
 import { Job }             from '../shared/job';
 import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
+import { ValidationService } from '../../shared/utils/validation.util';
 
 @Component({
   selector   : 'job-form',
   templateUrl: 'app/jobs/job-form/job-form.component.html',
-  providers  : [NgForm, PositionService],
-  directives : [ROUTER_DIRECTIVES]
+  providers  : [PositionService],
+  directives : [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class JobFormComponent implements OnInit {
   @Input() job:Job;
   @Output() onSubmit = new EventEmitter<Job>();
 
+  submitted:boolean = false;
   positions:any = [];
+
+  formGroup:ControlGroup = new ControlGroup({
+    title: new Control('', Validators.required),
+    intro: new Control('', Validators.required),
+    validUntil: new Control('', Validators.required),
+    openings: new Control('', Validators.compose([Validators.required, ValidationService.positiveNumberValidator])),
+    description: new Control('', Validators.required),
+    specification: new Control('', Validators.required)
+  });
 
   constructor(private positionService:PositionService) {
 
@@ -30,7 +42,7 @@ export class JobFormComponent implements OnInit {
   ngAfterViewInit() {
     var that = this;
     $('#datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function () {
-      that.job.valid_until = $('#datepicker-input').val();
+      that.job.valid_until = $('#validUntil').val();
     });
   }
 
@@ -48,7 +60,11 @@ export class JobFormComponent implements OnInit {
   }
 
   submit(job:Job) {
-    this.onSubmit.emit(job);
+    this.submitted = true;
+    if (this.formGroup.valid)
+      this.onSubmit.emit(job);
+    else
+      toastr.error('Please fill the required fields', 'Error!');
   }
 
   changeSpecAndDescription(value) {

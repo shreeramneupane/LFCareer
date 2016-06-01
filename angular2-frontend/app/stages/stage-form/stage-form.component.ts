@@ -16,10 +16,9 @@ export class StageFormComponent {
   @Output() onSubmit = new EventEmitter<Stage>();
 
   submitted:boolean = false;
-  ctrlName:Control = new Control('', Validators.required);
 
   formGroup:ControlGroup = new ControlGroup({
-    name: this.ctrlName
+    name: new Control('', Validators.required)
   });
 
   submit(stage:Stage) {
