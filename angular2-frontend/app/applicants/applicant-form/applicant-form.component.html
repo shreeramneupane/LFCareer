@@ -1,5 +1,5 @@
 <div class="block-title-border">Applicant Details</div>
-<form class="applicant-form" (ngSubmit)="submit(applicant)" #stageForm="ngForm">
+<form *ngIf="applicant" class="applicant-form" (ngSubmit)="submit(applicant)" [ngFormModel]="formGroup">
   <div class="subform">
     <div class="subform-title block-title-border">
       <i class="fa fa-user" aria-hidden="true"></i>
@@ -8,47 +8,47 @@
     <div class="clearfix">
       <div class="basic-info">
         <div class="form-group">
-          <label>Full Name</label>
-          <input class="form-control" data-role="tags-input" type="text" [(ngModel)]="applicant.profile.name"
-                 ngControl="profile_name" #profile_name="ngForm"/>
-          <span [hidden]="profile_name.valid || profile_name.untouched"
-                class="text-danger">{{'Please provide your name.'}}</span>
+          <label>Full Name *</label>
+          <input class="form-control" type="text" [(ngModel)]="applicant.name"
+                 ngControl="name" id="name"/>
+          <control-messages control="name" [submitted]="submitted"></control-messages>
         </div>
+
         <div class="form-group clearfix">
           <div class="row multiple-element">
             <div class="col-md-6 col-lg-6 element">
-              <label>Email</label>
-              <input class="form-control" type="email" [(ngModel)]="applicant.profile.email"
-                     ngControl="profile_email" #profile_email="ngForm"/>
-              <span [hidden]="profile_email.valid || profile_email.untouched"
-                    class="text-danger">{{'Please provide your correct email.'}}</span>
+              <label>Email *</label>
+              <input class="form-control" type="text" [(ngModel)]="applicant.email"
+                     ngControl="email" id="email"/>
+              <control-messages control="email" [submitted]="submitted"></control-messages>
             </div>
+
             <div class="col-md-6 col-lg-6 element">
-              <label>Address</label>
-              <input class="form-control" type="text" [(ngModel)]="applicant.profile.address"
-                     ngControl="profile_address" #profile_address="ngForm"/>
-              <span [hidden]="profile_address.valid || profile_address.untouched"
-                    class="text-danger">{{'Please provide your address.'}}</span>
+              <label>Address *</label>
+              <input class="form-control" type="text" [(ngModel)]="applicant.address"
+                     ngControl="address" id="address"/>
+              <control-messages control="address" [submitted]="submitted"></control-messages>
             </div>
           </div>
         </div>
+
         <div class="form-group clearfix">
           <div class="row multiple-element">
             <div class="col-md-6 col-lg-6 element">
               <label>Linkedin</label>
-              <input class="form-control" type="text" [(ngModel)]="applicant.profile.linkedin"
-                     ngControl="profile_linkedin" #profile_linkedin="ngForm"/>
+              <input class="form-control" type="text" [(ngModel)]="applicant.linkedin"/>
             </div>
+
             <div class="col-md-6 col-lg-6 element">
-              <label>Phone Number</label>
-              <input class="form-control" type="text" [(ngModel)]="applicant.profile.phoneNumber"
-                     ngControl="profile_phone" #profile_phone="ngForm"/>
-              <span [hidden]="profile_phone.valid || profile_phone.untouched"
-                    class="text-danger">{{'Please provide your phone number.'}}</span>
+              <label>Phone Number *</label>
+              <input class="form-control" type="text" [(ngModel)]="applicant.phone_number"
+                     ngControl="phone_number" id="phone_number"/>
+              <control-messages control="phone_number" [submitted]="submitted"></control-messages>
             </div>
           </div>
         </div>
       </div>
+
       <div class="passport-pic col-lg-2">
         <div class="passport-photo"><img id="passport-photo" src="app/shared/assets/images/avatar2.png"/></div>
         <div>
@@ -81,21 +81,24 @@
         </a>
       </div>
     </div>
-    <div *ngFor="let experience of applicant.experiences let index=index" class="form-group clearfix">
+    <div *ngFor="let experience of experiences let index=index" ngControlGroup="experiences"
+         class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-4 element">
           <label>Company</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company"
+                 ngControl="company"/>
         </div>
         <div class="col-sm-3 element">
           <label>Designation</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].designation"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].designation"
+                 ngControl="designation"/>
         </div>
         <div class="col-sm-2 element">
           <label>From</label>
           <div class="input-group date datepicker1">
             <input type="text" class="form-control experience-from"
-                   [(ngModel)]="applicant.experiences[index].startDate"/>
+                   [(ngModel)]="applicant.experiences[index].startDate" ngControl="from"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -104,7 +107,8 @@
         <div class="col-sm-2 element">
           <label>To</label>
           <div class="input-group date datepicker2">
-            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].endDate"/>
+            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].endDate"
+                   ngControl="to"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>

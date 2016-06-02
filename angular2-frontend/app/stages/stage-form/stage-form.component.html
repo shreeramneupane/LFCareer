@@ -1,4 +1,4 @@
-<form (ngSubmit)="submit(stage)" [ngFormModel]="formGroup">
+<form *ngIf="stage" (ngSubmit)="submit(stage)" [ngFormModel]="formGroup">
   <div class="form-group">
     <label>Name *</label>
     <input type="text" class="form-control" [(ngModel)]="stage.name"

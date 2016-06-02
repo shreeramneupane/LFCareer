@@ -1,4 +1,4 @@
-export class Training {
+export class Achievement {
   title: string;
   description: string;
   passedYear: string;
