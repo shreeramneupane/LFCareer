@@ -50,11 +50,16 @@ button {
 }
 
 .file-upload, #resume-upload {
-  padding-top: 0;
-  display    : block;
-  visibility : hidden;
-  width      : 0;
-  height     : 0;
+  padding-top : 0;
+  display     : block;
+  visibility  : hidden;
+  width       : 0;
+  height      : 0;
+}
+
+.optional-field {
+  font-style  : italic;
+  font-weight : 100;
 }
 
 @media screen and (min-width : 480px) {
@@ -68,14 +73,18 @@ button {
 }
 
 @media screen and (min-width : 768px) {
-  .input-group-addon {
+  .calendar-icon {
     display : none;
   }
 
   .delete-portfolio, .delete-subform {
     position    : absolute;
-    bottom      : 13px;
+    top         : 27px;
     margin-left : 0;
+  }
+
+  .delete-portfolio {
+    right : -35px;
   }
 
   .basic-info {
@@ -89,14 +98,8 @@ button {
   }
 }
 
-@media screen and (min-width : 1200px) {
-  .delete-subform {
-    bottom : 5px;
-  }
-}
-
 @media screen and (min-width : 1280px) {
-  .input-group-addon {
+  .calendar-icon {
     display : table-cell;
   }
 }

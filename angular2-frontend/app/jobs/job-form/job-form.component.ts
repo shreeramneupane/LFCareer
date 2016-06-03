@@ -41,7 +41,7 @@ export class JobFormComponent implements OnInit {
 
   ngAfterViewInit() {
     var that = this;
-    $('#datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function () {
+    $('#datepicker').datepicker({format: 'yyyy/mm/dd', startDate: new Date(), autoclose: true}).on('changeDate', function () {
       that.job.valid_until = $('#validUntil').val();
     });
   }

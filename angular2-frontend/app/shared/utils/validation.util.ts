@@ -5,13 +5,15 @@ export class ValidationService {
       'invalidPositiveNumber': 'Please enter positive number greater than 0',
       'invalidFullName'      : 'Please enter your valid name',
       'invalidEmail'         : 'Please enter valid email address',
-      'invalidPhoneNumber'   : 'Please enter valid phone number'
+      'invalidPhoneNumber'   : 'Please enter valid phone number',
+      'invalidYear'          : 'Please enter valid year',
+      'countExceeded'        : 'Limited word size exceeded'
     }
     return config[code];
   }
 
   static positiveNumberValidator(control) {
-    if (control.value && String(control.value).match('^[1-9][0-9]*$')) {
+    if (control.value == '' || !control.value || String(control.value).match('^[1-9][0-9]*$')) {
       return null;
     } else {
       return {'invalidPositiveNumber': true};
@@ -27,7 +29,7 @@ export class ValidationService {
   }
 
   static emailValidator(control) {
-    if (control.value && control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    if (control.value == '' || !control.value || control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
       return null;
     } else {
       return {'invalidEmail': true};
@@ -35,10 +37,26 @@ export class ValidationService {
   }
 
   static phoneNumberValidator(control) {
-    if (control.value && control.value.match(/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i)) {
+    if (control.value == '' || !control.value || control.value.match(/^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i)) {
       return null;
     } else {
       return {'invalidPhoneNumber': true};
+    }
+  }
+
+  static yearValidator(control) {
+    if (control.value == '' || !control.value || String(control.value).match(/^\d{4}$/)) {
+      return null;
+    } else {
+      return {'invalidYear': true};
+    }
+  }
+
+  static characterCountValidator(count, control) {
+    if (control.value == '' || !control.value || control.value.length <= count) {
+      return null;
+    } else {
+      return {'countExceeded': true};
     }
   }
 }

@@ -15,14 +15,15 @@ export class Applicant {
   portfolios:Array<Portfolio> = [];
   educations:Array<Education> = [];
   achievements:Array<Achievement> = [];
-  hobbies:Array<string>;
+  hobbies:string;
   references:Array<Reference> = [];
   coverLetter:string;
-  source:string = 'website';
+  source:string;
+  source_description: string;
   notifications:boolean;
-  agreement:boolean;
 
   constructor() {
+    this.source= 'website';
     this.experiences.push(new Experience());
     this.portfolios.push(new Portfolio());
     this.educations.push(new Education());
