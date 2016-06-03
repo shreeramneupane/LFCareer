@@ -1,14 +1,14 @@
 <form *ngIf="job" (ngSubmit)="submit(job)" [ngFormModel]="formGroup">
   <div class="form-group">
-    <label>Title *</label>
+    <label>Title</label>
     <input type="text" class="form-control"
            [(ngModel)]="job.title"
-           ngControl="title" id="title" />
+           ngControl="title" id="title"/>
     <control-messages control="title" [submitted]="submitted"></control-messages>
   </div>
 
   <div class="form-group">
-    <label>Introduction *</label>
+    <label>Introduction</label>
     <textarea class="form-control" rows="5"
               [(ngModel)]="job.intro"
               ngControl="intro" id="intro"></textarea>
@@ -18,7 +18,7 @@
   <div class="form-group clearfix">
     <div class="row multiple-element">
       <div class="col-md-6 col-lg-4 element">
-        <label>Valid Upto *</label>
+        <label>Valid Upto</label>
         <div class="input-group date" id="datepicker">
           <input type="text" class="form-control" [(ngModel)]="job.valid_until"
                  ngControl="validUntil" id="validUntil"/>
@@ -30,14 +30,14 @@
       </div>
 
       <div class="col-md-6 col-lg-4 element">
-        <label>Number of opening *</label>
+        <label>Number of opening</label>
         <input class="form-control" type="number" [(ngModel)]="job.number_of_opening"
                ngControl="openings" id="openings"/>
         <control-messages control="openings" [submitted]="submitted"></control-messages>
       </div>
 
       <div class="col-md-6 col-lg-4 element">
-        <label>Position *</label>
+        <label>Position</label>
         <select class="form-control" (change)="changeSpecAndDescription($event.target.value)"
                 [(ngModel)]="job.position_id">
           <option *ngFor="let position of positions" [value]="position.id">{{position.title}}</option>
@@ -47,7 +47,7 @@
   </div>
 
   <div class="form-group">
-    <label>Description *</label>
+    <label>Description</label>
     <textarea class="form-control" rows="5"
               [(ngModel)]="job.description"
               ngControl="description" id="description"></textarea>
@@ -55,7 +55,7 @@
   </div>
 
   <div class="form-group">
-    <label>Specification *</label>
+    <label>Specification</label>
     <textarea class="form-control" rows="5"
               [(ngModel)]="job.specification"
               ngControl="specification" id="specification"></textarea>

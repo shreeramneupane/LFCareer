@@ -8,7 +8,7 @@
     <div class="clearfix">
       <div class="basic-info">
         <div class="form-group">
-          <label>Full Name *</label>
+          <label>Full Name</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.name"
                  ngControl="name" id="name"/>
           <control-messages control="name" [submitted]="submitted"></control-messages>
@@ -17,14 +17,14 @@
         <div class="form-group clearfix">
           <div class="row multiple-element">
             <div class="col-md-6 col-lg-6 element">
-              <label>Email *</label>
+              <label>Email</label>
               <input class="form-control" type="text" [(ngModel)]="applicant.email"
                      ngControl="email" id="email"/>
               <control-messages control="email" [submitted]="submitted"></control-messages>
             </div>
 
             <div class="col-md-6 col-lg-6 element">
-              <label>Address *</label>
+              <label>Address</label>
               <input class="form-control" type="text" [(ngModel)]="applicant.address"
                      ngControl="address" id="address"/>
               <control-messages control="address" [submitted]="submitted"></control-messages>
@@ -35,12 +35,12 @@
         <div class="form-group clearfix">
           <div class="row multiple-element">
             <div class="col-md-6 col-lg-6 element">
-              <label>Linkedin</label>
+              <label>Linkedin <span class="optional-field">(Optional)</span></label>
               <input class="form-control" type="text" [(ngModel)]="applicant.linkedin"/>
             </div>
 
             <div class="col-md-6 col-lg-6 element">
-              <label>Phone Number *</label>
+              <label>Phone Number</label>
               <input class="form-control" type="text" [(ngModel)]="applicant.phone_number"
                      ngControl="phone_number" id="phone_number"/>
               <control-messages control="phone_number" [submitted]="submitted"></control-messages>
@@ -129,18 +129,18 @@
     <div *ngFor="let portfolio of applicant.portfolios let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-3 element" ngControlGroup="portfolioTitle">
-          <label>Project Name *</label>
+          <label>Project Name</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].title"
                  ngControl="{{index}}" id="{{'portfolioTitle' + index}}"/>
           <control-messages control="{{index}}" controlArray="portfolioTitle"
                             [submitted]="submitted"></control-messages>
         </div>
         <div class="col-sm-3 element">
-          <label>Link</label>
+          <label>Link <span class="optional-field">(Optional)</span></label>
           <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].link"/>
         </div>
         <div class="col-sm-5 element" ngControlGroup="portfolioDescription">
-          <label>Description *</label>
+          <label>Description</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].description"
                  ngControl="{{index}}" id="{{'portfolioDescription' + index}}"/>
           <control-messages control="{{index}}" controlArray="portfolioDescription"
@@ -170,14 +170,14 @@
     <div *ngFor="let education of applicant.educations let index=index" class="form-group clearfix">
       <div class="row multiple-element relative">
         <div class="col-sm-6 element" ngControlGroup="educationDegree">
-          <label>Degree *</label>
+          <label>Degree</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].degree" ngControl="{{index}}"
                  id="{{'educationDegree' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationDegree"
                             [submitted]="submitted"></control-messages>
         </div>
         <div class="col-sm-5 element" ngControlGroup="educationUniversity">
-          <label>University *</label>
+          <label>University</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].university"
                  ngControl="{{index}}" id="{{'educationUniversity' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationUniversity"
@@ -186,21 +186,21 @@
       </div>
       <div class="row multiple-element relative">
         <div class="col-sm-6 element" ngControlGroup="educationCollege">
-          <label>College *</label>
+          <label>College</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].college"
                  ngControl="{{index}}" id="{{'educationCollege' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationCollege"
                             [submitted]="submitted"></control-messages>
         </div>
         <div class="col-sm-2 element" ngControlGroup="educationGrade">
-          <label>Grade *</label>
+          <label>Grade</label>
           <input class="form-control" type="text" [(ngModel)]="applicant.educations[index].grade" ngControl="{{index}}"
                  id="{{'educationGrade' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationGrade"
                             [submitted]="submitted"></control-messages>
         </div>
         <div class="col-sm-3 element" ngControlGroup="educationPassedYear">
-          <label>Passed Year *</label>
+          <label>Passed Year</label>
           <input class="form-control" type="number" [(ngModel)]="applicant.educations[index].passedYear"
                  ngControl="{{index}}" id="{{'educationPassedYear' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationPassedYear"
@@ -247,7 +247,7 @@
   <div class="subform">
     <div class="subform-title block-title-border">
       <i class="fa fa-fw fa-futbol-o fa-lg" aria-hidden="true"></i>
-      Hobbies
+      Hobbies <span class="optional-field">(Optional)</span>
     </div>
     <div class="form-group">
       <input type="text" class="form-control" [(ngModel)]="applicant.hobbies"

@@ -13,42 +13,38 @@ import { JobsComponent }       from './jobs/jobs.component';
 import { PositionsComponent }  from './positions/positions.component';
 import { StagesComponent }     from './stages/stages.component';
 
-import { ApiService }   from './shared/utils/api.util';
-import { Converter }    from './shared/utils/converter.util';
-
 @Component({
   selector   : 'lfcareer-app',
   templateUrl: 'app/app.component.html',
   directives : [
     ROUTER_DIRECTIVES, Header, Sidebar
-  ],
-  providers  : [ApiService, Converter]
+  ]
 })
 
 @RouteConfig([
   {
-    path        : '/dashboard',
+    path        : 'dashboard',
     name        : 'Dashboard',
     component   : DashboardComponent,
     useAsDefault: true
   },
   {
-    path     : '/positions/...',
+    path     : 'positions/...',
     name     : 'Position',
     component: PositionsComponent
   },
   {
-    path     : '/stages/...',
+    path     : 'stages/...',
     name     : 'Stage',
     component: StagesComponent
   },
   {
-    path     : '/jobs/...',
+    path     : 'jobs/...',
     name     : 'Job',
     component: JobsComponent
   },
   {
-    path     : '/applicants/...',
+    path     : 'applicants/...',
     name     : 'Applicant',
     component: ApplicantsComponent
   }

@@ -6,7 +6,6 @@ ROUTER_DIRECTIVES,
 
 import { ApplicantEditComponent } from './applicant-edit/applicant-edit.component';
 import { ApplicantListComponent } from './applicant-list/applicant-list.component';
-import { ApplicantNewComponent }  from './applicant-new/applicant-new.component';
 import { ApplicantShowComponent } from './applicant-show/applicant-show.component';
 
 @Component({
@@ -23,16 +22,6 @@ import { ApplicantShowComponent } from './applicant-show/applicant-show.componen
     name        : 'ApplicantList',
     component   : ApplicantListComponent,
     useAsDefault: true
-  },
-  {
-    path     : '/new',
-    name     : 'ApplicantAdd',
-    component: ApplicantNewComponent
-  },
-  {
-    path     : '/edit/:id',
-    name     : 'ApplicantEdit',
-    component: ApplicantEditComponent
   },
   {
     path     : '/show/:id',

@@ -1,6 +1,6 @@
 <form *ngIf="stage" (ngSubmit)="submit(stage)" [ngFormModel]="formGroup">
   <div class="form-group">
-    <label>Name *</label>
+    <label>Name</label>
     <input type="text" class="form-control" [(ngModel)]="stage.name"
            ngControl="name" id="name" />
     <control-messages control="name" [submitted]="submitted"></control-messages>
