@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="widget">
+      <div class="widget-extra widget-custom">
+        <div class="widget-title">Open Jobs</div>
+      </div>
+      <div class="widget-extra-full">
+        <div class="row">
+          <div *ngFor="let openJob of openJobs let index of index">
+            <open-job [openJob]="openJob"></open-job>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
