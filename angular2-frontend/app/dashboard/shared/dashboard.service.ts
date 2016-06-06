@@ -47,8 +47,8 @@ export class DashboardService {
 
   getNewApplicants(){
     return [
-      {name:'BIshal', post:'manager', experience:'0', phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'},
-      {name:'BIshal', post:'engineer', experience:'0', phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'}
+      {name:'BIshal', designation:'manager', experience:3, phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'},
+      {name:'BIshal', designation:'engineer', experience:0, phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'}
     ]
   }
 }
