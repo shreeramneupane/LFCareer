@@ -14,8 +14,15 @@ export class DashboardService {
   getOpenJobs() {
     let fakeJobs:Array<OpenJob> = [
       {
-        title        : 'designer',
+        title        : 'Senior software Engineer',
         newApplicants: 2,
+        inProgress   : 2,
+        rejected     : 2,
+        hired        : 2
+      },
+      {
+        title        : 'Communication Manager',
+        newApplicants: 0,
         inProgress   : 2,
         rejected     : 2,
         hired        : 2
@@ -26,8 +33,22 @@ export class DashboardService {
         inProgress   : 2,
         rejected     : 2,
         hired        : 2
+      },
+      {
+        title        : 'Designer',
+        newApplicants: 2,
+        inProgress   : 2,
+        rejected     : 2,
+        hired        : 2
       }
     ];
     return fakeJobs;
+  }
+
+  getNewApplicants(){
+    return [
+      {name:'BIshal', post:'manager', experience:'0', phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'},
+      {name:'BIshal', post:'engineer', experience:'0', phone:'999', linkedin:'asdf', resume: 'df', appliedDate:'2017/05/09'}
+    ]
   }
 }

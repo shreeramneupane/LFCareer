@@ -13,6 +13,7 @@ import { PageHeader } from '../shared/components/page-header/pageHeader.componen
 })
 export class DashboardComponent implements OnInit {
   openJobs:Array<OpenJob> = [];
+  newApplicants:Array<NewApplicant> = [];
 
   constructor(private dashboardService:DashboardService) {
 
@@ -24,5 +25,6 @@ export class DashboardComponent implements OnInit {
 
   getOpenJobs():void {
     this.openJobs = this.dashboardService.getOpenJobs();
+    this.newApplicants = this.dasboardService.getNewApplicants();
   }
 }
