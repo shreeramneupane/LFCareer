@@ -4,8 +4,14 @@
     <div class="block clearfix">
       <div class="block-title-border">{{job?.title}}
         <div class="block-options">
-          <a class="btn btn-alt btn-sm btn-default" [routerLink]="['JobEdit', {id: job?.id}]"><i
-          class="fa fa-pencil"></i></a></div>
+          <a [routerLink]="['JobEdit', {id: job?.id}]"
+             title="Edit Job"
+             class="btn btn-sm btn-success text-uppercase">Edit Job</a>
+          <button (click)="closeJob()"
+                  title="Close Job"
+                  class="btn btn-sm btn-danger text-uppercase">Close Job
+          </button>
+        </div>
       </div>
       <div class="block-wrapper">
         <div class="row">
