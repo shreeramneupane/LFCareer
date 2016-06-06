@@ -14,10 +14,15 @@
         </div>
       </div>
       <div class="block-wrapper">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="common-view"><span class="view-label"> Job Introduction</span>
-              <p class="pre-line">{{job?.intro}}</p>
+        <div class="row multiple-element">
+          <div class="col-sm-6">
+            <div class="common-view"><span class="view-label">Status</span>
+              <p class="pre-line">Open</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="common-view"><span class="view-label">Valid Until</span>
+              <p class="pre-line">29th Feb, 2007</p>
             </div>
           </div>
         </div>
@@ -25,36 +30,117 @@
       <div class="block-wrapper">
         <div class="row multiple-element">
           <div class="col-sm-6">
-            <div class="common-view"><span class="view-label">Number of openings</span>
-              <p class="pre-line">{{job?.number_of_opening}}</p>
+            <div class="common-view"><span class="view-label">No. of hires</span>
+              <p class="pre-line">1</p>
             </div>
           </div>
-
           <div class="col-sm-6">
-            <div class="common-view"><span class="view-label">Valid upto</span>
-              <p class="pre-line">{{job?.valid_until}}</p>
+            <div class="common-view"><span class="view-label">Link for job application page</span>
+              <p class="pre-line"><a>http://career.lftechnology.com/application/1</a></p>
             </div>
           </div>
         </div>
       </div>
-      <div class="block-wrapper">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="common-view"><span class="view-label"> Job Description</span>
-              <p class="pre-line">{{job?.description}}</p>
-            </div>
+      <div class="block applicant-table clearfix">
+        <div class="block-title">
+          <h2>Applicants</h2>
+          <div class="block-options pull-right">
+            <a
+               title="View all applicants"
+               class="btn btn-sm btn-success btn-ghost text-uppercase">View all</a>
           </div>
         </div>
+        <div class="hiring-stages">
+          <div class="hiring-stages-title">Hiring Stages</div>
+          <button title="Pending"
+                  class="btn btn-sm btn-default text-uppercase">Pending
+          </button>
+          <button title="Shortlisted"
+                  class="btn btn-sm btn-default text-uppercase">Shortlisted
+          </button>
+          <button title="Phone Interview"
+                  class="btn btn-sm btn-default text-uppercase">Phone Interview
+          </button>
+          <button title="Face to Face Interview"
+                  class="btn btn-sm btn-default text-uppercase">Face to Face Interview
+          </button>
+          <button title="Hired"
+                  class="btn btn-sm btn-default text-uppercase">Hired
+          </button>
+          <button title="Rejected"
+                  class="btn btn-sm btn-default text-uppercase">Rejected
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-vcenter table-bordered table-hover table-striped">
+            <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>Name</th>
+              <th>Experience</th>
+              <th>Phone</th>
+              <th>Linkedin</th>
+              <th>Resume</th>
+              <th>Applied On</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let applicant of applicants;  let index = index">
+              <td>{{index + 1}}</td>
+              <td>Bishal</td>
+              <td>3 years</td>
+              <td>4498436</td>
+              <td>View</td>
+              <td>Resume</td>
+              <td>Feb 6, 2016</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="block-wrapper">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="common-view"><span class="view-label"> Job Specification</span>
-              <p class="pre-line">{{job?.specification}}</p>
-            </div>
+    </div>
+    <!--<div class="block-wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="common-view"><span class="view-label"> Job Introduction</span>
+            <p class="pre-line">{{job?.intro}}</p>
           </div>
         </div>
       </div>
     </div>
+    <div class="block-wrapper">
+      <div class="row multiple-element">
+        <div class="col-sm-6">
+          <div class="common-view"><span class="view-label">Number of openings</span>
+            <p class="pre-line">{{job?.number_of_opening}}</p>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="common-view"><span class="view-label">Valid upto</span>
+            <p class="pre-line">{{job?.valid_until}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block-wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="common-view"><span class="view-label"> Job Description</span>
+            <p class="pre-line">{{job?.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block-wrapper">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="common-view"><span class="view-label"> Job Specification</span>
+            <p class="pre-line">{{job?.specification}}</p>
+          </div>
+        </div>
+      </div>
+    </div>-->
   </div>
-</div>
+  <!--</div>
+  </div>-->

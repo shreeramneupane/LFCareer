@@ -9,6 +9,7 @@ import { PageHeader }  from '../../shared/components/page-header/pageHeader.comp
 
 @Component({
   selector   : 'job-show',
+  styleUrls  : ['app/jobs/job-show/job-show.component.css'],
   templateUrl: 'app/jobs/job-show/job-show.component.html',
   providers  : [JobService, AlertBox],
   directives : [PageHeader, ROUTER_DIRECTIVES]
@@ -16,7 +17,7 @@ import { PageHeader }  from '../../shared/components/page-header/pageHeader.comp
 
 export class JobShowComponent implements OnInit {
   public job:Job;
-
+  public applicants:Array<any> =[{}, {}, {}, {}, {}, {}, {}, {}];
   constructor(private jobService:JobService, private routeParams:RouteParams, private alertBox:AlertBox) {
   }
 
