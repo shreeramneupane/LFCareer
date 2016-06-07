@@ -1,0 +1,45 @@
+.passport-photo {
+  width      : 200px;
+  float      : left;
+  text-align : left;
+}
+
+.passport-photo img {
+  max-height : 200px;
+  max-width  : 180px;
+}
+
+.applicant-details {
+  float   : left;
+  padding : 15px;
+  height  : inherit;
+}
+
+.applicant-profile {
+  display : block;
+}
+
+.applicant-profile:first-child{
+  font-size:16px;
+  padding-bottom: 5px;
+}
+
+.block-title-border {
+  margin: 20px 0 10px;
+}
+
+.block-wrapper {
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+a.collapsible.collapsed:before
+{
+  content:'Show Other Details';
+}
+a.collapsible:before
+{
+  content:'Hide Details';
+}
