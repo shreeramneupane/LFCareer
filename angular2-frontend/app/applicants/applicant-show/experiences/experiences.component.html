@@ -1,0 +1,29 @@
+<div class="block-wrapper">
+  <div class="block-title-border">
+    <i class="fa fa-fw fa-building fa-lg" aria-hidden="true"></i>
+    Experiences
+  </div>
+  <div class="table-responsive">
+    <table
+    class="table table-vcenter table-bordered table-hover table-striped">
+      <thead>
+      <tr>
+        <th>SN</th>
+        <th>Company</th>
+        <th>Designation</th>
+        <th>Joined Date</th>
+        <th>End Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let experience of experiences;  let index = index">
+        <td>{{index + 1}}</td>
+        <td>Ram</td>
+        <td>Some company private limited</td>
+        <td>28th Feb, 2009</td>
+        <td>28th Feb, 2014</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

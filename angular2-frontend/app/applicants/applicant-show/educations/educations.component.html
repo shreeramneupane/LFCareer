@@ -1,0 +1,31 @@
+<div class="block-wrapper">
+  <div class="block-title-border">
+    <i class="fa fa-fw fa-graduation-cap fa-lg" aria-hidden="true"></i>
+    Educaions
+  </div>
+  <div class="table-responsive">
+    <table
+    class="table table-vcenter table-bordered table-hover table-striped">
+      <thead>
+      <tr>
+        <th>SN</th>
+        <th>Degree</th>
+        <th>University</th>
+        <th>College</th>
+        <th>Grade</th>
+        <th>Passed Year</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let education of educations;  let index = index">
+        <td>{{index + 1}}</td>
+        <td>BE</td>
+        <td>TU</td>
+        <td>Advanced College of Eng</td>
+        <td>1st Division</td>
+        <td>2015</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
