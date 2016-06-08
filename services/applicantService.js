@@ -60,8 +60,9 @@ var ApplicantService = {
             .then(function () {
               return t.commit();
             })
-            .catch(function () {
-              return t.rollback();
+            .catch(function (err) {
+              t.rollback();
+              throw new Error(err);
             });
           })
           .then(function () {
