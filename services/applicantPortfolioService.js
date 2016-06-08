@@ -2,8 +2,6 @@
 
 var models = require('../models/index');
 
-var ApplicantPortfolioService = require('../services/applicantPortfolioService');
-
 module.exports = {
 
   create: function (applicantID, portfolios, t) {

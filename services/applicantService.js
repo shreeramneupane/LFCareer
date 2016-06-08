@@ -45,6 +45,7 @@ var ApplicantService = {
     }
 
     return new Promise(function (resolve, reject) {
+
       return SkillService.confirmSkillPresence(applicantParam['skills'])
       .then(function () {
         return WorkareaService.confirmWorkareaPresence(applicantParam['portfolios'])
@@ -83,6 +84,7 @@ var ApplicantService = {
     ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
     ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
     );
+
   }
 };
 

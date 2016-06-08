@@ -24,6 +24,7 @@ module.exports = {
       .then(function (response) {
         resolve({job: response});
       })
+
       .catch(function (err) {
         reject(err);
       });

@@ -1,8 +1,14 @@
 {
-  "name": "recruitment_node",
+  "name": "LeapfrogRecruitmentSystem",
   "version": "1.0.0",
-  "description": "Recruitment Application",
+  "description": "An open source applicant recruiting system",
   "main": "app.js",
+  "authors": [
+    "Shobhab Shrestha <shobshrestha@lftechnology.com>",
+    "Suraj Archarya <surajarcharya@lftechnology.com>",
+    "Shree Ram Neupane <shreeramneupane@lftechnology.com>",
+    "Bishal Shrestha <bishalshrestha@lftechnology.com>"
+  ],
   "scripts": {
     "start": "nodemon app.js",
     "test": "mocha"
@@ -14,11 +20,9 @@
     "body-parser": "^1.15.0",
     "chai": "^3.5.0",
     "connect-multiparty": "^2.0.0",
-    "continuation-local-storage": "^3.1.7",
     "express": "^4.13.4",
     "http": "0.0.0",
     "http-status-codes": "^1.0.6",
-    "i18n": "^0.8.2",
     "lodash": "^4.6.1",
     "mocha": "^2.4.5",
     "moment": "^2.12.0",
@@ -36,5 +40,20 @@
     "sequelize-cli": "^2.4.0",
     "should": "^8.3.0",
     "supertest": "^1.2.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leapfrogtechnology/LFCareer.git"
+  },
+  "keywords": [
+    "Leapfrog",
+    "Recruitment System",
+    "Career",
+    "node.js",
+    "angular2"
+  ],
+  "bugs": {
+    "url": "https://github.com/leapfrogtechnology/LFCareer/issues"
+  },
+  "homepage": "http://lftechnology.com/"
 }
