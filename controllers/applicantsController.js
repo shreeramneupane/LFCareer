@@ -1,9 +1,8 @@
 "use strict";
 
 var applicantService = require('../services/applicantService');
-var applicantUploadService = require('../services/applicantUploadService');
+// var applicantUploadService = require('../services/applicantUploadService');
 var HttpStatus = require('http-status-codes');
-var _ = require('lodash');
 
 module.exports = {
 
@@ -46,30 +45,18 @@ module.exports = {
     });
   },
 
-  upload_files: function (request, response) {
-    applicantUploadService.upload_files(request)
-    .then(function (data) {
-      response.status(HttpStatus.OK).json(data)
-    })
-    .catch(function (err) {
-      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
-        message: err.message, code: err.code, type: err.type
-      }});
-    });
-  },
-
-  update_files: function (request, response) {
-    var id = request.params.id;
-    applicantUploadService.update_files(id,request)
-    .then(function (data) {
-      response.status(HttpStatus.OK).json(data)
-    })
-    .catch(function (err) {
-      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
-        message: err.message, code: err.code, type: err.type
-      }});
-    });
-  },
+  // update_files: function (request, response) {
+  //   var id = request.params.id;
+  //   applicantUploadService.update_files(id,request)
+  //   .then(function (data) {
+  //     response.status(HttpStatus.OK).json(data)
+  //   })
+  //   .catch(function (err) {
+  //     response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+  //       message: err.message, code: err.code, type: err.type
+  //     }});
+  //   });
+  // },
 
   update: function (request, response) {
     var id = request.params.id;

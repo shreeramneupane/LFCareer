@@ -1,26 +1,23 @@
 "use strict";
 
-var checkit = require('checkit');
-var uuid = require('node-uuid');
-var Promise = require("bluebird");
 var _ = require('lodash');
+var Promise = require("bluebird");
 
-var Applicant = require('../models/applicant');
-var validation = new checkit(require('../validation/applicantValidation'));
+var models = require('../models/index');
 
 var ApplicantAchievementService = require('../services/applicantAchievementService');
 var ApplicantEducationService = require('../services/applicantEducationService');
 var ApplicantExperienceService = require('../services/applicantExperienceService');
 var ApplicantPortfolioService = require('../services/applicantPortfolioService');
-var ApplicantReferenceService = require('../services/applicantReferenceService');
 var ApplicantSkillService = require('../services/applicantSkillService');
-
-var AppError = require('../error/AppError');
+var ApplicantReferenceService = require('../services/applicantReferenceService');
+var SkillService = require('../services/skillService');
+var WorkareaService = require('../services/workAreaService');
 
 var ApplicantService = {
   list: function () {
     return new Promise(function (resolve, reject) {
-      Applicant.list()
+      models.Applicant.findAll({})
       .then(function (response) {
         resolve(response);
       })
@@ -32,9 +29,9 @@ var ApplicantService = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      Applicant.show(id)
+      models.Applicant.find({where: {id: id}})
       .then(function (response) {
-        resolve(response);
+        resolve({applicant: response});
       })
       .catch(function (err) {
         reject(err);
@@ -42,56 +39,50 @@ var ApplicantService = {
     });
   },
 
-  create: function (applicantParams) {
-    var applicant = _.pick(applicantParams, ['name', 'email', 'address', 'linkedin', 'phone_number', 'cover_letter', 'hobbies', 'source', 'notification']);
+  create: function (applicantParam) {
+    if (applicantParam.job_id) {
+      applicantParam.direct_apply = false;
+    }
+
     return new Promise(function (resolve, reject) {
-      validation.run(applicant)
+      return SkillService.confirmSkillPresence(applicantParam['skills'])
       .then(function () {
-        applicant.id = uuid.v1();
-        applicant.created_at = new Date();
-        Applicant.create(applicant)
+        return WorkareaService.confirmWorkareaPresence(applicantParam['portfolios'])
         .then(function () {
-          ApplicantService.createNestedRecords(applicant.id, applicantParams)
+          return models.sequelize.transaction()
+          .then(function (t) {
+            return models.Applicant.create(applicantParam, {transaction: t})
+            .then(function (applicant) {
+              var applicantID = applicant.id;
+              return ApplicantService.createNestedRecords(applicantID, applicantParam, t)
+            })
+            .then(function () {
+              return t.commit();
+            })
+            .catch(function () {
+              return t.rollback();
+            });
+          })
           .then(function () {
             resolve();
           })
-        })
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
-      })
-    });
-  },
-
-  update: function (id, applicant) {
-    return new Promise(function (resolve, reject) {
-      validation.run(applicant)
-      .then(function () {
-        Applicant.update(id, applicant)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
+          .catch(function (err) {
+            reject(err);
+          });
         });
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
       });
     });
   },
 
-  createNestedRecords: function (applicantID, applicantParams) {
+  createNestedRecords: function (applicantID, applicantParam, t) {
     return Promise.join(
-    ApplicantAchievementService.create(applicantID, applicantParams['achievements']),
-    ApplicantEducationService.create(applicantID, applicantParams['educations']),
-    ApplicantExperienceService.create(applicantID, applicantParams['experiences']),
-    ApplicantReferenceService.create(applicantID, applicantParams['references']),
-    ApplicantPortfolioService.create(applicantID, applicantParams['portfolios']),
-    ApplicantSkillService.create(applicantID, applicantParams['skills'])
-    )
+    ApplicantAchievementService.create(applicantID, applicantParam['achievements'], t),
+    ApplicantEducationService.create(applicantID, applicantParam['educations'], t),
+    ApplicantExperienceService.create(applicantID, applicantParam['experiences'], t),
+    ApplicantPortfolioService.create(applicantID, applicantParam['portfolios'], t),
+    ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
+    ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
+    );
   }
 };
 

@@ -1,19 +1,15 @@
 "use strict";
 
-var Checkit = require('checkit');
-var UUID = require('node-uuid');
 var Promise = require("bluebird");
 
-var AppError = require('../error/AppError');
-var Position = require('../models/position');
-var Validation = new Checkit(require('../validation/positionValidation'));
+var models = require('../models/index');
 
 module.exports = {
   list: function () {
     return new Promise(function (resolve, reject) {
-      Position.list()
+      models.Position.findAll({})
       .then(function (response) {
-        resolve(response);
+        resolve({positions: response});
       })
       .catch(function (err) {
         reject(err);
@@ -23,9 +19,9 @@ module.exports = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      Position.show(id)
+      models.Position.find({where: {id: id}})
       .then(function (response) {
-        resolve(response);
+        resolve({position: response});
       })
       .catch(function (err) {
         reject(err);
@@ -33,43 +29,35 @@ module.exports = {
     });
   },
 
-  create: function (position) {
+  create: function (positionParam) {
     return new Promise(function (resolve, reject) {
-      Validation.run(position)
-      .then(function () {
-        position.id = UUID.v1();
-        position.created_at = new Date();
-
-        Position.create(position)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
+      models.Position.create(positionParam)
+      .then(function (response) {
+        resolve({position: response});
       })
       .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
+        reject(err);
       });
     });
   },
 
-  update: function (id, position) {
+  update: function (id, positionParam) {
     return new Promise(function (resolve, reject) {
-      Validation.run(position)
-      .then(function () {
-        Position.update(id, position)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
+      models.Position.find({
+        where: {
+          id: id
+        }
+      })
+      .then(function(position) {
+        if(position){
+          position.updateAttributes(positionParam)
+          .then(function(response) {
+            resolve({position: response});
+          });
+        }
       })
       .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
+        reject(err);
       });
     });
   }

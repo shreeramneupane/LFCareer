@@ -1,19 +1,16 @@
 "use strict";
 
-var Checkit = require('checkit');
 var Promise = require("bluebird");
-var UUID = require('node-uuid');
 
-var AppError = require('../error/AppError');
-var Stage = require('../models/stage');
-var Validation = new Checkit(require('../validation/stageValidation'));
+var models = require('../models/index');
 
 module.exports = {
+
   list: function () {
     return new Promise(function (resolve, reject) {
-      Stage.list()
+      models.Stage.findAll({})
       .then(function (response) {
-        resolve(response);
+        resolve({stages: response});
       })
       .catch(function (err) {
         reject(err);
@@ -21,11 +18,11 @@ module.exports = {
     });
   },
 
-  show: function (id) {
+  create: function (jobParam) {
     return new Promise(function (resolve, reject) {
-      Stage.show(id)
+      models.Stage.create(jobParam)
       .then(function (response) {
-        resolve(response);
+        resolve({stage: response});
       })
       .catch(function (err) {
         reject(err);
@@ -33,45 +30,23 @@ module.exports = {
     });
   },
 
-  create: function (stage) {
+  update: function (id, stageParams) {
     return new Promise(function (resolve, reject) {
-      Validation.run(stage)
-      .then(function () {
-        stage.id = UUID.v1();
-        stage.created_at = new Date();
-
-        Stage.create(stage)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
+      models.Stage.find({
+        where: {
+          id: id
+        }
+      })
+      .then(function(stage) {
+        if(stage){
+          stage.updateAttributes(stageParams)
+          .then(function(response) {
+            resolve({stage: response});
+          });
+        }
       })
       .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
-      });
-    });
-  },
-
-  update: function (id, stage) {
-    return new Promise(function (resolve, reject) {
-      Validation.run(stage)
-      .then(function () {
-        stage.updated_at = new Date();
-
-        Stage.update(id, stage)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
+        reject(err);
       });
     });
   }
