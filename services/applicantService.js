@@ -40,6 +40,8 @@ var ApplicantService = {
   },
 
   create: function (applicantParam) {
+    var applicantID;
+    
     if (applicantParam.job_id) {
       applicantParam.direct_apply = false;
     }
@@ -54,7 +56,7 @@ var ApplicantService = {
           .then(function (t) {
             return models.Applicant.create(applicantParam, {transaction: t})
             .then(function (applicant) {
-              var applicantID = applicant.id;
+              applicantID = applicant.id;
               return ApplicantService.createNestedRecords(applicantID, applicantParam, t)
             })
             .then(function () {
@@ -66,7 +68,7 @@ var ApplicantService = {
             });
           })
           .then(function () {
-            resolve();
+            resolve({applicant: {id: applicantID}});
           })
           .catch(function (err) {
             reject(err);
@@ -85,7 +87,6 @@ var ApplicantService = {
     ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
     ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
     );
-
   }
 };
 
