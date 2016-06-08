@@ -1,8 +1,9 @@
 "use strict";
 
-var applicantService = require('../services/applicantService');
-// var applicantUploadService = require('../services/applicantUploadService');
 var HttpStatus = require('http-status-codes');
+
+var applicantService = require('../services/applicantService');
+var ApplicantDocumentService = require('../services/applicantDocumentService');
 
 module.exports = {
 
@@ -46,19 +47,6 @@ module.exports = {
     });
   },
 
-  // update_files: function (request, response) {
-  //   var id = request.params.id;
-  //   applicantUploadService.update_files(id,request)
-  //   .then(function (data) {
-  //     response.status(HttpStatus.OK).json(data)
-  //   })
-  //   .catch(function (err) {
-  //     response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
-  //       message: err.message, code: err.code, type: err.type
-  //     }});
-  //   });
-  // },
-
   update: function (request, response) {
     var id = request.params.id;
     var applicant = request.body;
@@ -71,5 +59,20 @@ module.exports = {
         message: err.message, code: err.code, type: err.type
       }});
     });
-  }
+  },
+
+  create_document: function (request, response) {
+    var applicantID = request.params.applicant_id;
+    var documents = request.files;
+    // ApplicantDocumentService.upload_files(request)
+    ApplicantDocumentService.create(applicantID, documents)
+    .then(function (data) {
+      response.status(HttpStatus.OK).json(data)
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({error: {
+        message: err.message, code: err.code, type: err.type
+      }});
+    });
+  },
 };
