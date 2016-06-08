@@ -28,6 +28,7 @@ module.exports = {
       .then(function (response) {
         resolve(response);
       })
+
       .catch(function (err) {
         reject(err);
       });

@@ -1,5 +1,4 @@
 "use strict";
-
 var Promise = require("bluebird");
 
 var Repository = require('./repository.js');
