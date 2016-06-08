@@ -9,6 +9,7 @@ import '@angular/router-deprecated';
 // RxJS
 import 'rxjs';
 
+import './shared/assets/vendor/javascripts/tag-it.min.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './shared/assets/stylesheets/forms.css';
 import './shared/assets/stylesheets/main.css';
