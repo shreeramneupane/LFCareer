@@ -6,7 +6,7 @@ import { Stage } from '../shared/stage';
 
 @Component({
   selector   : 'stage-form',
-  templateUrl: 'app/stages/stage-form/stage-form.component.html',
+  template: require('./stage-form.component.html'),
   providers  : [NgForm],
   directives : [ROUTER_DIRECTIVES]
 })

@@ -5,10 +5,10 @@ import { ROUTER_DIRECTIVES }                      from '@angular/router-deprecat
 import { Position } from '../shared/position';
 
 @Component({
-  selector   : 'position-form',
-  templateUrl: 'app/positions/position-form/position-form.component.html',
-  providers  : [NgForm],
-  directives : [ROUTER_DIRECTIVES]
+  selector  : 'position-form',
+  template  : require('./position-form.component.html'),
+  providers : [NgForm],
+  directives: [ROUTER_DIRECTIVES]
 })
 
 export class PositionFormComponent {

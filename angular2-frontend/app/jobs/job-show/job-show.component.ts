@@ -6,10 +6,12 @@ import { Job }         from '../shared/job'
 import { JobService }  from '../shared/job.service';
 import { PageHeader }  from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector: 'job-show',
-  templateUrl: 'app/jobs/job-show/job-show.component.html',
-  providers: [JobService],
+  selector  : 'job-show',
+  template  : require('./job-show.component.html'),
+  providers : [JobService],
   directives: [PageHeader, ROUTER_DIRECTIVES]
 })
 

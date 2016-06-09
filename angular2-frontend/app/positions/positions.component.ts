@@ -10,9 +10,9 @@ import { PositionNewComponent }   from './position-new/position-new.component';
 import { PositionEditComponent }  from './position-edit/position-edit.component';
 
 @Component({
-  selector   : 'lfcareer-positions',
-  templateUrl: 'app/positions/positions.component.html',
-  directives : [ROUTER_DIRECTIVES]
+  selector  : 'lfcareer-positions',
+  template  : require('./positions.component.html'),
+  directives: [ROUTER_DIRECTIVES]
 })
 
 @RouteConfig([

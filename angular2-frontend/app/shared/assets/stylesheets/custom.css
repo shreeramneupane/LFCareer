@@ -747,3 +747,7 @@ footer a, footer a:hover {
 .datepicker-dropdown {
   display: table !important;
 }
+
+.profile-img {
+  content:url('../../assets/images/avatar.png');
+}

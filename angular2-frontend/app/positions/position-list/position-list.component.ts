@@ -5,11 +5,13 @@ import { PageHeader }       from '../../shared/components/page-header/pageHeader
 import { Position }         from '../shared/position';
 import { PositionService }  from '../shared/position.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'position-list',
-  templateUrl: 'app/positions/position-list/position-list.component.html',
-  directives : [ROUTER_DIRECTIVES, PageHeader],
-  providers  : [PositionService]
+  selector  : 'position-list',
+  template  : require('./position-list.component.html'),
+  directives: [ROUTER_DIRECTIVES, PageHeader],
+  providers : [PositionService]
 })
 
 export class PositionListComponent implements OnInit {
