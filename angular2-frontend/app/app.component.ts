@@ -14,13 +14,15 @@ import { StagesComponent }    from './stages/stages.component';
 
 import { ApiService }   from './shared/utils/api.util';
 import { Converter }    from './shared/utils/converter.util';
+import { App }          from './shared/assets/typescript/app';
+
 @Component({
-  selector   : 'lfcareer-app',
-  templateUrl: 'app/app.component.html',
-  directives : [
+  selector  : 'lfcareer-app',
+  template  : require('./app.component.html'),
+  directives: [
     ROUTER_DIRECTIVES, Header, Sidebar
   ],
-  providers  : [ApiService, Converter]
+  providers : [ApiService, App, Converter]
 })
 
 @RouteConfig([

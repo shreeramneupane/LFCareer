@@ -6,10 +6,12 @@ import { Job }             from '../shared/job';
 import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector: 'job-form',
-  templateUrl: 'app/jobs/job-form/job-form.component.html',
-  providers: [NgForm, PositionService],
+  selector  : 'job-form',
+  template  : require('./job-form.component.html'),
+  providers : [NgForm, PositionService],
   directives: [ROUTER_DIRECTIVES]
 })
 

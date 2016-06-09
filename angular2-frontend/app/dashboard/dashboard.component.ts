@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 
 @Component({
     selector: 'dashboard',
-    templateUrl: 'app/dashboard/dashboard.component.html'
+    template: require('./dashboard.component.html')
 })
 export class DashboardComponent {
 }

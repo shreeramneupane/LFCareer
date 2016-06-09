@@ -10,11 +10,13 @@ import { Stage }               from '../shared/stage';
 import { StageFormComponent }  from '../stage-form/stage-form.component';
 import { StageService }        from '../shared/stage.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'stage-edit',
-  templateUrl: 'app/stages/stage-edit/stage-edit.component.html',
-  providers  : [StageService],
-  directives : [ROUTER_DIRECTIVES, PageHeader, StageFormComponent]
+  selector  : 'stage-edit',
+  template  : require('./stage-edit.component.html'),
+  providers : [StageService],
+  directives: [ROUTER_DIRECTIVES, PageHeader, StageFormComponent]
 })
 
 export class StageEditComponent implements OnInit {

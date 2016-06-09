@@ -4,7 +4,7 @@ import { Hamburger }    from './hamburger/hamburger.component.ts';
 
 @Component({
   selector: 'header-top',
-  templateUrl: 'app/shared/components/header/header.component.html',
+  template: require('./header.component.html'),
   directives: [DropDownList, Hamburger]
 })
 

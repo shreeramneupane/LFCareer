@@ -6,11 +6,13 @@ import { StageService } from '../shared/stage.service';
 
 import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'stage-list',
-  templateUrl: 'app/stages/stage-list/stage-list.component.html',
-  directives : [ROUTER_DIRECTIVES, PageHeader],
-  providers  : [StageService]
+  selector  : 'stage-list',
+  template  : require('./stage-list.component.html'),
+  directives: [ROUTER_DIRECTIVES, PageHeader],
+  providers : [StageService]
 })
 
 export class StageListComponent implements OnInit {

@@ -10,10 +10,12 @@ import { JobFormComponent }  from '../job-form/job-form.component';
 import { JobService }        from '../shared/job.service';
 import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector: 'job-edit',
-  templateUrl: 'app/jobs/job-edit/job-edit.component.html',
-  providers: [JobService],
+  selector  : 'job-edit',
+  template  : require('./job-edit.component.html'),
+  providers : [JobService],
   directives: [ROUTER_DIRECTIVES, PageHeader, JobFormComponent]
 })
 
@@ -27,7 +29,7 @@ export class JobEditComponent implements OnInit {
     this.getJob();
   }
 
-  getJob(){
+  getJob() {
     let id = this.routeParams.get('id');
     this.jobService.getJob(id).subscribe(
     job => this.job = job,

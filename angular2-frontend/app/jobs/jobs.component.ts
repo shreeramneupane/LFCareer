@@ -10,9 +10,9 @@ import { JobNewComponent }  from './job-new/job-new.component';
 import { JobShowComponent } from './job-show/job-show.component';
 
 @Component({
-  selector   : 'lfcareer-jobs',
-  templateUrl: 'app/jobs/jobs.component.html',
-  directives : [
+  selector  : 'lfcareer-jobs',
+  template  : require('./jobs.component.html'),
+  directives: [
     ROUTER_DIRECTIVES
   ]
 })
