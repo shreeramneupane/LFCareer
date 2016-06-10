@@ -65,6 +65,7 @@ export class ApplicantFormComponent {
   });
 
   ngAfterViewInit() {
+
     $("#myTags").tagit({
       availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"],
       autocomplete : {delay: 0, minLength: 2}
@@ -227,6 +228,7 @@ export class ApplicantFormComponent {
   }
 
   submit(applicant:Applicant) {
+    console.log(applicant);
     this.submitted = true;
     let formDatas:Applicant = this.getFormDatas(applicant);
 
