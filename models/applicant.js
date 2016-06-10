@@ -30,8 +30,8 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       validate: {
         len: {
-          args: [50, 200],
-          msg: 'Please provide cover letter within 50 to 200 characters.'
+          args: [50, 500],
+          msg: 'Please provide cover letter within 50 to 500 characters.'
         }
       }
     },
@@ -58,7 +58,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     job_id: DataTypes.UUID,
-    direct_apply: DataTypes.BOOLEAN,
+    direct_apply: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function (models) {
