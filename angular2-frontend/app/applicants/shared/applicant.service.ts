@@ -18,8 +18,17 @@ export class ApplicantService {
   getApplicant(id:string):Observable<Applicant> {
     return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id]));
   }
+
+  getSkills(query:string) {
+    console.log(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q:query}));
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q:query}));
+  }
+
+  uploadDocuments(documents:any, id:string) {
+    return this.apiService.uploadFile(this.converter.getPathParam([AppConstants.APPLICANTS, id, 'documents']), documents);
+  }
   
-  createApplicant(applicant:Applicant):Observable<Applicant> {
+  createApplicant(applicant:Applicant) {
     return this.apiService.create(AppConstants.APPLICANTS, applicant);
   }
   

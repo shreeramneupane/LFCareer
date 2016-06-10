@@ -1,8 +1,8 @@
 export class Reference {
-  name:string;
+  full_name:string;
   organization:string;
   designation:string;
   email:string;
-  phoneNumber:string;
+  phone:string;
   relationship:string;
 }

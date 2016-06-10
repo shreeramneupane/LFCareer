@@ -17,10 +17,10 @@ export class Applicant {
   achievements:Array<Achievement> = [];
   hobbies:string;
   references:Array<Reference> = [];
-  coverLetter:string;
+  cover_letter:string;
   source:string;
   source_description: string;
-  notifications:boolean;
+  notification:boolean;
 
   constructor() {
     this.source= 'website';

@@ -10,6 +10,7 @@ import { Experience } from  '../shared/experience';
 import { Portfolio } from '../shared/portfolio';
 import { Reference } from '../shared/reference';
 
+import { ApplicantService } from '../shared/applicant.service';
 import { ValidationService } from '../../shared/utils/validation.util';
 
 import * as toastr from 'toastr';
@@ -23,10 +24,14 @@ import * as toastr from 'toastr';
 
 export class ApplicantFormComponent {
   @Input() applicant:Applicant;
-  @Output() onSubmit = new EventEmitter<Applicant>();
+  @Output() onSubmit = new EventEmitter();
 
   submitted:boolean = false;
   agreement:boolean = false;
+
+  documents:any = {
+
+  };
 
   portfolioTitleArray:ControlArray = new ControlArray([new Control('', Validators.required)]);
   portfolioDescriptionArray:ControlArray = new ControlArray([new Control('', Validators.required)]);
@@ -59,35 +64,55 @@ export class ApplicantFormComponent {
     referenceFullName     : this.referenceFullNameArray,
     referenceEmail        : this.referenceEmailArray,
     referencePhone        : this.referencePhoneArray,
-    coverLetter           : new Control('', Validators.compose([Validators.required, ValidationService.characterCountValidator.bind(null, 250)])),
+    coverLetter           : new Control('', Validators.compose([Validators.required, ValidationService.characterMaxCountValidator.bind(null, 500), ValidationService.characterMinCountValidator.bind(null, 50)])),
     sourceDescriptionName : new Control(''),
     sourceDescriptionOther: new Control('')
   });
 
-  ngAfterViewInit() {
+  constructor(private applicantService:ApplicantService) {
+  }
 
+  ngAfterViewInit() {
+    var that = this;
     $("#myTags").tagit({
-      availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"],
-      autocomplete : {delay: 0, minLength: 2}
+      autocomplete: {
+        delay: 0, minLength: 1, source: function (request, response) {
+          that.getAutoCompleteValue(request, response);
+        }
+      }
     });
   }
 
   ngAfterViewChecked() {
     var that = this;
     $(".portfolioTags").tagit({
-      availableTags: ["c++", "java", "php", "javascript", "ruby", "python", "c"],
-      autocomplete : {delay: 0, minLength: 2}
+      autocomplete: {
+        delay: 0, minLength: 1, source: function (request, response) {
+          that.getAutoCompleteValue(request, response);
+        }
+      }
     });
     $('.datepicker1').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function (e) {
       var index = $('.datepicker1').index(this);
       $("#datepicker2" + index).datepicker('setStartDate', e.date);
-      that.applicant.experiences[index].startDate = (<HTMLInputElement>$(this).children()[0]).value;
+      that.applicant.experiences[index].from_date = (<HTMLInputElement>$(this).children()[0]).value;
     });
     $('.datepicker2').datepicker({format: 'yyyy/mm/dd', autoclose: true}).on('changeDate', function (e) {
       var index = $('.datepicker2').index(this);
       $("#datepicker1" + index).datepicker('setEndDate', e.date);
-      that.applicant.experiences[index].endDate = (<HTMLInputElement>$(this).children()[0]).value;
+      that.applicant.experiences[index].to_date = (<HTMLInputElement>$(this).children()[0]).value;
     });
+  }
+
+  getAutoCompleteValue(request, response) {
+    console.log(request)
+    this.applicantService.getSkills(request.term).subscribe(
+    skills=> {
+      response(skills)
+    },
+    error=>toastr.error(error)
+    );
+    //this.applicantService.response(['java', 'javascript', 'jquery']);
   }
 
   addObject(type, event) {
@@ -172,12 +197,14 @@ export class ApplicantFormComponent {
       this.profilePic = e.target.result;
     }
     reader.readAsDataURL(event.target.files[0]);
+    this.documents.profile_picture = event.target.files[0];
     //this.applicant.profile.profilePic = event.target.files[0];
   }
 
   uploadResume(event) {
     var reader = new FileReader();
     $('#resume-input').val(event.target.files[0].name);
+    this.documents.resume = event.target.files[0];
   }
 
   removeSourceDescription() {
@@ -202,29 +229,25 @@ export class ApplicantFormComponent {
   getFormDatas(applicant:Applicant):Applicant {
     this.applicant.skills = $("#myTags").tagit("assignedTags");
     this.applicant.portfolios.forEach(function (entry, index) {
-      entry.technologies = $('#portfolioTags' + index).tagit("assignedTags");
+      entry.workareas = $('#portfolioTags' + index).tagit("assignedTags");
     });
     let formDatas = jQuery.extend(true, {}, applicant);
-    this.removeEmptyObjectsFromArray('experiences', formDatas);
-    this.removeEmptyObjectsFromArray('references', formDatas);
+    formDatas.experiences = this.removeEmptyObjectsFromArray(formDatas.experiences);
+    formDatas.references = this.removeEmptyObjectsFromArray(formDatas.references);
+    formDatas.achievements = this.removeEmptyObjectsFromArray(formDatas.achievements);
     return formDatas;
   }
 
-  removeEmptyObjectsFromArray(arrayName:string, formDatas:Applicant) {
-    let newArray = formDatas[arrayName];
-    for (var i = 0; i < newArray.length; i++) {
-      let allEmpty:boolean = true;
-      let object = newArray[i]
-      for (let key in object) {
-        if (object[key] != null && object[key] != '') {
-          allEmpty = false;
-          break;
+  removeEmptyObjectsFromArray(array:any) {
+    return array.filter(function (object) {
+      /*return (keyName in object) && object[keyName] != '';*/
+      for (var i in object) {
+        if (object[i] != null && object[i] != '') {
+          return object;
         }
       }
-      if (allEmpty) {
-        newArray.splice(i--, 1);
-      }
     }
+    );
   }
 
   submit(applicant:Applicant) {
@@ -241,8 +264,8 @@ export class ApplicantFormComponent {
     }
     else {
       console.log('valid')
-      console.log(formDatas);
-      //this.onSubmit.emit(applicant);
+      console.log(this.documents);
+      this.onSubmit.emit({applicant:formDatas, documents: this.documents});
     }
   }
 }

@@ -6,6 +6,8 @@ import { ApplicantFormComponent }  from '../applicant-form/applicant-form.compon
 import { ApplicantService }        from '../shared/applicant.service';
 import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
   selector  : 'applicant-new',
   template  : require('./applicant-new.component.html'),
@@ -19,15 +21,20 @@ export class ApplicantNewComponent {
   constructor(private applicantService:ApplicantService, private router:Router) {
   }
 
-  onSubmit(applicant:Applicant):void {
-    console.log('submitted');
-    /*this.applicantService.createApplicant(applicant)
+  onSubmit(newApplicant):void {
+    console.log(newApplicant.documents);
+    this.applicantService.createApplicant(newApplicant.applicant)
      .subscribe(
-     applicant => {
-     this.router.navigate(['ApplicantList']);
-     toastr.success('New Applicant Created Successfully!');
+     response => {
+       this.applicantService.uploadDocuments(newApplicant.documents, response.applicant.id)
+       .subscribe(
+       applicant => {console.log(applicant)},
+       error =>toastr.error(error)
+       )
+     /*this.router.navigate(['ApplicantList']);
+     toastr.success('New Applicant Created Successfully!');*/
      },
      error => toastr.error(error)
-     );*/
+     );
   }
 }

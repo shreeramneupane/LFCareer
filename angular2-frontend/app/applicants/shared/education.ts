@@ -3,5 +3,5 @@ export class Education {
   university: string;
   college: string;
   grade: string;
-  passedYear: string;
+  passed_year: string;
 }

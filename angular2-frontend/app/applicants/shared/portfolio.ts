@@ -1,6 +1,6 @@
 export class Portfolio {
-  title:string;
+  project_name:string;
   link:string;
   description:string;
-  technologies:Array<string>;
+  workareas:Array<string>;
 }

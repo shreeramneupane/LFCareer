@@ -7,7 +7,8 @@ export class ValidationService {
       'invalidEmail'         : 'Please enter valid email address',
       'invalidPhoneNumber'   : 'Please enter valid phone number',
       'invalidYear'          : 'Please enter valid year',
-      'countExceeded'        : 'Limited word size exceeded'
+      'countExceeded'        : 'Limited word size exceeded',
+      'countInsufficient'    : 'Insufficient word size',
     }
     return config[code];
   }
@@ -52,11 +53,19 @@ export class ValidationService {
     }
   }
 
-  static characterCountValidator(count, control) {
-    if (control.value == '' || !control.value || control.split(' ').length <= count) {
+  static characterMaxCountValidator(count, control) {
+    if (control.value == '' || !control.value || control.value.length <= count) {
       return null;
     } else {
       return {'countExceeded': true};
+    }
+  }
+
+  static characterMinCountValidator(count, control) {
+    if (control.value == '' || !control.value || control.value.length >= count) {
+      return null;
+    } else {
+      return {'countInsufficient': true};
     }
   }
 }

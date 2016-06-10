@@ -1,6 +1,6 @@
 export class Experience {
-  company: string;
+  company_name: string;
   designation: string;
-  startDate: string;
-  endDate: string;
+  from_date: string;
+  to_date: string;
 }

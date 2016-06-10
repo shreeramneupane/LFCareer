@@ -85,7 +85,7 @@
       <div class="row multiple-element relative">
         <div class="col-sm-4 element">
           <label>Company</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company"/>
+          <input class="form-control" type="text" [(ngModel)]="applicant.experiences[index].company_name"/>
         </div>
         <div class="col-sm-3 element">
           <label>Designation</label>
@@ -95,7 +95,7 @@
           <label>From</label>
           <div class="input-group date datepicker1" id="{{'datepicker1' + index}}">
             <input type="text" class="form-control experience-from"
-                   [(ngModel)]="applicant.experiences[index].startDate"/>
+                   [(ngModel)]="applicant.experiences[index].from_date"/>
                     <span class="input-group-addon calendar-icon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -104,7 +104,7 @@
         <div class="col-sm-2 element">
           <label>To</label>
           <div class="input-group date datepicker2" id="{{'datepicker2' + index}}">
-            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].endDate"/>
+            <input type="text" class="form-control experience-to" [(ngModel)]="applicant.experiences[index].to_date"/>
                     <span class="input-group-addon calendar-icon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -130,7 +130,7 @@
       <div class="row multiple-element relative">
         <div class="col-sm-3 element" ngControlGroup="portfolioTitle">
           <label>Project Name</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].title"
+          <input class="form-control" type="text" [(ngModel)]="applicant.portfolios[index].project_name"
                  ngControl="{{index}}" id="{{'portfolioTitle' + index}}"/>
           <control-messages control="{{index}}" controlArray="portfolioTitle"
                             [submitted]="submitted"></control-messages>
@@ -201,7 +201,7 @@
         </div>
         <div class="col-sm-3 element" ngControlGroup="educationPassedYear">
           <label>Passed Year</label>
-          <input class="form-control" type="number" [(ngModel)]="applicant.educations[index].passedYear"
+          <input class="form-control" type="number" [(ngModel)]="applicant.educations[index].passed_year"
                  ngControl="{{index}}" id="{{'educationPassedYear' + index}}"/>
           <control-messages control="{{index}}" controlArray="educationPassedYear"
                             [submitted]="submitted"></control-messages>
@@ -234,7 +234,7 @@
         </div>
         <div class="col-sm-2 element" ngControlGroup="achievementPassedYear">
           <label>Passed Year</label>
-          <input class="form-control" type="number" [(ngModel)]="applicant.achievements[index].passedYear"
+          <input class="form-control" type="number" [(ngModel)]="applicant.achievements[index].year"
                  ngControl="{{index}}" id="{{'achievementPassedYear' + index}}"/>
           <control-messages control="{{index}}" controlArray="achievementPassedYear"
                             [submitted]="submitted"></control-messages>
@@ -269,7 +269,7 @@
       <div class="row multiple-element relative">
         <div class="col-sm-4 element" ngControlGroup="referenceFullName">
           <label>Full Name</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].name" ngControl="{{index}}"
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].full_name" ngControl="{{index}}"
                  id="{{'referenceFullName' + index}}"/>
           <control-messages control="{{index}}" controlArray="referenceFullName"
                             [submitted]="submitted"></control-messages>
@@ -293,7 +293,7 @@
         </div>
         <div class="col-sm-4 element" ngControlGroup="referencePhone">
           <label>Phone Number</label>
-          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].phoneNumber"
+          <input class="form-control" type="text" [(ngModel)]="applicant.references[index].phone"
                  ngControl="{{index}}" id="{{'referencePhone' + index}}"/>
           <control-messages control="{{index}}" controlArray="referencePhone"
                             [submitted]="submitted"></control-messages>
@@ -315,7 +315,7 @@
     <div class="col-lg-12">
       <textarea class="form-control"
                 placeholder="Tell us something about you and your interest to join Leapfrog. (Not exceeding 250 words)"
-                [(ngModel)]="applicant.coverLetter" ngControl="coverLetter" id="coverLetter">
+                [(ngModel)]="applicant.cover_letter" ngControl="coverLetter" id="coverLetter">
       </textarea>
       <control-messages control="coverLetter" [submitted]="submitted"></control-messages>
     </div>
@@ -371,7 +371,7 @@
     <div class="checkbox-elements">
       <div class="checkbox checkbox-styled">
         <label>
-          <input type="hidden" value="0"/><input type="checkbox" value="1" [(ngModel)]="applicant.notifications"/>
+          <input type="hidden" value="0"/><input type="checkbox" value="1" [(ngModel)]="applicant.notification"/>
           <span>I would like to get occasional notifications from Leapfrog</span>
         </label>
       </div>

@@ -13,6 +13,15 @@ export class ApiService {
   constructor(private http:Http) {
   }
 
+  uploadFile(pathParams, body):Observable<any> {
+    let headers = new Headers({'enctype': 'multipart/form-data'});
+    let options = new RequestOptions({headers: headers});
+    console.log(body)
+    return this.http.post(this.URL + pathParams, body, options)
+    .map(res => res.json())
+    .catch(this.handleError)
+  }
+
   fetch(pathParams):Observable<any> {
     return this.http.get(this.URL + pathParams)
     .map(res => res.json())
