@@ -53,7 +53,7 @@ export class ValidationService {
   }
 
   static characterCountValidator(count, control) {
-    if (control.value == '' || !control.value || control.value.length <= count) {
+    if (control.value == '' || !control.value || control.split(' ').length <= count) {
       return null;
     } else {
       return {'countExceeded': true};

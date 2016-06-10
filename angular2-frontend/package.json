@@ -5,7 +5,7 @@
     "start": "NODE_ENV=development webpack-dev-server --inline --progress --port 3000",
     "test": "karma start",
     "build": "rm -rf dist && NODE_ENV=production webpack --config config/webpack.prod.js --progress --profile --bail",
-    "postinstall": "typings install && cp -r app/shared/custom-typings/* typings/browser/ambient/"
+    "postinstall": "typings install"
   },
   "license": "ISC",
   "dependencies": {
