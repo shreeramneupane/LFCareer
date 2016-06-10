@@ -2,13 +2,13 @@
 
 var HttpStatus = require('http-status-codes');
 
-var applicantService = require('../services/applicantService');
+var ApplicantService = require('../services/applicantService');
 var ApplicantDocumentService = require('../services/applicantDocumentService');
 
 module.exports = {
 
   index: function (request, response) {
-    var result = applicantService.list(request.query);
+    var result = ApplicantService.list(request.query);
     result
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
@@ -23,7 +23,7 @@ module.exports = {
   show: function (request, response) {
     var id = request.params.id;
 
-    applicantService.show(id)
+    ApplicantService.show(id)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -36,7 +36,7 @@ module.exports = {
 
   create: function (request, response) {
     var applicant = request.body;
-    applicantService.create(applicant)
+    ApplicantService.create(applicant)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -50,7 +50,7 @@ module.exports = {
   update: function (request, response) {
     var id = request.params.id;
     var applicant = request.body;
-    applicantService.update(id, applicant)
+    ApplicantService.update(id, applicant)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -64,7 +64,6 @@ module.exports = {
   create_document: function (request, response) {
     var applicantID = request.params.applicant_id;
     var documents = request.files;
-    // ApplicantDocumentService.upload_files(request)
     ApplicantDocumentService.create(applicantID, documents)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data)
@@ -74,5 +73,5 @@ module.exports = {
         message: err.message, code: err.code, type: err.type
       }});
     });
-  },
+  }
 };

@@ -1,12 +1,13 @@
 "use strict";
 
 var HttpStatus = require('http-status-codes');
-var jobService = require('../services/jobService');
+
+var JobService = require('../services/jobService');
 
 module.exports = {
 
   index: function (request, response) {
-    jobService.list()
+    JobService.list()
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -22,7 +23,7 @@ module.exports = {
   show: function (request, response) {
     var id = request.params.id;
 
-    jobService.show(id)
+    JobService.show(id)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -37,7 +38,7 @@ module.exports = {
 
   create: function (request, response) {
     var job = request.body;
-    jobService.create(job)
+    JobService.create(job)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -53,7 +54,7 @@ module.exports = {
   update: function (request, response) {
     var id = request.params.id;
     var job = request.body;
-    jobService.update(id, job)
+    JobService.update(id, job)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
