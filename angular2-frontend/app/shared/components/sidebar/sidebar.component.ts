@@ -11,8 +11,8 @@ import { PositionsComponent }  from '../../../positions/positions.component';
 import { StagesComponent }     from '../../../stages/stages.component';
 
 @Component({
-  selector: 'sidebar',
-  templateUrl: 'app/shared/components/sidebar/sidebar.component.html',
+  selector  : 'sidebar',
+  template  : require('./sidebar.component.html'),
   directives: [
     ROUTER_DIRECTIVES
   ]

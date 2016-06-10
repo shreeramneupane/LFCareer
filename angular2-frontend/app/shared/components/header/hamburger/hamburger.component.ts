@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { App }       from '../../../assets/javascripts/app';
+
+import { App } from '../../../assets/typescript/app';
+
 @Component({
-  selector   : 'hamburger',
-  templateUrl: 'app/shared/components/header/hamburger/hamburger.component.html',
+  selector: 'hamburger',
+  template: require('./hamburger.component.html')
 })
 
 export class Hamburger {
@@ -12,5 +14,4 @@ export class Hamburger {
   toggleSidebar() {
     this.app.handleSidebar('toggle-sidebar', null);
   }
-
 }

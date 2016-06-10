@@ -7,12 +7,16 @@ var Applicant = require('../models/applicant');
 var _ = require('lodash');
 var Promise = require("bluebird");
 var AppError = require('../error/AppError');
+var ApplicantHelper = require('../helpers/applicantFilter');
+
 
 module.exports = {
+  list: function (params) {
 
-  list: function () {
+    var parsedUrl = ApplicantHelper.urlParser(params);
+
     return new Promise(function (resolve, reject) {
-      Applicant.list()
+      Applicant.list(parsedUrl)
       .then(function (response) {
         resolve(response);
       })
@@ -23,6 +27,7 @@ module.exports = {
   },
 
   show: function (id) {
+
     return new Promise(function (resolve, reject) {
       Applicant.show(id)
       .then(function (response) {
@@ -74,5 +79,6 @@ module.exports = {
       });
     });
   }
+
 };
 

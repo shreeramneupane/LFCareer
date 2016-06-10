@@ -6,9 +6,9 @@ import { ControlMessages } from '../../shared/components/control-messages';
 import { Position }        from '../shared/position';
 
 @Component({
-  selector   : 'position-form',
-  templateUrl: 'app/positions/position-form/position-form.component.html',
-  directives : [ROUTER_DIRECTIVES, ControlMessages]
+  selector  : 'position-form',
+  template  : require('./position-form.component.html'),
+  directives: [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class PositionFormComponent {
@@ -18,8 +18,8 @@ export class PositionFormComponent {
   submitted:boolean = false;
 
   formGroup:ControlGroup = new ControlGroup({
-    title: new Control('', Validators.required),
-    description: new Control('', Validators.required),
+    title        : new Control('', Validators.required),
+    description  : new Control('', Validators.required),
     specification: new Control('', Validators.required)
 
   });

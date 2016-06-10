@@ -1,18 +1,15 @@
 "use strict";
 
-var db = require('../db');
 var repository = require('./repository.js');
 
 module.exports = {
 
   create: function (params) {
-    console.log(params)
     return new Promise(function (resolve, reject) {
       repository.create('applicant_uploads',params).then(function(data){
         resolve(data);
       })
-      .catch(function(err){
-        console.log(err)
+      .catch(function (err) {
         reject(err);
       });
     });
@@ -24,7 +21,6 @@ module.exports = {
         resolve(data);
       })
       .catch(function (err) {
-        console.log('dsf',err)
         reject(err);
       });
     });

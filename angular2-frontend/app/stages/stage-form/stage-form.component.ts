@@ -6,9 +6,9 @@ import { ControlMessages } from '../../shared/components/control-messages';
 import { Stage }           from '../shared/stage';
 
 @Component({
-  selector   : 'stage-form',
-  templateUrl: 'app/stages/stage-form/stage-form.component.html',
-  directives : [ROUTER_DIRECTIVES, ControlMessages]
+  selector  : 'stage-form',
+  template  : require('./stage-form.component.html'),
+  directives: [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class StageFormComponent {

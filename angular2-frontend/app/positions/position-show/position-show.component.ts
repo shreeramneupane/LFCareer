@@ -5,9 +5,11 @@ import { PageHeader }       from '../../shared/components/page-header/pageHeader
 import { Position }         from '../shared/position'
 import { PositionService }  from '../shared/position.service';
 
+import * as toastr from 'toastr';
+
 @Component({
   selector   : 'position-show',
-  templateUrl: 'app/positions/position-show/position-show.component.html',
+  template: require('./position-show.component.html'),
   providers  : [PositionService],
   directives : [ROUTER_DIRECTIVES, PageHeader]
 })

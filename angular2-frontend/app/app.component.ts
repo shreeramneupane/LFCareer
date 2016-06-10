@@ -14,11 +14,10 @@ import { PositionsComponent }  from './positions/positions.component';
 import { StagesComponent }     from './stages/stages.component';
 
 @Component({
-  selector   : 'lfcareer-app',
-  templateUrl: 'app/app.component.html',
-  directives : [
-    ROUTER_DIRECTIVES, Header, Sidebar
-  ]
+  selector  : 'lfcareer-app',
+  template  : require('./app.component.html'),
+  directives: [
+    ROUTER_DIRECTIVES, Header, Sidebar]
 })
 
 @RouteConfig([

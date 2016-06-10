@@ -8,11 +8,13 @@ import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
 import { ValidationService } from '../../shared/utils/validation.util';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'job-form',
-  templateUrl: 'app/jobs/job-form/job-form.component.html',
-  providers  : [PositionService],
-  directives : [ROUTER_DIRECTIVES, ControlMessages]
+  selector  : 'job-form',
+  template  : require('./job-form.component.html'),
+  providers : [PositionService],
+  directives: [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class JobFormComponent implements OnInit {
@@ -23,11 +25,11 @@ export class JobFormComponent implements OnInit {
   positions:any = [];
 
   formGroup:ControlGroup = new ControlGroup({
-    title: new Control('', Validators.required),
-    intro: new Control('', Validators.required),
-    validUntil: new Control('', Validators.required),
-    openings: new Control('', Validators.compose([Validators.required, ValidationService.positiveNumberValidator])),
-    description: new Control('', Validators.required),
+    title        : new Control('', Validators.required),
+    intro        : new Control('', Validators.required),
+    validUntil   : new Control('', Validators.required),
+    openings     : new Control('', Validators.compose([Validators.required, ValidationService.positiveNumberValidator])),
+    description  : new Control('', Validators.required),
     specification: new Control('', Validators.required)
   });
 
@@ -41,7 +43,11 @@ export class JobFormComponent implements OnInit {
 
   ngAfterViewInit() {
     var that = this;
-    $('#datepicker').datepicker({format: 'yyyy/mm/dd', startDate: new Date(), autoclose: true}).on('changeDate', function () {
+    $('#datepicker').datepicker({
+      format   : 'yyyy/mm/dd',
+      startDate: new Date(),
+      autoclose: true
+    }).on('changeDate', function () {
       that.job.valid_until = $('#validUntil').val();
     });
   }

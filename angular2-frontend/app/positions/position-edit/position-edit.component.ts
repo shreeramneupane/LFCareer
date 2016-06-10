@@ -10,11 +10,13 @@ import { Position }               from '../shared/position';
 import { PositionFormComponent }  from '../position-form/position-form.component';
 import { PositionService }        from '../shared/position.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'position-edit',
-  templateUrl: 'app/positions/position-edit/position-edit.component.html',
-  providers  : [PositionService],
-  directives : [ROUTER_DIRECTIVES, PageHeader, PositionFormComponent]
+  selector  : 'position-edit',
+  template  : require('./position-edit.component.html'),
+  providers : [PositionService],
+  directives: [ROUTER_DIRECTIVES, PageHeader, PositionFormComponent]
 })
 
 export class PositionEditComponent implements OnInit {

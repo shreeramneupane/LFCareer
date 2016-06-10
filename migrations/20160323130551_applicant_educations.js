@@ -9,9 +9,9 @@ exports.up = function (knex, Promise) {
     table.string('degree', 60).notNullable();
     table.string('university', 80).notNullable();
     table.string('college', 80).notNullable();
-    table.date('passed_year').notNullable();
+    table.integer('passed_year').notNullable();
     table.string('grade', 80).notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_id').notNullable().references('id').inTable('applicants');

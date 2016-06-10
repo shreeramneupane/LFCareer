@@ -1,16 +1,21 @@
 "use strict";
 
-var db = require('../db');
-var repository = require('./repository.js');
+var Repository = require('./repository.js');
 var Promise = require("bluebird");
+var _ = require('lodash');
 
 module.exports = {
 
-  list: function () {
+  list: function (parsedUrl) {
+
+    var searchStatement = _.find(parsedUrl, { 'type': 'search' });
+    var sortStatement = _.find(parsedUrl, { 'type': 'sort' });
+    var filterStatement = [];
+    filterStatement = _.filter(parsedUrl, { 'type': 'filter' });
+    var paginationAttribute =  _.find(parsedUrl, { 'type': 'paginate' });
+
     return new Promise(function (resolve, reject) {
-      db('applicants')
-      .join('applicant_uploads', 'applicants.id', '=', 'applicant_uploads.applicant_id')
-      .select('applicants.id','applicants.name', 'applicants.email', 'applicants.address', 'applicants.phone_number', 'applicants.cover_letter', 'applicants.applied_date', 'applicant_uploads.resume', 'applicant_uploads.profile_picture')
+      Repository.list('applicants', searchStatement, filterStatement, sortStatement , paginationAttribute, jointFields)
       .then(function (data) {
         resolve(data);
       })
@@ -19,11 +24,10 @@ module.exports = {
       });
     });
   },
+
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      db('applicants')
-      .join('applicant_uploads', 'applicants.id', '=', 'applicant_uploads.applicant_id')
-      .select('applicants.id','applicants.name', 'applicants.email', 'applicants.address', 'applicants.phone_number', 'applicants.cover_letter', 'applicants.applied_date', 'applicant_uploads.resume', 'applicant_uploads.profile_picture').where("id", id).first()
+      Repository.show('applicants', id, jointFields)
       .then(function (data) {
         resolve(data);
       })
@@ -35,7 +39,8 @@ module.exports = {
 
   create: function (applicant) {
     return new Promise(function (resolve, reject) {
-      repository.create('applicants', applicant).then(function (data) {
+      Repository.create('applicants', applicant)
+      .then(function (data) {
         resolve(data);
       })
       .catch(function (err) {
@@ -46,12 +51,18 @@ module.exports = {
 
   update: function (id, applicant) {
     return new Promise(function (resolve, reject) {
-      repository.update('applicants', id, applicant).then(function (data) {
+      Repository.update('applicants', id, applicant)
+      .then(function (data) {
         resolve(data);
       })
       .catch(function (err) {
         reject(err);
       });
     });
-  }
+  },
 };
+var jointFields = [{
+  table_name: 'applicant_uploads',
+  attributes: ['resume', 'profile_picture'],
+  foreign_key: 'applicant_id'
+}];

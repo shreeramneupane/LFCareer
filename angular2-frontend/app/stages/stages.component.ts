@@ -9,9 +9,9 @@ import { StageListComponent }  from './stage-list/stage-list.component';
 import { StageNewComponent }   from './stage-new/stage-new.component';
 
 @Component({
-  selector   : 'lfcareer-stages',
-  templateUrl: 'app/stages/stages.component.html',
-  directives : [ROUTER_DIRECTIVES]
+  selector  : 'lfcareer-stages',
+  template  : require('./stages.component.html'),
+  directives: [ROUTER_DIRECTIVES]
 })
 
 @RouteConfig([

@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
 
     //Fields
     table.text('remark', 'mediumtext').notNullable();
-    table.timestamp('created_date').notNullable();
+    table.timestamps();
 
     //FK
     table.uuid('applicant_stage_id').references('id').inTable('applicants_stages');

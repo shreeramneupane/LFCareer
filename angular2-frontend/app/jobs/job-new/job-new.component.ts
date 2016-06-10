@@ -6,10 +6,12 @@ import { JobFormComponent }  from '../job-form/job-form.component';
 import { JobService }        from '../shared/job.service';
 import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector: 'job-new',
-  templateUrl: 'app/jobs/job-new/job-new.component.html',
-  providers: [JobService],
+  selector  : 'job-new',
+  template  : require('./job-new.component.html'),
+  providers : [JobService],
   directives: [ROUTER_DIRECTIVES, PageHeader, JobFormComponent]
 })
 

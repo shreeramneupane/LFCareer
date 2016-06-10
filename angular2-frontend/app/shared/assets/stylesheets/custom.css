@@ -748,6 +748,7 @@ footer a, footer a:hover {
   display: table !important;
 }
 
+<<<<<<< HEAD
 html, body, #page-container, #main-container, #sidebar {
   height: 100%;
 }
@@ -773,4 +774,7 @@ html, body, #page-container, #main-container, #sidebar {
   background-color: #F8F8F8 !important;
   border: inherit !important;
   color: #000000 !important;
+
+.profile-img {
+  content:url('../../assets/images/avatar.png');
 }

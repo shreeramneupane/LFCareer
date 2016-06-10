@@ -12,20 +12,33 @@ module.exports = {
 
   resolve: {
     alias     : {
-      config: helpers.root('config' , process.env.NODE_ENV)
+      config: helpers.root('config', process.env.NODE_ENV)
     },
     extensions: ['', '.js', '.ts']
   },
 
   module: {
-    loaders: [
+    preLoaders: [
+      {
+        test   : /\.js$/,
+        loader : 'source-map-loader',
+        exclude: [
+          // these packages have problems with their sourcemaps
+          helpers.root('node_modules/rxjs'),
+          helpers.root('node_modules/@angular'),
+        ]
+      }
+    ],
+
+    loaders   : [
       {
         test  : /\.ts$/,
         loader: 'ts'
       },
       {
         test  : /\.html$/,
-        loader: 'html'
+        loader: 'raw-loader',
+        exclude: [helpers.root('app/index.html')]
       },
 
       {
@@ -52,7 +65,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      inject: true,
+      inject  : true,
       template: './index.html'
     })
   ]
