@@ -30,7 +30,7 @@ module.exports = {
     });
   },
 
-  update: function (id, stageParams) {
+  update: function (id, stageParam) {
     return new Promise(function (resolve, reject) {
       models.Stage.find({
         where: {
@@ -39,7 +39,7 @@ module.exports = {
       })
       .then(function(stage) {
         if(stage){
-          stage.updateAttributes(stageParams)
+          stage.updateAttributes(stageParam)
           .then(function(response) {
             resolve({stage: response});
           });

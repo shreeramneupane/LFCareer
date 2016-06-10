@@ -43,7 +43,7 @@ module.exports = {
     });
   },
 
-  update: function (id, jobParams) {
+  update: function (id, jobParam) {
     return new Promise(function (resolve, reject) {
       models.Job.find({
         where: {
@@ -52,7 +52,7 @@ module.exports = {
       })
       .then(function(job) {
         if(job){
-          job.updateAttributes(jobParams)
+          job.updateAttributes(jobParam)
           .then(function(response) {
             resolve({job: response});
           });
