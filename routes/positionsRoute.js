@@ -1,9 +1,9 @@
 "use strict";
 
-var PositionsController = require('../controllers/positionsController');
-
 var express = require('express'),
 router = express.Router();
+
+var PositionsController = require('../controllers/positionsController');
 
 router.get('/positions', PositionsController.index);
 router.get('/positions/:id', PositionsController.show);

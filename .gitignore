@@ -3,6 +3,7 @@ node_modules
 knexfile.js
 *.log
 secret-config.json
+config/config.json
 
 
 # Angular Front end Gitignore

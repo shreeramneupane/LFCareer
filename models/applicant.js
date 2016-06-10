@@ -1,68 +1,73 @@
-"use strict";
-
-var Repository = require('./repository.js');
-var Promise = require("bluebird");
-var _ = require('lodash');
-
-module.exports = {
-
-  list: function (parsedUrl) {
-
-    var searchStatement = _.find(parsedUrl, { 'type': 'search' });
-    var sortStatement = _.find(parsedUrl, { 'type': 'sort' });
-    var filterStatement = [];
-    filterStatement = _.filter(parsedUrl, { 'type': 'filter' });
-    var paginationAttribute =  _.find(parsedUrl, { 'type': 'paginate' });
-
-    return new Promise(function (resolve, reject) {
-      Repository.list('applicants', searchStatement, filterStatement, sortStatement , paginationAttribute, jointFields)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  show: function (id) {
-    return new Promise(function (resolve, reject) {
-      Repository.show('applicants', id, jointFields)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  create: function (applicant) {
-    return new Promise(function (resolve, reject) {
-      Repository.create('applicants', applicant)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  update: function (id, applicant) {
-    return new Promise(function (resolve, reject) {
-      Repository.update('applicants', id, applicant)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
+'use strict';
+module.exports = function (sequelize, DataTypes) {
+  var Applicant = sequelize.define('Applicant', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        max: 200
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        max: 200
+      }
+    },
+    address: {
+      type: DataTypes.STRING,
+      validate: {
+        max: 200
+      }
+    },
+    phone_number: DataTypes.STRING,
+    linkedin: DataTypes.STRING,
+    cover_letter: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [50, 500],
+          msg: 'Please provide cover letter within 50 to 500 characters.'
+        }
+      }
+    },
+    source: DataTypes.STRING,
+    source_description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: false,
+        max: {
+          arg: 100,
+          msg: 'Please provide source description within 100 characters.'
+        }
+      }
+    },
+    notification: DataTypes.BOOLEAN,
+    hobbies: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: false,
+        max: {
+          arg: 100,
+          msg: 'Please provide hobbies within 100 characters.'
+        }
+      }
+    },
+    job_id: DataTypes.UUID,
+    direct_apply: DataTypes.BOOLEAN
+  }, {
+    classMethods: {
+      associate: function (models) {
+        Applicant.belongsTo(models.Job);
+        Applicant.belongsToMany(models.Skill, { through: models.ApplicantSkill });
+      }
+    },
+    underscored: true,
+    tableName: 'applicants'
+  });
+  return Applicant;
 };
-var jointFields = [{
-  table_name: 'applicant_uploads',
-  attributes: ['resume', 'profile_picture'],
-  foreign_key: 'applicant_id'
-}];

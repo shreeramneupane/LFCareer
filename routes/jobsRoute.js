@@ -1,9 +1,9 @@
 "use strict";
 
-var JobsController = require('../controllers/jobsController');
-
 var express = require('express'),
 router = express.Router();
+
+var JobsController = require('../controllers/jobsController');
 
 router.get('/jobs', JobsController.index);
 router.get('/jobs/:id', JobsController.show);
