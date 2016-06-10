@@ -11,10 +11,10 @@ import { Portfolios } from './portfolios/portfolios.component';
 import { References } from './references/references.component';
 
 @Component({
-  selector   : 'applicant-show',
-  styleUrls  : ['app/applicants/applicant-show/applicant-show.component.css'],
-  templateUrl: 'app/applicants/applicant-show/applicant-show.component.html',
-  directives : [PageHeader, Achievements, Educations, Experiences, GeneralDetails, OtherDetails, Portfolios, Profile, References]
+  selector  : 'applicant-show',
+  styles    : [require('./applicant-show.component.css')],
+  template  : require('./applicant-show.component.html'),
+  directives: [PageHeader, Achievements, Educations, Experiences, GeneralDetails, OtherDetails, Portfolios, Profile, References]
 })
 export class ApplicantShowComponent {
 }

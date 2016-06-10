@@ -11,11 +11,14 @@ import { Portfolio } from '../shared/portfolio';
 import { Reference } from '../shared/reference';
 
 import { ValidationService } from '../../shared/utils/validation.util';
+
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'applicant-form',
-  templateUrl: 'app/applicants/applicant-form/applicant-form.component.html',
-  styleUrls  : ['app/applicants/applicant-form/applicant-form.component.css'],
-  directives : [ROUTER_DIRECTIVES, ControlMessages]
+  selector  : 'applicant-form',
+  template  : require('./applicant-form.component.html'),
+  styles    : [require('./applicant-form.component.css')],
+  directives: [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class ApplicantFormComponent {

@@ -5,11 +5,13 @@ import { Applicant }        from '../shared/applicant';
 import { ApplicantService } from '../shared/applicant.service';
 import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'applicant-list',
-  templateUrl: 'app/applicants/applicant-list/applicant-list.component.html',
-  directives : [PageHeader, ROUTER_DIRECTIVES],
-  providers  : [ApplicantService]
+  selector  : 'applicant-list',
+  template  : require('./applicant-list.component.html'),
+  directives: [PageHeader, ROUTER_DIRECTIVES],
+  providers : [ApplicantService]
 })
 
 export class ApplicantListComponent implements OnInit {

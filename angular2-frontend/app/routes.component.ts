@@ -8,16 +8,16 @@ import { AppComponent }          from './app.component';
 import { ApplicantNewComponent } from './applicants/applicant-new/applicant-new.component';
 
 import { ApiService }   from './shared/utils/api.util';
-import { App }          from './shared/assets/javascripts/app';
+import { App }          from './shared/assets/typescripts/app';
 import { Converter }    from './shared/utils/converter.util';
 
 @Component({
-  selector   : 'lfcareer-app',
-  templateUrl: 'app/routes.component.html',
-  directives : [
+  selector  : 'lfcareer-app',
+  template  : require('./routes.component.html'),
+  directives: [
     ROUTER_DIRECTIVES
   ],
-  providers  : [ApiService, App, Converter]
+  providers : [ApiService, App, Converter]
 })
 
 @RouteConfig([

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { App } from '../../../assets/typescript/app';
+import { App } from '../../../assets/typescripts/app';
 
 @Component({
   selector: 'hamburger',

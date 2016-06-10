@@ -9,9 +9,9 @@ import { ApplicantListComponent } from './applicant-list/applicant-list.componen
 import { ApplicantShowComponent } from './applicant-show/applicant-show.component';
 
 @Component({
-  selector   : 'lfcareer-applicants',
-  templateUrl: 'app/applicants/applicants.component.html',
-  directives : [
+  selector  : 'lfcareer-applicants',
+  template  : require('./applicants.component.html'),
+  directives: [
     ROUTER_DIRECTIVES
   ]
 })

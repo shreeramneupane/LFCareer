@@ -7,9 +7,9 @@ import { ApplicantService }        from '../shared/applicant.service';
 import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
 
 @Component({
-  selector: 'applicant-new',
-  templateUrl: 'app/applicants/applicant-new/applicant-new.component.html',
-  providers: [ApplicantService],
+  selector  : 'applicant-new',
+  template  : require('./applicant-new.component.html'),
+  providers : [ApplicantService],
   directives: [ROUTER_DIRECTIVES, PageHeader, ApplicantFormComponent]
 })
 
@@ -22,12 +22,12 @@ export class ApplicantNewComponent {
   onSubmit(applicant:Applicant):void {
     console.log('submitted');
     /*this.applicantService.createApplicant(applicant)
-    .subscribe(
-    applicant => {
-      this.router.navigate(['ApplicantList']);
-      toastr.success('New Applicant Created Successfully!');
-    },
-    error => toastr.error(error)
-    );*/
+     .subscribe(
+     applicant => {
+     this.router.navigate(['ApplicantList']);
+     toastr.success('New Applicant Created Successfully!');
+     },
+     error => toastr.error(error)
+     );*/
   }
 }

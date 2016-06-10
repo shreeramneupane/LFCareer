@@ -2,7 +2,8 @@ import {Component} from '@angular/core';
 
 @Component({
   selector: 'applicant-edit',
-  templateUrl: 'app/applicants/applicant-edit/applicant-edit.component.html'
+  template: require('./applicant-edit.component.html')
 })
+
 export class ApplicantEditComponent {
 }
