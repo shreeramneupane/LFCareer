@@ -1,22 +1,23 @@
 "use strict";
 
-var checkit = require('checkit');
-var uuid = require('node-uuid');
-var validation = new checkit(require('../validation/applicantValidation'));
-var Applicant = require('../models/applicant');
 var _ = require('lodash');
 var Promise = require("bluebird");
-var AppError = require('../error/AppError');
-var ApplicantHelper = require('../helpers/applicantFilter');
 
+var models = require('../models/index');
 
-module.exports = {
-  list: function (params) {
+var ApplicantAchievementService = require('../services/applicantAchievementService');
+var ApplicantEducationService = require('../services/applicantEducationService');
+var ApplicantExperienceService = require('../services/applicantExperienceService');
+var ApplicantPortfolioService = require('../services/applicantPortfolioService');
+var ApplicantSkillService = require('../services/applicantSkillService');
+var ApplicantReferenceService = require('../services/applicantReferenceService');
+var SkillService = require('../services/skillService');
+var WorkareaService = require('../services/workAreaService');
 
-    var parsedUrl = ApplicantHelper.urlParser(params);
-
+var ApplicantService = {
+  list: function () {
     return new Promise(function (resolve, reject) {
-      Applicant.list(parsedUrl)
+      models.Applicant.findAll({})
       .then(function (response) {
         resolve(response);
       })
@@ -27,11 +28,10 @@ module.exports = {
   },
 
   show: function (id) {
-
     return new Promise(function (resolve, reject) {
-      Applicant.show(id)
+      models.Applicant.find({where: {id: id}})
       .then(function (response) {
-        resolve(response);
+        resolve({applicant: response});
       })
       .catch(function (err) {
         reject(err);
@@ -39,46 +39,55 @@ module.exports = {
     });
   },
 
-  create: function (applicant) {
-    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
+  create: function (applicantParam) {
+    var applicantID;
+    
+    if (applicantParam.job_id) {
+      applicantParam.direct_apply = false;
+    }
+
     return new Promise(function (resolve, reject) {
-      validation.run(applicant)
+
+      return SkillService.confirmSkillPresence(applicantParam['skills'])
       .then(function () {
-        applicant.id = uuid.v1();
-        Applicant.create(applicant)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
+        return WorkareaService.confirmWorkareaPresence(applicantParam['portfolios'])
+        .then(function () {
+          return models.sequelize.transaction()
+          .then(function (t) {
+            return models.Applicant.create(applicantParam, {transaction: t})
+            .then(function (applicant) {
+              applicantID = applicant.id;
+              return ApplicantService.createNestedRecords(applicantID, applicantParam, t)
+            })
+            .then(function () {
+              return t.commit();
+            })
+            .catch(function (err) {
+              t.rollback();
+              throw new Error(err);
+            });
+          })
+          .then(function () {
+            resolve({applicant: {id: applicantID}});
+          })
+          .catch(function (err) {
+            reject(err);
+          });
         });
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
       });
     });
   },
 
-  update: function (id, applicant) {
-    var applicant = _(applicant).omitBy(_.isUndefined).omitBy(_.isNull).omitBy(_.isEmpty).value();
-    return new Promise(function (resolve, reject) {
-      validation.run(applicant)
-      .then(function () {
-        Applicant.update(id, applicant)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
-      });
-    });
+  createNestedRecords: function (applicantID, applicantParam, t) {
+    return Promise.join(
+    ApplicantAchievementService.create(applicantID, applicantParam['achievements'], t),
+    ApplicantEducationService.create(applicantID, applicantParam['educations'], t),
+    ApplicantExperienceService.create(applicantID, applicantParam['experiences'], t),
+    ApplicantPortfolioService.create(applicantID, applicantParam['portfolios'], t),
+    ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
+    ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
+    );
   }
-
 };
 
+module.exports = ApplicantService;

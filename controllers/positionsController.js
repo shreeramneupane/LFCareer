@@ -1,12 +1,13 @@
 "use strict";
 
 var HttpStatus = require('http-status-codes');
-var positionService = require('../services/positionService');
+
+var PositionService = require('../services/positionService');
 
 module.exports = {
 
   index: function (request, response) {
-    positionService.list()
+    PositionService.list()
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -22,7 +23,7 @@ module.exports = {
   show: function (request, response) {
     var id = request.params.id;
 
-    positionService.show(id)
+    PositionService.show(id)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -37,7 +38,7 @@ module.exports = {
 
   create: function (request, response) {
     var position = request.body;
-    positionService.create(position)
+    PositionService.create(position)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -49,10 +50,11 @@ module.exports = {
       });
     });
   },
+
   update: function (request, response) {
     var id = request.params.id;
     var position = request.body;
-    positionService.update(id, position)
+    PositionService.update(id, position)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

@@ -17,6 +17,6 @@ app.use(function (req, res, next) {
   next();
 });
 var routes = requireDir('./routes');
-for (var i in routes) app.use('/api', routes[i]);
+for (var i in routes) app.use('/v1', routes[i]);
 
 app.listen(port);

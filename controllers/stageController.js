@@ -1,12 +1,13 @@
 "use strict";
 
 var HttpStatus = require('http-status-codes');
-var stageService = require('../services/stageService');
+
+var StageService = require('../services/stageService');
 
 module.exports = {
 
   index: function (request, response) {
-    stageService.list()
+    StageService.list()
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -22,7 +23,7 @@ module.exports = {
   show: function (request, response) {
     var id = request.params.id;
 
-    stageService.show(id)
+    StageService.show(id)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -37,7 +38,7 @@ module.exports = {
 
   create: function (request, response) {
     var stage = request.body;
-    stageService.create(stage)
+    StageService.create(stage)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
@@ -53,7 +54,7 @@ module.exports = {
   update: function (request, response) {
     var id = request.params.id;
     var stage = request.body;
-    stageService.update(id, stage)
+    StageService.update(id, stage)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

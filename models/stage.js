@@ -1,55 +1,28 @@
-"use strict";
-
-var Promise = require("bluebird");
-
-var Repository = require('./repository.js');
-
-module.exports = {
-  list: function () {
-    return new Promise(function (resolve, reject) {
-      Repository.list('stages')
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  show: function (id) {
-    return new Promise(function (resolve, reject) {
-      Repository.show('stages', id)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  create: function (stage) {
-    return new Promise(function (resolve, reject) {
-      Repository.create('stages', stage)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  update: function (id, stage) {
-    return new Promise(function (resolve, reject) {
-      Repository.update('stages', id, stage)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  }
+'use strict';
+module.exports = function (sequelize, DataTypes) {
+  var Stage = sequelize.define('Stage', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [5, 50],
+          msg: 'Please provide name within 5 to 50 characters.'
+        }
+      }
+    }
+  }, {
+    classMethods: {
+      associate: function (models) {
+        // associations can be defined here
+      }
+    },
+    underscored: true,
+    tableName: 'stages'
+  });
+  return Stage;
 };
