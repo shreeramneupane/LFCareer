@@ -4,6 +4,7 @@ var _ = require('lodash');
 var Promise = require("bluebird");
 
 var models = require('../models/index');
+var QueryParser = require('../helpers/queryParser');
 
 var ApplicantAchievementService = require('../services/applicantAchievementService');
 var ApplicantEducationService = require('../services/applicantEducationService');
@@ -15,9 +16,12 @@ var SkillService = require('../services/skillService');
 var WorkareaService = require('../services/workAreaService');
 
 var ApplicantService = {
-  list: function () {
+
+  list: function (query) {
+    var parsedQuery = QueryParser.parse(models.Stage, query);
+
     return new Promise(function (resolve, reject) {
-      models.Applicant.findAll({})
+      models.Applicant.findAll(parsedQuery)
       .then(function (response) {
         resolve(response);
       })

@@ -48,12 +48,12 @@ module.exports = {
       {
         test   : /\.css$/,
         include: helpers.root('app'),
-        exclude: helpers.root('app', 'shared'),
+        exclude: helpers.root('app', 'shared', 'assets'),
         loader : 'raw?sourceMap'
       },
       {
         test   : /\.css$/,
-        include: helpers.root('app', 'shared'),
+        include: helpers.root('app', 'shared', 'assets'),
         loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
       },
       {

@@ -14,13 +14,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let applicant of applicants;  let index = index">
-        <td>{{index + 1}}</td>
+        <td>{{(currentPage - 1) * 10 + index + 1}}</td>
         <td>{{applicant.name}}</td>
         <td class="text-center">
           <div class="btn-group">
-            <a [routerLink]="['ApplicantEdit', {id: job.id}]"
-               title="Edit"
-               class="btn btn-sm btn-default"><i class="fa fa-pencil"></i> </a>
             <a [routerLink]="['ApplicantShow', {id: applicant.id}]" data-toggle="tooltip" title="Applicant Detail"
                class="btn btn-sm btn-default">
               <i class="glyphicon glyphicon-list-alt"></i></a>
@@ -30,4 +27,5 @@
       </tbody>
     </table>
   </div>
+  <pagination totalCount="60" (refreshList)="refreshList($event)"></pagination>
 </div>

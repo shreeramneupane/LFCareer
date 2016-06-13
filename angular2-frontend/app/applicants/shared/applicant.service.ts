@@ -11,8 +11,12 @@ export class ApplicantService {
   constructor(private apiService:ApiService, private converter:Converter) {
   }
   
-  listApplicants() {
-    return this.apiService.fetch(AppConstants.APPLICANTS);
+  listApplicants(page) {
+    let pathParams = AppConstants.APPLICANTS + this.converter.serialize({
+      start : page * 10,
+      offset: AppConstants.OFFSET
+    });
+    return this.apiService.fetch(pathParams);
   }
   
   getApplicant(id:string):Observable<Applicant> {
@@ -20,7 +24,7 @@ export class ApplicantService {
   }
 
   getSkills(query:string) {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q:query}));
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q: query}));
   }
 
   uploadDocuments(documents:any, id:string) {

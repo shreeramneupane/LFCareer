@@ -19,7 +19,7 @@ export class ApiService {
       xhr:XMLHttpRequest = new XMLHttpRequest();
 
       for (var key in documents) {
-        formData.append("key", files[i], files[i].name);
+        formData.append(key, documents[key], documents[key].name);
       }
 
       xhr.onreadystatechange = () => {
@@ -33,18 +33,24 @@ export class ApiService {
         }
       };
 
+      xhr.upload.onprogress = (event) => {
+        //this.progress = Math.round(event.loaded / event.total * 100);
+
+        //this.progressObserver.next(this.progress);
+      };
+
       xhr.open('POST', this.URL + pathParams, true);
       xhr.send(formData);
     });
   }
 
-  fetch(pathParams):Observable < any > {
+  fetch(pathParams):Observable<any> {
     return this.http.get(this.URL + pathParams)
     .map(res => res.json())
     .catch(this.handleError);
   }
 
-  create(pathParams:string, object:any):Observable < any > {
+  create(pathParams:string, object:any):Observable<any> {
     let body = JSON.stringify(object);
 
     return this.http.post(this.URL + pathParams, body, this.options)
@@ -52,7 +58,7 @@ export class ApiService {
     .catch(this.handleError)
   }
 
-  update(pathParams:string, object:any):Observable < any > {
+  update(pathParams:string, object:any):Observable<any> {
     let body = JSON.stringify(object);
 
     return this.http.put(this.URL + pathParams, body, this.options)
@@ -60,8 +66,7 @@ export class ApiService {
     .catch(this.handleError)
   }
 
-  private
-  handleError(response:any) {
+  private handleError(response:any) {
     return Observable.throw(JSON.parse(response['_body']).error.message || 'Server Error');
   }
 }

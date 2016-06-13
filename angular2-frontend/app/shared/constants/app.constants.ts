@@ -4,4 +4,5 @@ export class AppConstants {
   public static get POSITIONS():string { return "positions"; }
   public static get SKILLS():string { return "skills"; }
   public static get STAGES():string { return "stages"; }
+  public static get OFFSET():number { return 10; };
 }
