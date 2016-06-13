@@ -5,6 +5,8 @@ var Promise = require("bluebird");
 
 var models = require('../models/index');
 
+var QueryParser = require('../helpers/queryParser');
+
 var ApplicantAchievementService = require('../services/applicantAchievementService');
 var ApplicantEducationService = require('../services/applicantEducationService');
 var ApplicantExperienceService = require('../services/applicantExperienceService');
@@ -15,11 +17,13 @@ var SkillService = require('../services/skillService');
 var WorkareaService = require('../services/workAreaService');
 
 var ApplicantService = {
-  list: function () {
+  list: function (query) {
+    var parsedQuery = QueryParser.parse(models.Stage, query);
+
     return new Promise(function (resolve, reject) {
-      models.Applicant.findAll({})
+      models.Applicant.findAndCountAll(parsedQuery)
       .then(function (response) {
-        resolve(response);
+        resolve({applicants: response.rows, total_count: response.count});
       })
       .catch(function (err) {
         reject(err);
@@ -64,7 +68,7 @@ var ApplicantService = {
         });
         applicantParam = _.omit(applicantParam, 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
 
-        resolve(applicantParam);
+        resolve({applicant: applicantParam});
       })
       .catch(function (err) {
         reject(err);
