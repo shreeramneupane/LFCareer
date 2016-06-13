@@ -3,6 +3,8 @@
 var _ = require('lodash');
 var Promise = require("bluebird");
 
+var config = require("../secret-config.json")[process.env.NODE_ENV || 'development'];
+var applicantDocumentRootUrl = config['bucket_name'] + '.s3.amazonaws.com/';
 var models = require('../models/index');
 
 var ApplicantAchievementService = require('../services/applicantAchievementService');
@@ -28,10 +30,51 @@ var ApplicantService = {
   },
 
   show: function (id) {
+    var applicantParam;
     return new Promise(function (resolve, reject) {
-      models.Applicant.find({where: {id: id}})
-      .then(function (response) {
-        resolve({applicant: response});
+      models.Applicant.findOne({
+        where: {
+          id: id
+        },
+        include: [
+          {model: models.ApplicantDocument},
+          {model: models.ApplicantAchievement},
+          {model: models.ApplicantEducation},
+          {model: models.ApplicantExperience},
+          {model: models.ApplicantReference},
+          {model: models.Skill, through: models.ApplicantSkill},
+          {
+            model: models.ApplicantPortfolio,
+            include: [{
+              model: models.Workarea,
+              through: models.ApplicantPortfolioWorkarea
+            }]
+          }
+        ]
+      })
+      .then(function (applicant) {
+        applicantParam = applicant.dataValues;
+        applicantParam.resume = null;
+        applicantParam.profile_picture = null;
+
+        if (applicant.ApplicantDocument) {
+          applicantParam.resume = applicantDocumentRootUrl + applicant.ApplicantDocument.resume;
+          applicantParam.profile_picture = applicantDocumentRootUrl + applicant.ApplicantDocument.profile_picture;
+        }
+
+        applicantParam.achievements = applicant.ApplicantAchievements;
+        applicantParam.educations = applicant.ApplicantEducations;
+        applicantParam.experiences = applicant.ApplicantExperiences;
+        applicantParam.references = applicant.ApplicantReferences;
+        applicantParam.skills = _.map(applicant.Skills, 'name');
+        applicantParam.portfolios = _.map(applicant.ApplicantPortfolios, 'dataValues');
+        _.each(applicantParam.portfolios, function (portfolio) {
+          portfolio.workareas = _.map(portfolio.Workareas, 'name');
+          delete portfolio.Workareas;
+        });
+        applicantParam = _.omit(applicantParam, 'ApplicantDocument', 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
+
+        resolve(applicantParam);
       })
       .catch(function (err) {
         reject(err);
@@ -41,7 +84,7 @@ var ApplicantService = {
 
   create: function (applicantParam) {
     var applicantID;
-    
+
     if (applicantParam.job_id) {
       applicantParam.direct_apply = false;
     }
