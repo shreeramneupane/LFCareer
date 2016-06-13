@@ -1,21 +1,21 @@
 "use strict";
 
-var _ = require('lodash');
 var fs = require('fs');
 var Promise = require("bluebird");
 var S3FS = require('s3fs');
 
 var config;
+var env = process.env.NODE_ENV || 'development';
 var fileName = "../secret-config.json";
 var models = require('../models/index');
 
 try {
-  config = require(fileName)
+  config = require(fileName)[env]
 }
 catch (err) {
   config = {};
-  console.log("unable to read file '" + fileName + "': ", err)
-  console.log("see secret-config-sample.json for an example")
+  console.log("unable to read file '" + fileName + "': ", err);
+  console.log("see secret-config-sample.json for an example");
 }
 
 var s3fsImpl = new S3FS(config['bucket_name'], {
@@ -26,33 +26,35 @@ var s3fsImpl = new S3FS(config['bucket_name'], {
 module.exports = {
 
   create: function (applicantID, documents) {
-    var params = {
-      'applicant_id': applicantID
-    };
 
     return new Promise(function (resolve, reject) {
       var resume = documents.resume;
-      var profile_picture = documents.profile_picture;
+      var profilePicture = documents.profile_picture;
 
-      var resume_stream = fs.createReadStream(resume.path);
-      var profile_picture_stream = fs.createReadStream(profile_picture.path);
+      var resumeStream = fs.createReadStream(resume.path);
+      var profilePictureStream = fs.createReadStream(profilePicture.path);
 
-      s3fsImpl.writeFile(resume.originalFilename, resume_stream, {ACL: 'public-read'}).then(function () {
+      var resumeURL = applicantID + '/resume/' + resume.originalFilename;
+      var profilePictureURL = applicantID + '/profile_picture/' + profilePicture.originalFilename;
+
+      s3fsImpl.writeFile(resumeURL, resumeStream, {ACL: 'public-read'}).then(function () {
         fs.unlink(resume.path, function (err) {
           if (err)
             reject(err)
         });
       });
-      s3fsImpl.writeFile(profile_picture.originalFilename, profile_picture_stream, {ACL: 'public-read'}).then(function () {
-        fs.unlink(profile_picture.path, function (err) {
+      s3fsImpl.writeFile(profilePictureURL, profilePictureStream, {ACL: 'public-read'}).then(function () {
+        fs.unlink(profilePicture.path, function (err) {
           if (err)
             reject(err)
         });
       });
 
-      params['resume'] = applicantID + '/resume/' + resume.originalFilename;
-      params['profile_picture'] = applicantID + '/profile_picture/' + profile_picture.originalFilename;
-
+      var params = {
+        applicant_id: applicantID,
+        resume: resumeURL,
+        profile_picture: profilePictureURL
+      };
       return models.ApplicantDocument.create(params)
       .then(function (data) {
         resolve({applicant_document: data})
