@@ -63,6 +63,12 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Applicant.belongsTo(models.Job);
+        Applicant.hasOne(models.ApplicantDocument);
+        Applicant.hasMany(models.ApplicantAchievement);
+        Applicant.hasMany(models.ApplicantEducation);
+        Applicant.hasMany(models.ApplicantExperience);
+        Applicant.hasMany(models.ApplicantPortfolio);
+        Applicant.hasMany(models.ApplicantReference);
         Applicant.belongsToMany(models.Skill, { through: models.ApplicantSkill });
       }
     },
