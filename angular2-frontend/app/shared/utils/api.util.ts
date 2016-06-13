@@ -19,7 +19,7 @@ export class ApiService {
       xhr:XMLHttpRequest = new XMLHttpRequest();
 
       for (var key in documents) {
-        formData.append(key, documents[key], documents[key].name);
+        formData.append("key", files[i], files[i].name);
       }
 
       xhr.onreadystatechange = () => {
@@ -31,12 +31,6 @@ export class ApiService {
             observer.error(xhr.response);
           }
         }
-      };
-
-      xhr.upload.onprogress = (event) => {
-        //this.progress = Math.round(event.loaded / event.total * 100);
-
-        //this.progressObserver.next(this.progress);
       };
 
       xhr.open('POST', this.URL + pathParams, true);

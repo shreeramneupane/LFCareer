@@ -103,7 +103,6 @@ export class ApplicantFormComponent {
   }
 
   getAutoCompleteValue(request, response) {
-    console.log(request)
     this.applicantService.getSkills(request.term).subscribe(
     skills=> {
       response(skills)
@@ -255,8 +254,6 @@ export class ApplicantFormComponent {
   }
 
   submit(applicant:Applicant) {
-    this.onSubmit.emit({applicant: 'asdf', documents: this.documents});
-    console.log(applicant);
     this.submitted = true;
     let formDatas:Applicant = this.getFormDatas(applicant);
 
@@ -268,8 +265,6 @@ export class ApplicantFormComponent {
       toastr.error('Agree on terms and conditions before submiting form');
     }
     else {
-      console.log('valid')
-      console.log(this.documents);
       this.onSubmit.emit({applicant: formDatas, documents: this.documents});
     }
   }

@@ -20,7 +20,6 @@ export class ApplicantService {
   }
 
   getSkills(query:string) {
-    console.log(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q:query}));
     return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q:query}));
   }
 
