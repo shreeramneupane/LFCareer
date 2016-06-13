@@ -3,8 +3,6 @@
 var _ = require('lodash');
 var Promise = require("bluebird");
 
-var config = require("../secret-config.json")[process.env.NODE_ENV || 'development'];
-var applicantDocumentRootUrl = config['bucket_name'] + '.s3.amazonaws.com/';
 var models = require('../models/index');
 
 var ApplicantAchievementService = require('../services/applicantAchievementService');
@@ -37,7 +35,6 @@ var ApplicantService = {
           id: id
         },
         include: [
-          {model: models.ApplicantDocument},
           {model: models.ApplicantAchievement},
           {model: models.ApplicantEducation},
           {model: models.ApplicantExperience},
@@ -54,13 +51,6 @@ var ApplicantService = {
       })
       .then(function (applicant) {
         applicantParam = applicant.dataValues;
-        applicantParam.resume = null;
-        applicantParam.profile_picture = null;
-
-        if (applicant.ApplicantDocument) {
-          applicantParam.resume = applicantDocumentRootUrl + applicant.ApplicantDocument.resume;
-          applicantParam.profile_picture = applicantDocumentRootUrl + applicant.ApplicantDocument.profile_picture;
-        }
 
         applicantParam.achievements = applicant.ApplicantAchievements;
         applicantParam.educations = applicant.ApplicantEducations;
@@ -72,7 +62,7 @@ var ApplicantService = {
           portfolio.workareas = _.map(portfolio.Workareas, 'name');
           delete portfolio.Workareas;
         });
-        applicantParam = _.omit(applicantParam, 'ApplicantDocument', 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
+        applicantParam = _.omit(applicantParam, 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
 
         resolve(applicantParam);
       })
