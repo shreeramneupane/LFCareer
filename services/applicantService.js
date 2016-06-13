@@ -39,6 +39,7 @@ var ApplicantService = {
           id: id
         },
         include: [
+          {model: models.Job},
           {model: models.ApplicantAchievement},
           {model: models.ApplicantEducation},
           {model: models.ApplicantExperience},
@@ -55,7 +56,7 @@ var ApplicantService = {
       })
       .then(function (applicant) {
         applicantParam = applicant.dataValues;
-
+        applicantParam.job = applicant.Job;
         applicantParam.achievements = applicant.ApplicantAchievements;
         applicantParam.educations = applicant.ApplicantEducations;
         applicantParam.experiences = applicant.ApplicantExperiences;
@@ -66,7 +67,7 @@ var ApplicantService = {
           portfolio.workareas = _.map(portfolio.Workareas, 'name');
           delete portfolio.Workareas;
         });
-        applicantParam = _.omit(applicantParam, 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
+        applicantParam = _.omit(applicantParam, 'Job', 'ApplicantAchievements', 'ApplicantEducations', 'ApplicantExperiences', 'ApplicantReferences', 'Skills', 'ApplicantPortfolios');
 
         resolve({applicant: applicantParam});
       })
