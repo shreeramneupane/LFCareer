@@ -23,7 +23,8 @@ export class ApplicantNewComponent {
 
   onSubmit(newApplicant):void {
     console.log(newApplicant.documents);
-    this.applicantService.createApplicant(newApplicant.applicant)
+    this.router.navigate(['NewApplicantSuccess']);
+    /*this.applicantService.createApplicant(newApplicant.applicant)
     .subscribe(
     response => {
       this.applicantService.uploadDocuments(newApplicant.documents, response.applicant.id)
@@ -37,6 +38,6 @@ export class ApplicantNewComponent {
 
     },
     error => toastr.error(error)
-    );
+    ); */
   }
 }

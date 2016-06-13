@@ -255,6 +255,7 @@ export class ApplicantFormComponent {
   }
 
   submit(applicant:Applicant) {
+    this.onSubmit.emit({applicant: 'asdf', documents: this.documents});
     console.log(applicant);
     this.submitted = true;
     let formDatas:Applicant = this.getFormDatas(applicant);

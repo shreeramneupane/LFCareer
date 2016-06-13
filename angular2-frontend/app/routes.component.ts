@@ -6,7 +6,7 @@ ROUTER_DIRECTIVES
 
 import { AppComponent }          from './app.component';
 import { ApplicantNewComponent } from './applicants/applicant-new/applicant-new.component';
-
+import { ApplicantCreationSuccessComponent } from './applicants/applicant-creation-success/applicant-creation-success.component';
 import { ApiService }   from './shared/utils/api.util';
 import { App }          from './shared/assets/typescripts/app';
 import { Converter }    from './shared/utils/converter.util';
@@ -25,6 +25,11 @@ import { Converter }    from './shared/utils/converter.util';
     path     : '/applicants/new',
     name     : 'NewApplicant',
     component: ApplicantNewComponent
+  },
+  {
+    path     : '/applicants/success',
+    name     : 'NewApplicantSuccess',
+    component: ApplicantCreationSuccessComponent
   },
   {
     path     : '/...',
