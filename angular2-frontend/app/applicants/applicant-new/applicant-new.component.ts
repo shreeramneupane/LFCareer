@@ -24,17 +24,19 @@ export class ApplicantNewComponent {
   onSubmit(newApplicant):void {
     console.log(newApplicant.documents);
     this.applicantService.createApplicant(newApplicant.applicant)
-     .subscribe(
-     response => {
-       this.applicantService.uploadDocuments(newApplicant.documents, response.applicant.id)
-       .subscribe(
-       applicant => {console.log(applicant)},
-       error =>toastr.error(error)
-       )
-     /*this.router.navigate(['ApplicantList']);
-     toastr.success('New Applicant Created Successfully!');*/
-     },
-     error => toastr.error(error)
-     );
+    .subscribe(
+    response => {
+      this.applicantService.uploadDocuments(newApplicant.documents, response.applicant.id)
+      .subscribe(
+      response => {
+        //this.router.navigate(['ApplicantList']);
+        toastr.success('New Applicant Created Successfully!');
+      },
+      error =>toastr.error(error)
+      )
+
+    },
+    error => toastr.error(error)
+    );
   }
 }

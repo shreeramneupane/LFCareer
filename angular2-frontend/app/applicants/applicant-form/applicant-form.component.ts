@@ -29,9 +29,7 @@ export class ApplicantFormComponent {
   submitted:boolean = false;
   agreement:boolean = false;
 
-  documents:any = {
-
-  };
+  documents:any = {};
 
   portfolioTitleArray:ControlArray = new ControlArray([new Control('', Validators.required)]);
   portfolioDescriptionArray:ControlArray = new ControlArray([new Control('', Validators.required)]);
@@ -189,22 +187,28 @@ export class ApplicantFormComponent {
     $('#resume-upload').click();
   }
 
-  upload(event) {
+  uploadPhoto(event) {
     var reader = new FileReader();
     reader.onload = function (e:any) {
-      $('#passport-photo')
-      .attr('src', e.target.result)
-      this.profilePic = e.target.result;
+      $('.passport-photo')
+      .css('content', 'url(' + e.target.result + ')');
     }
-    reader.readAsDataURL(event.target.files[0]);
-    this.documents.profile_picture = event.target.files[0];
-    //this.applicant.profile.profilePic = event.target.files[0];
+
+    if (ValidationService.fileValidator('image', event.target.files[0].name)) {
+      reader.readAsDataURL(event.target.files[0]);
+      this.documents.profile_picture = event.target.files[0];
+    } else {
+      toastr.error('Please select your passport size photo', 'Error!');
+    }
   }
 
   uploadResume(event) {
-    var reader = new FileReader();
-    $('#resume-input').val(event.target.files[0].name);
-    this.documents.resume = event.target.files[0];
+    if (ValidationService.fileValidator('document', event.target.files[0].name)) {
+      $('#resume-input').val(event.target.files[0].name);
+      this.documents.resume = event.target.files[0];
+    } else {
+      toastr.error('Please select your resume', 'Error!');
+    }
   }
 
   removeSourceDescription() {
@@ -257,15 +261,15 @@ export class ApplicantFormComponent {
 
     if (!this.formGroup.valid)
       toastr.error('Please fill the required fields', 'Error!');
-    /*else if(not upload pic)
-     toastr.error('Please upload all required documents');*/
+    else if (!this.documents.resume || !this.documents.profile_picture)
+      toastr.error('Please upload all required documents');
     else if (!this.agreement) {
       toastr.error('Agree on terms and conditions before submiting form');
     }
     else {
       console.log('valid')
       console.log(this.documents);
-      this.onSubmit.emit({applicant:formDatas, documents: this.documents});
+      this.onSubmit.emit({applicant: formDatas, documents: this.documents});
     }
   }
 }

@@ -26,6 +26,8 @@ var s3fsImpl = new S3FS(config['bucket_name'], {
 module.exports = {
 
   create: function (applicantID, documents) {
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+    console.log(documents)
     var params = {
       'applicant_id': applicantID
     };
@@ -37,6 +39,7 @@ module.exports = {
       var resume_stream = fs.createReadStream(resume.path);
       var profile_picture_stream = fs.createReadStream(profile_picture.path);
 
+      console.log(documents + '*********************************************************')
       s3fsImpl.writeFile(resume.originalFilename, resume_stream, {ACL: 'public-read'}).then(function () {
         fs.unlink(resume.path, function (err) {
           if (err)

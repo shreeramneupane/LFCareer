@@ -68,4 +68,23 @@ export class ValidationService {
       return {'countInsufficient': true};
     }
   }
+
+  static fileValidator(type, fileName) {
+    let validArray:Array<string> = [];
+    let extension = fileName.substring(
+    fileName.lastIndexOf('.') + 1).toLowerCase();
+    switch (type) {
+      case 'image':
+        validArray = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tif'];
+        break;
+      case 'document':
+        validArray = ['doc', 'docx', 'odt', 'rtf', 'txt', 'tex', 'wpd', 'pdf'];
+        break;
+    }
+
+    if (validArray.indexOf(extension) > -1) {
+      return true;
+    }
+    return false;
+  }
 }

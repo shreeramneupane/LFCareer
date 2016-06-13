@@ -52,7 +52,7 @@
       <div class="passport-pic col-lg-2">
         <div class="passport-photo"><img id="passport-photo" /></div>
         <div>
-          <input type="file" class="file-upload" size="chars" (change)="upload($event)">
+          <input type="file" class="file-upload" size="chars" (change)="uploadPhoto($event)">
           <button class="btn btn-sm btn-success text-uppercase" (click)="triggerPhotoUploadClickEvent($event)"><i
           class="fa fa-file" aria-hidden="true"></i>Upload
             Picture
@@ -328,7 +328,7 @@
     <div class="col-sm-4">
       <div class="input-group">
         <input type="file" id="resume-upload" size="chars" (change)="uploadResume($event)"/>
-        <input type="text" class="form-control" id="resume-input" readonly/>
+        <input type="text" class="form-control" id="resume-input" (click)="triggerResumeUploadClickEvent($event)" readonly/>
         <span class="input-group-addon" (click)="triggerResumeUploadClickEvent($event)">
         <span class="fa fa-file-word-o"></span>
       </span>
