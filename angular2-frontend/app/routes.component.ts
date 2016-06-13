@@ -10,6 +10,7 @@ import { ApplicantCreationSuccessComponent } from './applicants/applicant-creati
 import { ApiService }   from './shared/utils/api.util';
 import { App }          from './shared/assets/typescripts/app';
 import { Converter }    from './shared/utils/converter.util';
+import { Sorter } from './shared/utils/sort.util';
 
 @Component({
   selector  : 'lfcareer-app',
@@ -17,7 +18,7 @@ import { Converter }    from './shared/utils/converter.util';
   directives: [
     ROUTER_DIRECTIVES
   ],
-  providers : [ApiService, App, Converter]
+  providers : [ApiService, App, Converter, Sorter]
 })
 
 @RouteConfig([

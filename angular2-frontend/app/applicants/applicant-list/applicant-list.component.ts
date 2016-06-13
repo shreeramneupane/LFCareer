@@ -5,8 +5,10 @@ import { Applicant }        from '../shared/applicant';
 import { ApplicantService } from '../shared/applicant.service';
 import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 import { Pagination } from '../../shared/components/pagination/pagination.component';
+import { Sorter } from '../../shared/utils/sort.util';
 
 import * as toastr from 'toastr';
+import * as moment from 'moment';
 
 @Component({
   selector  : 'applicant-list',
@@ -18,16 +20,30 @@ import * as toastr from 'toastr';
 export class ApplicantListComponent implements OnInit {
   applicants:any = [];
   currentPage:number = 1;
+  sorter:any;
 
-  constructor(private applicantService:ApplicantService) {
+  constructor(private applicantService:ApplicantService, private sorterService:Sorter) {
+    this.sorter = this.sorterService.getSorterObject(['name', 'appliedFor', 'experience', 'appliedDate']);
   }
   
   ngOnInit() {
-    this.listApplicants(1);
+    this.listApplicants(1, null);
+  }
+
+  getDate(date) {
+    return moment(date).format("MMM Do YYYY");
+  }
+
+  downloadResume(id:string) {
+    this.applicantService.getResume(id).subscribe(
+    response => console.log(response),
+    error => console.log(error)
+    )
+
   }
   
-  listApplicants(page) {
-    this.applicantService.listApplicants(page)
+  listApplicants(page, sortBy) {
+    this.applicantService.listApplicants(page, sortBy)
     .subscribe(
     applicants => {
       this.applicants = applicants
@@ -38,6 +54,11 @@ export class ApplicantListComponent implements OnInit {
 
   refreshList(page) {
     this.currentPage = page;
-    this.listApplicants(page);
+    this.listApplicants(page, this.sorter.sortBy);
+  }
+
+  sort(by) {
+    this.sorter = this.sorterService.changeClassName(this.sorter, by);
+    this.refreshList(this.currentPage);
   }
 }
