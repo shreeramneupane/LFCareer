@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Converter {
-
   serialize(data):string {
     if (typeof(data) != 'object') {
       return '?' + data;

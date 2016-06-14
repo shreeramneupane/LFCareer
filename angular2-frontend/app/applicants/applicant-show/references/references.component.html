@@ -1,0 +1,33 @@
+<div class="block-wrapper" *ngIf="references?.length">
+  <div class="block-title-border">
+    <i class="fa fa-fw fa-thumbs-up fa-lg" aria-hidden="true"></i>
+    References
+  </div>
+  <div class="table-responsive">
+    <table
+    class="table table-vcenter table-bordered table-hover table-striped">
+      <thead>
+      <tr>
+        <th>SN</th>
+        <th>Name</th>
+        <th>Organization</th>
+        <th>Designation</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Relationship</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let reference of references;  let index = index">
+        <td>{{index + 1}}</td>
+        <td>{{reference.full_name}}</td>
+        <td>{{reference.organization}}</td>
+        <td>{{reference.designation}}</td>
+        <td>{{reference.email}}</td>
+        <td>{{reference.phone}}</td>
+        <td>{{reference.relationship}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

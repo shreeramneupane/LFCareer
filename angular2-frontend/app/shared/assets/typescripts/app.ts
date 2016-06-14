@@ -31,8 +31,9 @@ export class App {
     this.handleNav();
     // Resize #page-content to fill empty space if exists (also add it to resize and orientationchange events)
     this.resizePageContent();
+    var that = this;
     $(window).resize(function () {
-      this.resizePageContent();
+      that.resizePageContent();
     });
     $(window).bind('orientationchange', this.resizePageContent);
     // Add the correct copyright year at the footer
@@ -152,6 +153,13 @@ export class App {
       // In smaller screens (the same applies to resized browsers) two visible sidebars
       // could mess up our main content (not enough space), so we hide the other one :-)
       $('.sidebar-partial #sidebar')
+      .mouseenter(function () {
+        this.handleSidebar('close-sidebar-alt');
+      });
+      $('.sidebar-alt-partial #sidebar-alt')
+      .mouseenter(function () {
+        this.handleSidebar('close-sidebar');
+      });
     }
     else {
       var windowW = this.getWindowWidth();
@@ -254,10 +262,10 @@ export class App {
     this.sScroll.add(this.sScroll.parent()).css('height', $(window).height());
   };
 
-  var
-  sidebarScrollResizeOrient = function () {
+  sidebarScrollResizeOrient() {
     setTimeout(this.sScroll.add(this.sScroll.parent()).css('height', $(window).height()), 500);
   };
+
   /* Resize #page-content to fill empty space if exists */
   resizePageContent() {
     var windowH = $(window).height();
