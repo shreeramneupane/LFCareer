@@ -20,11 +20,19 @@ var WorkareaService = require('../services/workAreaService');
 var ApplicantService = {
   list: function (query) {
     var parsedQuery = QueryParser.parse(models.Stage, query);
-
+    parsedQuery.include = [{model: models.Job}];
     return new Promise(function (resolve, reject) {
       models.Applicant.findAndCountAll(parsedQuery)
       .then(function (response) {
-        resolve({applicants: response.rows, total_count: response.count});
+        var applicants = _.map(response.rows, 'dataValues');
+        _.each(applicants, function (applicant) {
+          applicant.job = null;
+          if (applicant.Job) {
+            applicant.job = applicant.Job.title;
+          }
+          delete applicant.Job;
+        });
+        resolve({applicants: applicants, total_count: response.count});
       })
       .catch(function (err) {
         reject(err);
@@ -140,10 +148,10 @@ var ApplicantService = {
           id: id
         }
       })
-      .then(function(applicant) {
-        if(applicant){
+      .then(function (applicant) {
+        if (applicant) {
           applicant.updateAttributes(applicantParam)
-          .then(function(response) {
+          .then(function (response) {
             resolve({applicant: response});
           });
         }
