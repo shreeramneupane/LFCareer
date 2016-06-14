@@ -16,9 +16,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       from_date: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       to_date: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       applicant_id: {
