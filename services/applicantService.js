@@ -1,6 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
+var moment = require('moment');
 var Promise = require("bluebird");
 
 var models = require('../models/index');
@@ -85,7 +86,12 @@ var ApplicantService = {
     }
 
     return new Promise(function (resolve, reject) {
-
+      try {
+        applicantParam.total_experience = totalExperience(applicantParam['experiences']);
+      }
+      catch (e) {
+        reject(new Error('Please fill up experience field with all detail.'))
+      }
       return SkillService.confirmSkillPresence(applicantParam['skills'])
       .then(function () {
         return WorkareaService.confirmWorkareaPresence(applicantParam['portfolios'])
@@ -129,3 +135,22 @@ var ApplicantService = {
 };
 
 module.exports = ApplicantService;
+
+function totalExperience(experiences) {
+  var total = 0;
+
+  experiences.forEach(function (experience) {
+    try {
+      var start = moment(new Date(experience.to_date));
+      var end = moment(new Date(experience.from_date));
+    }
+    catch (e) {
+      throw e;
+    }
+    
+    var diff = start.diff(end, "years", true);
+    total = total + diff;
+  });
+
+  return (Math.floor(total) + " years " + Math.floor(12 * (total % 1)) + " months " + Math.floor(30 * ((12 * (total % 1)) % 1)) + " days");
+}

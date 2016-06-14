@@ -58,6 +58,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     job_id: DataTypes.UUID,
+    total_experience: DataTypes.STRING,
     direct_apply: DataTypes.BOOLEAN
   }, {
     classMethods: {
