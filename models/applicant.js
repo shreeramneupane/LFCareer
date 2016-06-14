@@ -58,11 +58,18 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     job_id: DataTypes.UUID,
+    total_experience: DataTypes.STRING,
     direct_apply: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function (models) {
         Applicant.belongsTo(models.Job);
+        Applicant.hasOne(models.ApplicantDocument);
+        Applicant.hasMany(models.ApplicantAchievement);
+        Applicant.hasMany(models.ApplicantEducation);
+        Applicant.hasMany(models.ApplicantExperience);
+        Applicant.hasMany(models.ApplicantPortfolio);
+        Applicant.hasMany(models.ApplicantReference);
         Applicant.belongsToMany(models.Skill, { through: models.ApplicantSkill });
       }
     },
