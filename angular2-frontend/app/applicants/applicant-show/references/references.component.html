@@ -1,4 +1,4 @@
-<div class="block-wrapper">
+<div class="block-wrapper" *ngIf="references?.length">
   <div class="block-title-border">
     <i class="fa fa-fw fa-thumbs-up fa-lg" aria-hidden="true"></i>
     References
@@ -20,12 +20,12 @@
       <tbody>
       <tr *ngFor="let reference of references;  let index = index">
         <td>{{index + 1}}</td>
-        <td>Ram Shrestha</td>
-        <td>Leapfrog Technology</td>
-        <td>Associate s/w Engineer</td>
-        <td>ram@a.com</td>
-        <td>9841222333</td>
-        <td>Brother</td>
+        <td>{{reference.full_name}}</td>
+        <td>{{reference.organization}}</td>
+        <td>{{reference.designation}}</td>
+        <td>{{reference.email}}</td>
+        <td>{{reference.phone}}</td>
+        <td>{{reference.relationship}}</td>
       </tr>
       </tbody>
     </table>

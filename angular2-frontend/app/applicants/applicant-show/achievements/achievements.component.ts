@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Achievement } from '../../shared/achievement';
 
 @Component({
   selector: 'achievements',
@@ -7,5 +8,5 @@ import {Component} from '@angular/core';
 })
 
 export class Achievements {
-  achievements:any = [{}, {}];
+  @Input() achievements:Array<Achievement>;
 }

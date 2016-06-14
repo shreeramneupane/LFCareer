@@ -12,16 +12,16 @@
         <th>Project Name</th>
         <th>Link</th>
         <th>Description</th>
-        <th>Area</th>
+        <th>Areas</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let portfolio of portfolios;  let index = index">
         <td>{{index + 1}}</td>
-        <td>Billing system</td>
-        <td>Link</td>
-        <td>Project for shops which helps in billing</td>
-        <td>C, C++, Java</td>
+        <td>{{portfolio.project_name}}</td>
+        <td>{{portfolio.link}}</td>
+        <td>{{portfolio.description}}</td>
+        <td><span *ngFor="let skill of portfolio.workareas" class="label label-blue-grey">{{skill}}</span></td>
       </tr>
       </tbody>
     </table>

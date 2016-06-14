@@ -21,11 +21,12 @@ export class ApplicantService {
   }
   
   getApplicant(id:string):Observable<Applicant> {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id]));
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id]))
+    .map(response=> response.applicant)
   }
 
-  getResume(id:string) {
-    var pathParam = this.converter.getPathParam([AppConstants.APPLICANTS, id, 'documents']) + this.converter.serialize({type: 'resume'});
+  getDocument(id:string, type: string) {
+    var pathParam = this.converter.getPathParam([AppConstants.APPLICANTS, id, 'documents']) + this.converter.serialize({type: type});
     return this.apiService.fetch(pathParam);
   }
 

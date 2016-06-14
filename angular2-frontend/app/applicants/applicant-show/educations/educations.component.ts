@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Education } from '../../shared/education';
 
 @Component({
   selector: 'educations',
@@ -7,5 +8,5 @@ import {Component} from '@angular/core';
 })
 
 export class Educations {
-  educations:any = [{}, {}];
+  @Input() educations:Array<Education>;
 }

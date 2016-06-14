@@ -1,7 +1,9 @@
 .passport-photo {
-  width      : 200px;
-  float      : left;
-  text-align : left;
+  width        : 120px;
+  height       : 150px;
+  float        : left;
+  text-align   : left;
+  margin-right : 20px;
 }
 
 .passport-photo img {
@@ -19,27 +21,40 @@
   display : block;
 }
 
-.applicant-profile:first-child{
-  font-size:16px;
-  padding-bottom: 5px;
+.applicant-profile:first-child {
+  font-size      : 16px;
+  padding-bottom : 5px;
 }
 
 .block-title-border {
-  margin: 20px 0 20px;
+  margin : 20px 0 20px;
 }
 
 .block-wrapper {
-  margin-top: 20px;
+  margin-top : 20px;
 }
 
 a {
-  text-decoration: none;
+  text-decoration : none;
 }
-a.collapsible.collapsed:before
-{
-  content:'Show Other Details';
+
+a.collapsible.collapsed:before {
+  content : 'Show Other Details';
 }
-a.collapsible:before
-{
-  content:'Hide Details';
+
+a.collapsible:before {
+  content : 'Hide Details';
+}
+
+.dwnload-icon {
+  margin-left : 10px;
+}
+
+.separate-fields {
+  text-align  : center;
+  line-height : 38px;
+}
+
+.assign-btn {
+  margin-top : 15px;
 }

@@ -19,11 +19,11 @@
       <tbody>
       <tr *ngFor="let education of educations;  let index = index">
         <td>{{index + 1}}</td>
-        <td>BE</td>
-        <td>TU</td>
-        <td>Advanced College of Eng</td>
-        <td>1st Division</td>
-        <td>2015</td>
+        <td>{{education.degree}}</td>
+        <td>{{education.university}}</td>
+        <td>{{education.college}}</td>
+        <td>{{education.grade}}</td>
+        <td>{{education.passed_year}}</td>
       </tr>
       </tbody>
     </table>

@@ -2,16 +2,16 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="block clearfix">
-      <general-details></general-details>
-      <profile></profile>
+      <general-details [applicant]="applicant"></general-details>
+      <profile [applicant]="applicant"></profile>
       <a href="#Bar" class="collapsible collapsed" data-toggle="collapse"></a>
       <div id="Bar" class="collapse">
-        <experiences></experiences>
-        <portfolios></portfolios>
-        <educations></educations>
-        <achievements></achievements>
-        <references></references>
-        <other-details></other-details>
+        <experiences [experiences]="applicant?.experiences"></experiences>
+        <portfolios [portfolios]="applicant?.portfolios"></portfolios>
+        <educations [educations]="applicant?.educations"></educations>
+        <achievements [achievements]="applicant?.achievements"></achievements>
+        <references [references]="applicant?.references"></references>
+        <other-details [applicant]="applicant"></other-details>
       </div>
       <hiring-pipeline></hiring-pipeline>
     </div>

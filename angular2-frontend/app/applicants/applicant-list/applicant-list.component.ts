@@ -20,6 +20,7 @@ import * as moment from 'moment';
 export class ApplicantListComponent implements OnInit {
   applicants:any = [];
   currentPage:number = 1;
+  totalCount:number = 0;
   sorter:any;
 
   constructor(private applicantService:ApplicantService, private sorterService:Sorter) {
@@ -35,7 +36,7 @@ export class ApplicantListComponent implements OnInit {
   }
 
   downloadResume(id:string) {
-    this.applicantService.getResume(id).subscribe(
+    this.applicantService.getDocument(id, 'resume').subscribe(
     response => console.log(response),
     error => console.log(error)
     )
@@ -45,8 +46,11 @@ export class ApplicantListComponent implements OnInit {
   listApplicants(page, sortBy) {
     this.applicantService.listApplicants(page, sortBy)
     .subscribe(
-    applicants => {
-      this.applicants = applicants
+    response => {
+      {
+        this.applicants = response.applicants,
+        this.totalCount = response.total_count
+      }
     },
     error => toastr.error(error)
     );

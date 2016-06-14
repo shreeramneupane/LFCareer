@@ -1,4 +1,4 @@
-<div class="block-wrapper">
+<div class="block-wrapper"  *ngIf="achievements?.length">
   <div class="block-title-border">
     <i class="fa fa-fw fa-trophy fa-lg" aria-hidden="true"></i>
     Certificates, Trainings and Publications
@@ -11,15 +11,15 @@
         <th>SN</th>
         <th>Title</th>
         <th>Description</th>
-        <th>Passed year</th>
+        <th>Year</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let achievement of achievements;  let index = index">
         <td>{{index + 1}}</td>
-        <td>Some training</td>
-        <td>this was a training</td>
-        <td>28th Feb, 2009</td>
+        <td>{{achievement.title}}</td>
+        <td>{{achievement.description}}</td>
+        <td>{{achievement.year}}</td>
       </tr>
       </tbody>
     </table>

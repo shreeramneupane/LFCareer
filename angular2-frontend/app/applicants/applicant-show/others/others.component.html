@@ -3,23 +3,17 @@
     <i class="fa fa-user-plus"></i>
     Other Details
   </div>
-  <div class="row multiple-element">
-    <div class="col-sm-6">
-      <div class="common-view"><span class="view-label">Skills</span>
-        <p class="pre-line">react, java, javascript</p>
-      </div>
-    </div>
-    <div class="col-sm-6">
+  <div class="row">
+    <div class="col-sm-12">
       <div class="common-view"><span class="view-label">Hobbies</span>
-        <p class="pre-line">playing, singing, dancing, listening</p>
+        <p class="pre-line">{{applicant?.hobbies || '-'}}</p>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
       <div class="common-view"><span class="view-label">Cover Letter</span>
-        <p class="pre-line">This is a cover letter of mine and asdf asdf ljsdl dlskjf sldkfj sldfkj lskdjf lsjkf
-          lksjdflk jafj </p>
+        <p class="pre-line">{{applicant?.cover_letter}}</p>
       </div>
     </div>
   </div>

@@ -10,6 +10,7 @@ import { ApplicantCreationSuccessComponent } from './applicants/applicant-creati
 import { ApiService }   from './shared/utils/api.util';
 import { App }          from './shared/assets/typescripts/app';
 import { Converter }    from './shared/utils/converter.util';
+import  { DateUtil } from './shared/utils/date.util';
 import { Sorter } from './shared/utils/sort.util';
 
 @Component({
@@ -18,7 +19,7 @@ import { Sorter } from './shared/utils/sort.util';
   directives: [
     ROUTER_DIRECTIVES
   ],
-  providers : [ApiService, App, Converter, Sorter]
+  providers : [ApiService, App, Converter, DateUtil, Sorter]
 })
 
 @RouteConfig([

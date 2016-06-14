@@ -28,7 +28,7 @@ export class StageListComponent implements OnInit {
   listStage() {
     this.stageService.listStage()
     .subscribe(
-    stages => this.stages = stages,
+    response => this.stages = response.stages,
     error => toastr.error(error)
     );
   }

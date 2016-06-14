@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-
+import { Input, Component } from '@angular/core';
+import { Portfolio } from '../../shared/portfolio';
 @Component({
   selector: 'portfolios',
   styles  : [require('../applicant-show.component.css')],
@@ -7,5 +7,5 @@ import {Component} from '@angular/core';
 })
 
 export class Portfolios {
-  portfolios:any = [{}, {}];
+  @Input() portfolios:Array<Portfolio>;
 }

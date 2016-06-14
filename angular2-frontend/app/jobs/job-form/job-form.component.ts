@@ -55,11 +55,14 @@ export class JobFormComponent implements OnInit {
   getPositions() {
     this.positionService.listPosition()
     .subscribe(
-    positions => {
+    response => {
+      let positions = response.positions;
       this.positions = positions;
-      this.job.position_id = this.job.position_id ? this.job.position_id : positions[0].id;
-      this.job.specification = this.job.specification ? this.job.specification : positions[0].specification;
-      this.job.description = this.job.description ? this.job.description : positions[0].description;
+      if (positions.length) {
+        this.job.position_id = this.job.position_id ? this.job.position_id : positions[0].id;
+        this.job.specification = this.job.specification ? this.job.specification : positions[0].specification;
+        this.job.description = this.job.description ? this.job.description : positions[0].description;
+      }
     },
     error => toastr.error(error)
     );

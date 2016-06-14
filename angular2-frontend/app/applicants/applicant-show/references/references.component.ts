@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Reference } from '../../shared/reference';
 
 @Component({
   selector: 'references',
@@ -7,5 +8,5 @@ import {Component} from '@angular/core';
 })
 
 export class References {
-  references:any = [{}, {}];
+  @Input() references:Array<Reference>;
 }
