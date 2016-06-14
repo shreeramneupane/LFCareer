@@ -131,6 +131,27 @@ var ApplicantService = {
     ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
     ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
     );
+  },
+
+  update: function (id, applicantParam) {
+    return new Promise(function (resolve, reject) {
+      models.Applicant.find({
+        where: {
+          id: id
+        }
+      })
+      .then(function(applicant) {
+        if(applicant){
+          applicant.updateAttributes(applicantParam)
+          .then(function(response) {
+            resolve({applicant: response});
+          });
+        }
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
   }
 };
 
@@ -147,7 +168,7 @@ function totalExperience(experiences) {
     catch (e) {
       throw e;
     }
-    
+
     var diff = start.diff(end, "years", true);
     total = total + diff;
   });
