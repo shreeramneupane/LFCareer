@@ -24,6 +24,20 @@ export class JobFormComponent implements OnInit {
   submitted:boolean = false;
   positions:any = [];
 
+  a:any = [{title: 'new', default: true}, {title: 'new2', default: true}, {title: 'new3', default: true}, {
+    title  : 'new4',
+    default: true
+  }, {title: 'new10', default: false}];
+  b:any = [{title: 'new', default: true}, {title: 'new2', default: true}, {title: 'new3', default: true}, {
+    title  : 'new4',
+    default: true
+  }, {title: 'new10', default: false}, {title: 'new5', default: false}, {title: 'new6', default: false}, {
+    title  : 'new7',
+    default: false
+  }
+  ];
+  c:any = [];
+
   formGroup:ControlGroup = new ControlGroup({
     title        : new Control('', Validators.required),
     intro        : new Control('', Validators.required),
@@ -39,10 +53,27 @@ export class JobFormComponent implements OnInit {
 
   ngOnInit() {
     this.getPositions();
+    let that:any = this;
+
+    this.c = this.b.filter(function (index) {
+      for (var i = 0; i < that.a.length; i++) {
+        if (that.a[i].title == index.title) {
+          console.log(that.a[i].title, index.title);
+          return;
+        }
+      }
+      return index
+    });
+    console.log(this.c)
   }
 
   ngAfterViewInit() {
+    $('#my-select').multiSelect({keepOrder: true});
+    $('.ms-list').sortable({cancel: '.default'});
     var that = this;
+
+
+    console.log(this.c)
     $('#datepicker').datepicker({
       format   : 'yyyy/mm/dd',
       startDate: new Date(),
@@ -69,6 +100,11 @@ export class JobFormComponent implements OnInit {
   }
 
   submit(job:Job) {
+    let c:any = [];
+    $('.ms-list').eq(1).children('li:visible').each(function (value) {
+      c.push($(this).children().html())
+    });
+    console.log(c)
     this.submitted = true;
     if (this.formGroup.valid)
       this.onSubmit.emit(job);

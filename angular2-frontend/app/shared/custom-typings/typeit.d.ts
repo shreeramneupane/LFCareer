@@ -99,6 +99,8 @@ declare module tagit {
   }
 
 interface JQuery {
+      multiSelect(settings?: any):void;
+      sortable(settings?: any):void;
       /**
         * Setup tag-it options.
        */
