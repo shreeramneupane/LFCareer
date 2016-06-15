@@ -27,7 +27,7 @@ export class JobList implements OnInit {
   listJobs() {
     this.jobService.listJobs()
     .subscribe(
-    jobs => this.jobs = jobs,
+    response => this.jobs = response.jobs,
     error => toastr.error(error)
     );
   }

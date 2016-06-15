@@ -30,14 +30,14 @@ module.exports = {
       }
     ],
 
-    loaders   : [
+    loaders: [
       {
         test  : /\.ts$/,
         loader: 'ts'
       },
       {
-        test  : /\.html$/,
-        loader: 'raw-loader',
+        test   : /\.html$/,
+        loader : 'raw-loader',
         exclude: [helpers.root('app/index.html')]
       },
 
@@ -47,14 +47,19 @@ module.exports = {
       },
       {
         test   : /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
-      }
-      ,
+        include: helpers.root('app'),
+        exclude: helpers.root('app', 'shared', 'assets'),
+        loader : 'raw?sourceMap'
+      },
       {
         test   : /\.css$/,
-        include: helpers.root('src', 'app'),
-        loader : 'raw'
+        include: helpers.root('app', 'shared', 'assets'),
+        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
+      },
+      {
+        test   : /\.css$/,
+        exclude: helpers.root('app'),
+        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
       }
     ]
   },

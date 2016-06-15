@@ -17,6 +17,9 @@ import './shared/assets/stylesheets/style.css';
 import '../node_modules/toastr/build/toastr.min.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import '../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
+import './shared/assets/vendor/stylesheets/jquery.tagit.css';
 
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './shared/assets/vendor/javascripts/plugins.js';
+import './shared/assets/vendor/javascripts/tag-it.min.js';
+

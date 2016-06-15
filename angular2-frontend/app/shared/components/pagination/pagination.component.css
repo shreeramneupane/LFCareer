@@ -1,0 +1,6 @@
+.more-pages span {
+  margin-left      : 0;
+  margin-right     : 0;
+  border-radius    : 0 !important;
+  background-color : #ffffff;
+}

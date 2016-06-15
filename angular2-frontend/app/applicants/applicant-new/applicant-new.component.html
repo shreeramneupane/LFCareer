@@ -1,0 +1,19 @@
+<div id="page-container">
+  <div id="main-container">
+    <div id="page-content">
+      <page-header [pageHeader]="'Applicant Form'"></page-header>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="block full">
+            <applicant-form [applicant]="applicant"
+                            (onSubmit)="onSubmit($event)"></applicant-form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="clearfix"><span></span> &copy;
+      <a href="http://www.lftechnology.com/" target="_blank">Leapfrog Technology Inc.</a>
+    </footer>
+  </div>
+</div>
+
