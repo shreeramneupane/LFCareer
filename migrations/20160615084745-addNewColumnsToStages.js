@@ -6,21 +6,21 @@ module.exports = {
     return [
       queryInterface.addColumn(
       'stages',
-      'default',
+      'is_default',
       {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       }),
       queryInterface.addColumn(
       'stages',
-      'repeatable',
+      'is_repeatable',
       {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       }),
       queryInterface.addColumn(
       'stages',
-      'order',
+      'precedence_number',
       {
         type: Sequelize.INTEGER
       })
@@ -29,9 +29,9 @@ module.exports = {
 
   down: function (queryInterface, Sequelize) {
     return [
-      queryInterface.removeColumn('stages', 'default'),
-      queryInterface.removeColumn('stages', 'repeatable'),
-      queryInterface.removeColumn('stages', 'order')
+      queryInterface.removeColumn('stages', 'is_default'),
+      queryInterface.removeColumn('stages', 'is_repeatable'),
+      queryInterface.removeColumn('stages', 'precedence_number')
     ];
   }
 };

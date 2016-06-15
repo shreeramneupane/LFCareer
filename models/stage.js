@@ -14,7 +14,16 @@ module.exports = function (sequelize, DataTypes) {
           msg: 'Please provide name within 5 to 50 characters.'
         }
       }
-    }
+    },
+    is_default: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    is_repeatable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    precedence_number: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function (models) {
