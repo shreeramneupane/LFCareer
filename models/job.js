@@ -64,6 +64,7 @@ module.exports = function (sequelize, DataTypes) {
       associate: function (models) {
         Job.belongsTo(models.Position);
         Job.hasMany(models.Applicant);
+        Job.hasMany(models.JobStage);
       }
     },
     underscored: true,
