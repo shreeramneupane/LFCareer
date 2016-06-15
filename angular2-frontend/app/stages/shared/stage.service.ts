@@ -12,12 +12,17 @@ export class StageService {
   constructor(private apiService:ApiService, private converter:Converter) {
   }
   
-  listStage() {
-    return this.apiService.fetch(AppConstants.STAGES);
+  listStage(page, sortBy) {
+    let pathParams = AppConstants.STAGES + this.converter.serialize({
+      sort  : sortBy,
+      start : (page - 1) * 10,
+      offset: AppConstants.OFFSET
+    });
+    return this.apiService.fetch(pathParams);
   }
   
   getStage(id:string):Observable<Stage> {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.STAGES, id]));
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.STAGES, id])).map(res=>res.stage)
   }
   
   createStage(stage:Stage):Observable<Stage> {

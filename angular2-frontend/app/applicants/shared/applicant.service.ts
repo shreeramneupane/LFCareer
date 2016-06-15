@@ -14,7 +14,7 @@ export class ApplicantService {
   listApplicants(page, sortBy) {
     let pathParams = AppConstants.APPLICANTS + this.converter.serialize({
       sort  : sortBy,
-      start : page * 10,
+      start : (page - 1) * 10,
       offset: AppConstants.OFFSET
     });
     return this.apiService.fetch(pathParams);

@@ -16,17 +16,17 @@
           <thead>
           <tr>
             <th>SN</th>
-            <th>Name</th>
+            <th class="cursor-pointer noselect" (click)="sort('title')">Title<i class="fa pull-right" ngClass="{{sorter.title}}"></i></th>
             <th>Action</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let stage of stages;  let index = index">
-            <td>{{index + 1}}</td>
-            <td>{{stage.name}}</td>
+            <td>{{(currentPage - 1) * 10 + index + 1}}</td>
+            <td>{{stage.title}}</td>
             <td class="text-center">
               <div class="btn-group">
-                <a [routerLink]="['StageEdit', {id: stage.id}]"
+                <a *ngIf="!stage.is_default"  [routerLink]="['StageEdit', {id: stage.id}]"
                    data-toggle="tooltip" title="Edit Stage"
                    class="btn btn-sm btn-default">
                   <i class="fa fa-pencil"></i></a>
@@ -36,6 +36,7 @@
           </tbody>
         </table>
       </div>
+      <pagination [totalCount]="totalCount" (refreshList)="refreshList($event)"></pagination>
     </div>
   </div>
 </div>
