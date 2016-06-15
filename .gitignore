@@ -1,6 +1,5 @@
 node_modules
 .idea
-knexfile.js
 *.log
 secret-config.json
 config/config.json
