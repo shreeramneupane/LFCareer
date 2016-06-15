@@ -11,9 +11,9 @@ module.exports = {
 
   list: function () {
     return new Promise(function (resolve, reject) {
-      models.Job.findAll({})
+      models.Job.findAndCountAll({})
       .then(function (response) {
-        resolve({jobs: response});
+        resolve({jobs: response.rows, total_count: response.count});
       })
       .catch(function (err) {
         reject(err);
