@@ -22,6 +22,18 @@ module.exports = {
     });
   },
 
+  show: function (id) {
+    return new Promise(function (resolve, reject) {
+      models.Stage.find({where: {id: id}})
+      .then(function (response) {
+        resolve({stage: response});
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+  
   create: function (jobParam) {
     return new Promise(function (resolve, reject) {
       models.Stage.create(jobParam)
