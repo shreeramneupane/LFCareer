@@ -4,11 +4,15 @@ var Promise = require("bluebird");
 
 var models = require('../models/index');
 
+var QueryParser = require('../helpers/queryParser');
+
 module.exports = {
 
-  list: function () {
+  list: function (query) {
+    var parsedQuery = QueryParser.parse(models.Stage, query);
+
     return new Promise(function (resolve, reject) {
-      models.Stage.findAll({})
+      models.Stage.findAll(parsedQuery)
       .then(function (response) {
         resolve({stages: response});
       })
@@ -18,6 +22,18 @@ module.exports = {
     });
   },
 
+  show: function (id) {
+    return new Promise(function (resolve, reject) {
+      models.Stage.find({where: {id: id}})
+      .then(function (response) {
+        resolve({stage: response});
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+  
   create: function (jobParam) {
     return new Promise(function (resolve, reject) {
       models.Stage.create(jobParam)
