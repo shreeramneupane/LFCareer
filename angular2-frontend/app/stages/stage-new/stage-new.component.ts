@@ -16,7 +16,7 @@ import * as toastr from 'toastr';
 })
 
 export class StageNewComponent {
-  stage = this.stageService.newStage();
+  stage:Stage = new Stage();
 
   constructor(private stageService:StageService, private router:Router) {
   }

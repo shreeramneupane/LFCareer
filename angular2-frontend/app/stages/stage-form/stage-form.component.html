@@ -5,6 +5,12 @@
            ngControl="name" id="name" />
     <control-messages control="name" [submitted]="submitted"></control-messages>
   </div>
+  <div class="checkbox checkbox-styled">
+    <label>
+      <input type="hidden" value="0"/><input type="checkbox" value="1" [(ngModel)]="stage.is_repeatable"/>
+      <span>Repeatable</span>
+    </label>
+  </div>
 
   <div class="form-group form-actions clearfix">
     <div class="pull-right">

@@ -12,10 +12,6 @@ export class StageService {
   constructor(private apiService:ApiService, private converter:Converter) {
   }
   
-  newStage() {
-    return new Stage('');
-  }
-  
   listStage() {
     return this.apiService.fetch(AppConstants.STAGES);
   }
