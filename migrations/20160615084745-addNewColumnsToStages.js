@@ -22,7 +22,8 @@ module.exports = {
       'stages',
       'precedence_number',
       {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unique: true
       })
     ];
   },

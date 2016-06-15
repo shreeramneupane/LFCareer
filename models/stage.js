@@ -6,12 +6,12 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       validate: {
         len: {
           args: [5, 50],
-          msg: 'Please provide name within 5 to 50 characters.'
+          msg: 'Please provide title within 5 to 50 characters.'
         }
       }
     },
