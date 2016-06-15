@@ -1,8 +1,11 @@
 "use strict";
 
+var _ = require("lodash");
 var Promise = require("bluebird");
 
 var models = require('../models/index');
+
+var JobStageService = require('../services/jobStageService');
 
 module.exports = {
 
@@ -20,11 +23,23 @@ module.exports = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      models.Job.find({where: {id: id}})
-      .then(function (response) {
-        resolve({job: response});
+      models.Job.find({
+        where: {
+          id: id
+        },
+        include: [
+          {model: models.Stage}]
       })
-
+      .then(function (job) {
+        var job = job.dataValues;
+        job.stages = _.map(job.Stages, 'dataValues');
+        delete job.Stages;
+        _.each(job.stages, function (stage) {
+          stage.precedence_number = stage.JobStage.precedence_number;
+        });
+        job.stages = _.map(job.stages, _.partialRight(_.pick, 'id', "title", "precedence_number"));
+        resolve({job: job});
+      })
       .catch(function (err) {
         reject(err);
       });
@@ -32,14 +47,38 @@ module.exports = {
   },
 
   create: function (jobParam) {
+    var jobID;
+
     return new Promise(function (resolve, reject) {
-      models.Job.create(jobParam)
-      .then(function (response) {
-        resolve({job: response});
+      return models.sequelize.transaction()
+      .then(function (t) {
+        return models.Job.create(jobParam, {transaction: t})
+        .then(function (job) {
+          jobID = job.id;
+          return JobStageService.createMultiple(jobID, jobParam['stages'], t)
+        })
+        .then(function () {
+          return t.commit();
+        })
+        .catch(function (err) {
+          t.rollback();
+          throw new Error(err);
+        });
+      })
+      .then(function () {
+        models.Job.findOne({
+          where: {
+            id: jobID
+          }
+        })
+        .then(function (job) {
+          resolve({job: job});
+        })
       })
       .catch(function (err) {
         reject(err);
       });
+
     });
   },
 
@@ -50,10 +89,10 @@ module.exports = {
           id: id
         }
       })
-      .then(function(job) {
-        if(job){
+      .then(function (job) {
+        if (job) {
           job.updateAttributes(jobParam)
-          .then(function(response) {
+          .then(function (response) {
             resolve({job: response});
           });
         }
