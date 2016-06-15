@@ -3,10 +3,10 @@ import { enableProdMode }   from '@angular/core';
 import { HTTP_PROVIDERS }   from '@angular/http';
 import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
-import { AppComponent } from './app/app.component';
+import { RoutesComponent } from './app/routes.component';
 
 if (process.env.ENV === 'production') {
   enableProdMode();
 }
 
-bootstrap(AppComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);
+bootstrap(RoutesComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS]);

@@ -5,11 +5,13 @@ import { Job }        from '../shared/job';
 import { JobService } from '../shared/job.service';
 import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector: 'job-list',
-  templateUrl: 'app/jobs/job-list/job-list.component.html',
+  selector  : 'job-list',
+  template  : require('./job-list.component.html'),
   directives: [PageHeader, ROUTER_DIRECTIVES],
-  providers: [JobService]
+  providers : [JobService]
 })
 
 export class JobList implements OnInit {
@@ -24,8 +26,8 @@ export class JobList implements OnInit {
 
   listJobs() {
     this.jobService.listJobs()
-   .subscribe(
-    jobs => this.jobs = jobs,
+    .subscribe(
+    response => this.jobs = response.jobs,
     error => toastr.error(error)
     );
   }

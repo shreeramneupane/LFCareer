@@ -6,11 +6,13 @@ import { Stage }               from '../shared/stage'
 import { StageFormComponent }  from '../stage-form/stage-form.component';
 import { StageService }        from '../shared/stage.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'stage-new',
-  templateUrl: 'app/stages/stage-new/stage-new.component.html',
-  providers  : [StageService],
-  directives : [ROUTER_DIRECTIVES, StageFormComponent, PageHeader]
+  selector  : 'stage-new',
+  template  : require('./stage-new.component.html'),
+  providers : [StageService],
+  directives: [ROUTER_DIRECTIVES, StageFormComponent, PageHeader]
 })
 
 export class StageNewComponent {

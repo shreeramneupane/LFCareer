@@ -1,0 +1,19 @@
+<div class="block-wrapper">
+  <div class="row">
+    <div class="col-sm-12 clearfix">
+      <div class="passport-photo">
+        <img id="passport-photo"/>
+      </div>
+      <div class="applicant-details">
+              <span class="applicant-profile"><strong>{{applicant?.name}}</strong>
+                <a class="download-resume" download="{{applicant?.name}}"></a><span
+              class="glyphicon glyphicon-download dwnload-icon pull-right cursor-pointer"
+              (click)="downloadResume()"></span></span>
+        <span class="applicant-profile">Status: Pending</span>
+        <span class="applicant-profile">Applied On: {{getDate(applicant?.created_at)}}</span>
+        <span
+        class="applicant-profile">Applied For: {{applicant?.direct_apply ? 'Direct Apply': 'Indirect Apply'}}</span>
+      </div>
+    </div>
+  </div>
+</div>

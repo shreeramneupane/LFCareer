@@ -13,6 +13,37 @@ export class ApiService {
   constructor(private http:Http) {
   }
 
+  uploadFile(pathParams, documents):Observable<any> {
+    return Observable.create(observer => {
+      let formData:FormData = new FormData(),
+      xhr:XMLHttpRequest = new XMLHttpRequest();
+
+      for (var key in documents) {
+        formData.append(key, documents[key], documents[key].name);
+      }
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            observer.next(JSON.parse(xhr.response));
+            observer.complete();
+          } else {
+            observer.error(xhr.response);
+          }
+        }
+      };
+
+      xhr.upload.onprogress = (event) => {
+        //this.progress = Math.round(event.loaded / event.total * 100);
+
+        //this.progressObserver.next(this.progress);
+      };
+
+      xhr.open('POST', this.URL + pathParams, true);
+      xhr.send(formData);
+    });
+  }
+
   fetch(pathParams):Observable<any> {
     return this.http.get(this.URL + pathParams)
     .map(res => res.json())

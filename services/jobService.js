@@ -1,20 +1,16 @@
 "use strict";
 
-var Checkit = require('checkit');
-var UUID = require('node-uuid');
 var Promise = require("bluebird");
 
-var Job = require('../models/job');
-var AppError = require('../error/AppError');
-var Validation = new Checkit(require('../validation/jobValidation'));
+var models = require('../models/index');
 
 module.exports = {
 
   list: function () {
     return new Promise(function (resolve, reject) {
-      Job.list()
+      models.Job.findAll({})
       .then(function (response) {
-        resolve(response);
+        resolve({jobs: response});
       })
       .catch(function (err) {
         reject(err);
@@ -24,9 +20,22 @@ module.exports = {
 
   show: function (id) {
     return new Promise(function (resolve, reject) {
-      Job.show(id)
+      models.Job.find({where: {id: id}})
       .then(function (response) {
-        resolve(response);
+        resolve({job: response});
+      })
+
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+
+  create: function (jobParam) {
+    return new Promise(function (resolve, reject) {
+      models.Job.create(jobParam)
+      .then(function (response) {
+        resolve({job: response});
       })
       .catch(function (err) {
         reject(err);
@@ -34,43 +43,23 @@ module.exports = {
     });
   },
 
-  create: function (job) {
+  update: function (id, jobParam) {
     return new Promise(function (resolve, reject) {
-      Validation.run(job)
-      .then(function () {
-        job.id = UUID.v1();
-        job.created_at = new Date();
-
-        Job.create(job)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
+      models.Job.find({
+        where: {
+          id: id
+        }
+      })
+      .then(function(job) {
+        if(job){
+          job.updateAttributes(jobParam)
+          .then(function(response) {
+            resolve({job: response});
+          });
+        }
       })
       .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
-      });
-    });
-  },
-
-  update: function (id, job) {
-    return new Promise(function (resolve, reject) {
-      Validation.run(job)
-      .then(function () {
-        Job.update(id, job)
-        .then(function (response) {
-          resolve(response);
-        })
-        .catch(function (err) {
-          reject(err);
-        });
-      })
-      .catch(function (err) {
-        var error = AppError.validationError(err);
-        reject(error);
+        reject(err);
       });
     });
   }

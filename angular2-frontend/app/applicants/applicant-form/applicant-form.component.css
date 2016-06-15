@@ -1,0 +1,105 @@
+.subform {
+  padding-bottom : 15px;
+  border-bottom  : 1px solid #f9f9f9;
+}
+
+.subform-title {
+  padding-top    : 15px;
+  padding-bottom : 5px;
+  margin-bottom  : 20px;
+  width          : 100%;
+  font-size      : 18px;
+}
+
+.passport-photo {
+  margin : 0 auto;
+  height : 200px;
+  width  : 180px;
+  border : 1px solid #DBE1E8;
+}
+
+.passport-photo img {
+  height : inherit;
+  width  : inherit;
+}
+
+.passport-pic div {
+  text-align : center;
+  margin     : 0 auto;
+}
+
+.passport-pic div button {
+  width      : 180px;
+  margin-top : 5px;
+  color      : #ffffff;
+  font-size  : 12px;
+}
+
+.checkbox-elements {
+  clear        : both;
+  padding-left : 15px;
+  padding-top  : 10px;
+}
+
+.relative {
+  position : relative;
+}
+
+button {
+  margin-top : 10px;
+}
+
+.file-upload, #resume-upload {
+  padding-top : 0;
+  display     : block;
+  visibility  : hidden;
+  width       : 0;
+  height      : 0;
+}
+
+.optional-field {
+  font-style  : italic;
+  font-weight : 100;
+}
+
+@media screen and (min-width : 480px) {
+  .delete-subform {
+    margin-left : 15px;
+  }
+
+  .delete-portfolio {
+    margin-left : 15px;
+  }
+}
+
+@media screen and (min-width : 768px) {
+  .calendar-icon {
+    display : none;
+  }
+
+  .delete-portfolio, .delete-subform {
+    position    : absolute;
+    top         : 27px;
+    margin-left : 0;
+  }
+
+  .delete-portfolio {
+    right : -35px;
+  }
+
+  .basic-info {
+    width : 65%;
+    float : left;
+  }
+
+  .passport-pic {
+    float : left;
+    width : 35%;
+  }
+}
+
+@media screen and (min-width : 1280px) {
+  .calendar-icon {
+    display : table-cell;
+  }
+}

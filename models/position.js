@@ -1,55 +1,49 @@
-"use strict";
+'use strict';
 
-var Promise = require("bluebird");
-
-var Repository = require('./repository.js');
-
-module.exports = {
-  list: function () {
-    return new Promise(function (resolve, reject) {
-      Repository.list('positions')
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
+module.exports = function (sequelize, DataTypes) {
+  var Position = sequelize.define('Position', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV1,
+      primaryKey: true
+    },
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [5, 50],
+          msg: 'Please provide title within 5 to 50 characters.'
+        }
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      validate: {
+        len: {
+          args: [50, 400],
+          msg: 'Please provide description within 50 to 400 characters.'
+        }
+      }
+    },
+    specification: {
+      type: DataTypes.TEXT,
+      validate: {
+        notEmpty: false,
+        len: {
+          args: [50, 400],
+          msg: 'Please provide specification within 50 to 400 characters.'
+        }
+      }
+    }
   },
-
-  show: function (id) {
-    return new Promise(function (resolve, reject) {
-      Repository.show('positions', id)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  create: function (position) {
-    return new Promise(function (resolve, reject) {
-      Repository.create('positions', position)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  },
-
-  update: function (id, position) {
-    return new Promise(function (resolve, reject) {
-      Repository.update('positions', id, position)
-      .then(function (data) {
-        resolve(data);
-      })
-      .catch(function (err) {
-        reject(err);
-      });
-    });
-  }
+  {
+    classMethods: {
+      associate: function (models) {
+        Position.hasMany(models.Job);
+      }
+    },
+    underscored: true,
+    tableName: 'positions'
+  });
+  return Position;
 };

@@ -7,17 +7,20 @@ import { Job }         from '../shared/job'
 import { JobService }  from '../shared/job.service';
 import { PageHeader }  from '../../shared/components/page-header/pageHeader.component';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'job-show',
-  styleUrls  : ['app/jobs/job-show/job-show.component.css'],
-  templateUrl: 'app/jobs/job-show/job-show.component.html',
-  providers  : [JobService, AlertBox],
-  directives : [PageHeader, ROUTER_DIRECTIVES]
+  selector  : 'job-show',
+  styles    : [require('app/jobs/job-show/job-show.component.css')],
+  template  : require('./job-show.component.html'),
+  providers : [JobService, AlertBox],
+  directives: [PageHeader, ROUTER_DIRECTIVES]
 })
 
 export class JobShowComponent implements OnInit {
   public job:Job;
-  public applicants:Array<any> =[{}, {}, {}, {}, {}, {}, {}, {}];
+  public applicants:Array<any> = [{}, {}, {}, {}, {}, {}, {}, {}];
+
   constructor(private jobService:JobService, private routeParams:RouteParams, private alertBox:AlertBox) {
   }
 

@@ -1,0 +1,20 @@
+<div class="pagination-wrap clearfix">
+  <ul class="pagination" *ngIf="totalPages <= 6">
+    <li (click)="prevPage()" *ngIf="currentPage>1"><span><i class="fa fa-chevron-left"></i></span></li>
+    <li *ngFor="#page of range(totalPages)" (click)="changePage(page)" ngClass="{{currentPage===page ? 'active':''}}"><span>{{page}}</span></li>
+    <li (click)="nextPage()" *ngIf="currentPage<totalPages"><span><i class="fa fa-chevron-right"></i></span></li>
+  </ul>
+
+  <ul class="pagination" *ngIf="totalPages > 6">
+    <li (click)="prevPage()" *ngIf="currentPage>1"><span><i class="fa fa-chevron-left"></i></span></li>
+    <li (click)="changePage(1)" ngClass="{{currentPage===1 ? 'active': ''}}"><span>1</span></li>
+    <li (click)="changePage(2)" ngClass="{{currentPage===2 ? 'active': ''}}"><span>2</span></li>
+    <li *ngIf="currentPage>3" class="more-pages"><span>..</span></li>
+    <li *ngIf="currentPage>2 && currentPage<totalPages-1" ngClass="active"><span>{{currentPage}}</span></li>
+    <li *ngIf="currentPage>2 && currentPage<totalPages-2" (click)="changePage(currentPage + 1)"><span>{{currentPage + 1}}</span></li>
+    <li *ngIf="currentPage<totalPages - 3" class="more-pages"><span>..</span></li>
+    <li (click)="changePage(totalPages - 1)" ngClass="{{currentPage===totalPages - 1 ? 'active': ''}}"><span>{{totalPages - 1}}</span></li>
+    <li (click)="changePage(totalPages)" ngClass="{{totalPages===currentPage ? 'active': ''}}"><span>{{totalPages}}</span></li>
+    <li (click)="nextPage()"  *ngIf="currentPage<totalPages"><span><i class="fa fa-chevron-right"></i></span></li>
+  </ul>
+</div>

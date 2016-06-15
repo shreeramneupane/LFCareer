@@ -4,14 +4,15 @@ Router,
 ROUTER_DIRECTIVES
 } from '@angular/router-deprecated';
 
-import { DashboardComponent } from '../../../dashboard/dashboard.component';
-import { JobsComponent }      from '../../../jobs/jobs.component';
-import { PositionsComponent } from '../../../positions/positions.component';
-import { StagesComponent }    from '../../../stages/stages.component';
+import { ApplicantsComponent } from '../../../applicants/applicants.component';
+import { DashboardComponent }  from '../../../dashboard/dashboard.component';
+import { JobsComponent }       from '../../../jobs/jobs.component';
+import { PositionsComponent }  from '../../../positions/positions.component';
+import { StagesComponent }     from '../../../stages/stages.component';
 
 @Component({
-  selector: 'sidebar',
-  templateUrl: 'app/shared/components/sidebar/sidebar.component.html',
+  selector  : 'sidebar',
+  template  : require('./sidebar.component.html'),
   directives: [
     ROUTER_DIRECTIVES
   ]

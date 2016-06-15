@@ -6,11 +6,13 @@ import { Position }               from '../shared/position'
 import { PositionFormComponent }  from '../position-form/position-form.component';
 import { PositionService }        from '../shared/position.service';
 
+import * as toastr from 'toastr';
+
 @Component({
-  selector   : 'position-new',
-  templateUrl: 'app/positions/position-new/position-new.component.html',
-  providers  : [PositionService],
-  directives : [ROUTER_DIRECTIVES, PositionFormComponent, PageHeader]
+  selector  : 'position-new',
+  template  : require('./position-new.component.html'),
+  providers : [PositionService],
+  directives: [ROUTER_DIRECTIVES, PositionFormComponent, PageHeader]
 })
 
 export class PositionNewComponent {

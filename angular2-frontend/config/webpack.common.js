@@ -12,20 +12,33 @@ module.exports = {
 
   resolve: {
     alias     : {
-      config: helpers.root('config' , process.env.NODE_ENV)
+      config: helpers.root('config', process.env.NODE_ENV)
     },
     extensions: ['', '.js', '.ts']
   },
 
   module: {
+    preLoaders: [
+      {
+        test   : /\.js$/,
+        loader : 'source-map-loader',
+        exclude: [
+          // these packages have problems with their sourcemaps
+          helpers.root('node_modules/rxjs'),
+          helpers.root('node_modules/@angular'),
+        ]
+      }
+    ],
+
     loaders: [
       {
         test  : /\.ts$/,
         loader: 'ts'
       },
       {
-        test  : /\.html$/,
-        loader: 'html'
+        test   : /\.html$/,
+        loader : 'raw-loader',
+        exclude: [helpers.root('app/index.html')]
       },
 
       {
@@ -34,14 +47,19 @@ module.exports = {
       },
       {
         test   : /\.css$/,
-        exclude: helpers.root('src', 'app'),
-        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
-      }
-      ,
+        include: helpers.root('app'),
+        exclude: helpers.root('app', 'shared', 'assets'),
+        loader : 'raw?sourceMap'
+      },
       {
         test   : /\.css$/,
-        include: helpers.root('src', 'app'),
-        loader : 'raw'
+        include: helpers.root('app', 'shared', 'assets'),
+        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
+      },
+      {
+        test   : /\.css$/,
+        exclude: helpers.root('app'),
+        loader : ExtractTextPlugin.extract('style', 'css?sourceMap')
       }
     ]
   },
@@ -52,7 +70,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      inject: true,
+      inject  : true,
       template: './index.html'
     })
   ]

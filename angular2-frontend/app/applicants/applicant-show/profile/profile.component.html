@@ -1,0 +1,47 @@
+<div class="block-wrapper">
+  <div class="block-title-border">
+    <i class="fa fa-user" aria-hidden="true"></i>
+    Profile
+  </div>
+  <div class="row multiple-element">
+    <div class="col-sm-4">
+      <div class="common-view"><span class="view-label">Email</span>
+        <p class="pre-line">{{applicant?.email}}</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="common-view"><span class="view-label">Linkedin</span>
+        <p class="pre-line">{{applicant?.linkedin || '-'}}</p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="common-view"><span class="view-label">Address</span>
+        <p class="pre-line">{{applicant?.address}}</p>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="common-view"><span class="view-label">Phone</span>
+        <p class="pre-line">{{applicant?.phone_number}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row multiple-element">
+    <div class="col-sm-4">
+      <div class="common-view"><span class="view-label">Skills</span>
+        <p class="pre-line"><span class="label label-blue-grey" *ngFor="let tags of applicant?.skills">
+          {{tags}}
+        </span></p>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="common-view"><span class="view-label">Source</span>
+        <p class="pre-line">{{applicant?.source}}</p>
+      </div>
+    </div>
+    <div class="col-sm-3" *ngIf="applicant?.source_description">
+      <div class="common-view"><span class="view-label">Source Description</span>
+        <p class="pre-line">{{applicant?.source_description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
