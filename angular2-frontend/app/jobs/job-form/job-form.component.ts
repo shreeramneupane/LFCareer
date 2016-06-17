@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Control, ControlGroup, Validators }              from '@angular/common';
 import { ROUTER_DIRECTIVES }                              from '@angular/router-deprecated';
 
+
+import { ArrayUtil } from '../../shared/utils/array.util';
 import { ControlMessages } from '../../shared/components/control-messages';
 import { Job }             from '../shared/job';
 import { Position }        from '../../positions/shared/position';
@@ -47,7 +49,7 @@ export class JobFormComponent implements OnInit {
     specification: new Control('', Validators.required)
   });
 
-  constructor(private positionService:PositionService) {
+  constructor(private positionService:PositionService, private arrayUtil:ArrayUtil) {
 
   }
 
@@ -55,15 +57,7 @@ export class JobFormComponent implements OnInit {
     this.getPositions();
     let that:any = this;
 
-    this.c = this.b.filter(function (index) {
-      for (var i = 0; i < that.a.length; i++) {
-        if (that.a[i].title == index.title) {
-          console.log(that.a[i].title, index.title);
-          return;
-        }
-      }
-      return index
-    });
+    this.c = this.arrayUtil.getDiffFromObjectArrays(this.b, this.a, 'title');
     console.log(this.c)
   }
 

@@ -11,7 +11,7 @@ import * as toastr from 'toastr';
 
 @Component({
   selector  : 'job-show',
-  styles    : [require('app/jobs/job-show/job-show.component.css')],
+  styles    : [require('./job-show.component.css')],
   template  : require('./job-show.component.html'),
   providers : [JobService, AlertBox],
   directives: [PageHeader, ROUTER_DIRECTIVES]
