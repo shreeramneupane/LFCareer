@@ -18,7 +18,7 @@ export class StageFormComponent {
   submitted:boolean = false;
 
   formGroup:ControlGroup = new ControlGroup({
-    name: new Control('', Validators.required)
+    title: new Control('', Validators.required)
   });
 
   submit(stage:Stage) {
