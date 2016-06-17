@@ -71,7 +71,6 @@ module.exports = function (sequelize, DataTypes) {
         Applicant.hasMany(models.ApplicantPortfolio);
         Applicant.hasMany(models.ApplicantReference);
         Applicant.belongsToMany(models.Skill, { through: models.ApplicantSkill });
-        Applicant.hasMany(models.ApplicantStage);
         Applicant.belongsToMany(models.Stage, {through: models.ApplicantStage});
       }
     },
