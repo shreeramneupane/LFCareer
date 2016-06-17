@@ -28,7 +28,8 @@ module.exports = function (sequelize, DataTypes) {
     classMethods: {
       associate: function (models) {
         Stage.hasMany(models.ApplicantStage);
-        Stage.hasMany(models.Applicant, {through: models.ApplicantStage});
+        Stage.hasMany(models.Applicant);
+        Stage.belongsToMany(models.Applicant, {through: models.ApplicantStage});
         Stage.belongsToMany(models.Job, {through: models.JobStage});
       }
     },
