@@ -63,12 +63,12 @@
   </div>
 
   <div class="form-group">
-    <label>Something</label>
+    <label>Stages</label>
     <select multiple="multiple" id="my-select" name="my-select[]">
-      <option *ngFor="let as of a" value='{{as.title}}' [ngClass]="{default:as.default}"
-              [disabled]="as.default==true? 'true':null" selected>{{as.title}}
+      <option *ngFor="let stage of job.stages" value="{{stage.id}}" [ngClass]="{default:stage.is_default}"
+              [disabled]="stage.is_default==true? 'true':null" selected>{{stage.title}}
       </option>
-      <option *ngFor="let as of c" value="{{as.title}}">{{as.title}}</option>
+      <option *ngFor="let stage of notSelectedStages" value="{{stage.id}}">{{stage.title}}</option>
     </select>
   </div>
 

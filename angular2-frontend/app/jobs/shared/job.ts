@@ -6,4 +6,9 @@ export class Job {
   valid_until:string;
   number_of_opening:number;
   position_id:string;
+  stages:Array<any>;
+
+  constructor() {
+    this.stages = [];
+  }
 }

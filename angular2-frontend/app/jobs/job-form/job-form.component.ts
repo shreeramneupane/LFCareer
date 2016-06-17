@@ -6,8 +6,10 @@ import { ROUTER_DIRECTIVES }                              from '@angular/router-
 import { ArrayUtil } from '../../shared/utils/array.util';
 import { ControlMessages } from '../../shared/components/control-messages';
 import { Job }             from '../shared/job';
+import { JobService } from '../shared/job.service';
 import { Position }        from '../../positions/shared/position';
 import { PositionService } from '../../positions/shared/position.service';
+import { StageService } from '../../stages/shared/stage.service';
 import { ValidationService } from '../../shared/utils/validation.util';
 
 import * as toastr from 'toastr';
@@ -15,31 +17,19 @@ import * as toastr from 'toastr';
 @Component({
   selector  : 'job-form',
   template  : require('./job-form.component.html'),
-  providers : [PositionService],
+  providers : [PositionService, StageService],
   directives: [ROUTER_DIRECTIVES, ControlMessages]
 })
 
 export class JobFormComponent implements OnInit {
   @Input() job:Job;
+  @Input() stages:Array<any>;
   @Output() onSubmit = new EventEmitter<Job>();
 
   submitted:boolean = false;
   positions:any = [];
-
-  a:any = [{title: 'new', default: true}, {title: 'new2', default: true}, {title: 'new3', default: true}, {
-    title  : 'new4',
-    default: true
-  }, {title: 'new10', default: false}];
-  b:any = [{title: 'new', default: true}, {title: 'new2', default: true}, {title: 'new3', default: true}, {
-    title  : 'new4',
-    default: true
-  }, {title: 'new10', default: false}, {title: 'new5', default: false}, {title: 'new6', default: false}, {
-    title  : 'new7',
-    default: false
-  }
-  ];
-  c:any = [];
-
+  //stages:any = [];
+  notSelectedStages:any = [];
   formGroup:ControlGroup = new ControlGroup({
     title        : new Control('', Validators.required),
     intro        : new Control('', Validators.required),
@@ -49,25 +39,22 @@ export class JobFormComponent implements OnInit {
     specification: new Control('', Validators.required)
   });
 
-  constructor(private positionService:PositionService, private arrayUtil:ArrayUtil) {
+  constructor(private arrayUtil:ArrayUtil, private jobService:JobService, private positionService:PositionService, private stageService:StageService) {
 
   }
 
   ngOnInit() {
     this.getPositions();
-    let that:any = this;
-
-    this.c = this.arrayUtil.getDiffFromObjectArrays(this.b, this.a, 'title');
-    console.log(this.c)
+    console.log(this.job);
+    this.jobService.sortByPrecedence(this.job.stages);
+    //console.log(this.job.stages)
+    this.notSelectedStages = this.arrayUtil.getDiffFromObjectArrays(this.stages, this.job.stages, 'id')
   }
 
   ngAfterViewInit() {
     $('#my-select').multiSelect({keepOrder: true});
-    $('.ms-list').sortable({cancel: '.default'});
+    $('.ms-list').sortable({cancel: '.default', axis: 'y'});
     var that = this;
-
-
-    console.log(this.c)
     $('#datepicker').datepicker({
       format   : 'yyyy/mm/dd',
       startDate: new Date(),
@@ -93,15 +80,22 @@ export class JobFormComponent implements OnInit {
     );
   }
 
+
   submit(job:Job) {
-    let c:any = [];
-    $('.ms-list').eq(1).children('li:visible').each(function (value) {
-      c.push($(this).children().html())
-    });
-    console.log(c)
+    let arrangedStages:any = [];
+    let counter:number = 1;
+    var that = this;
+
     this.submitted = true;
-    if (this.formGroup.valid)
+    if (this.formGroup.valid) {
+      $('.ms-list').eq(1).children('li:visible').each(function () {
+        arrangedStages.push({id: $(this).children().attr('id'), precedence_number: counter, title: $(this).children().html()});
+        counter++;
+      });
+      job.stages = arrangedStages;
+      console.log(job.stages)
       this.onSubmit.emit(job);
+    }
     else
       toastr.error('Please fill the required fields', 'Error!');
   }

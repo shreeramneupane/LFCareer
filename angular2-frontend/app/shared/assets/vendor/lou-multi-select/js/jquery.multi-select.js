@@ -99,6 +99,7 @@
       var that = this,
           ms = that.$element,
           attributes = "",
+          spanAttributes = '',
           $option = $(option);
 
       for (var cpt = 0; cpt < option.attributes.length; cpt++){
@@ -106,9 +107,11 @@
 
         if(attr.name !== 'value' && attr.name !== 'disabled'){
           attributes += attr.name+'="'+attr.value+'" ';
-        }
+        }else if(attr.name == 'value') {
+          spanAttributes += 'id' +'="'+attr.value+'" ';
+       }
       }
-      var selectableLi = $('<li '+attributes+'><span>'+that.escapeHTML($option.text())+'</span></li>'),
+      var selectableLi = $('<li '+attributes+'><span '+spanAttributes+'>'+that.escapeHTML($option.text())+'</span></li>'),
           selectedLi = selectableLi.clone(),
           value = $option.val(),
           elementId = that.sanitize(value);
