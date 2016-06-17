@@ -45,9 +45,7 @@ export class JobFormComponent implements OnInit {
 
   ngOnInit() {
     this.getPositions();
-    console.log(this.job);
     this.jobService.sortByPrecedence(this.job.stages);
-    //console.log(this.job.stages)
     this.notSelectedStages = this.arrayUtil.getDiffFromObjectArrays(this.stages, this.job.stages, 'id')
   }
 
@@ -84,7 +82,6 @@ export class JobFormComponent implements OnInit {
   submit(job:Job) {
     let arrangedStages:any = [];
     let counter:number = 1;
-    var that = this;
 
     this.submitted = true;
     if (this.formGroup.valid) {
