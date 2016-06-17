@@ -31,17 +31,23 @@ export class Pagination implements OnChanges {
   }
 
   prevPage():void {
-    this.currentPage -= 1;
-    this.refreshList.emit(this.currentPage);
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+      this.refreshList.emit(this.currentPage);
+    }
   }
 
   nextPage():void {
-    this.currentPage += 1;
-    this.refreshList.emit(this.currentPage);
+    if (this.currentPage < this.totalPages) {
+      this.currentPage += 1;
+      this.refreshList.emit(this.currentPage);
+    }
   }
 
   changePage(pageNumber):void {
-    this.currentPage = pageNumber;
-    this.refreshList.emit(this.currentPage);
+    if (this.currentPage != pageNumber) {
+      this.currentPage = pageNumber;
+      this.refreshList.emit(this.currentPage);
+    }
   }
 }

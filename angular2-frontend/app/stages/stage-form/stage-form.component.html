@@ -1,9 +1,15 @@
 <form *ngIf="stage" (ngSubmit)="submit(stage)" [ngFormModel]="formGroup">
   <div class="form-group">
-    <label>Name</label>
-    <input type="text" class="form-control" [(ngModel)]="stage.name"
-           ngControl="name" id="name" />
-    <control-messages control="name" [submitted]="submitted"></control-messages>
+    <label>Title</label>
+    <input type="text" class="form-control" [(ngModel)]="stage.title"
+           ngControl="title" id="title" />
+    <control-messages control="title" [submitted]="submitted"></control-messages>
+  </div>
+  <div class="checkbox checkbox-styled">
+    <label>
+      <input type="hidden" value="0"/><input type="checkbox" value="1" [(ngModel)]="stage.is_repeatable"/>
+      <span>Repeatable</span>
+    </label>
   </div>
 
   <div class="form-group form-actions clearfix">

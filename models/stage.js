@@ -6,19 +6,28 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       validate: {
         len: {
           args: [5, 50],
-          msg: 'Please provide name within 5 to 50 characters.'
+          msg: 'Please provide title within 5 to 50 characters.'
         }
       }
-    }
+    },
+    is_default: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    is_repeatable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    precedence_number: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function (models) {
-        // associations can be defined here
+        Stage.belongsToMany(models.Job, {through: models.JobStage});
       }
     },
     underscored: true,

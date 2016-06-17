@@ -1,6 +1,6 @@
 export class Stage {
   id:number;
-
-  constructor(public name:string) {
-  }
+  title:string;
+  is_repeatable:boolean = false;
+  is_default:boolean = false;
 }

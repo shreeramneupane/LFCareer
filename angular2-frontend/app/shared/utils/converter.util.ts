@@ -8,7 +8,7 @@ export class Converter {
     }
     var str = [];
     for (var p in data) {
-      if (data[p] && data.hasOwnProperty(p)) {
+      if (data[p] != null && data.hasOwnProperty(p)) {
         str.push(encodeURIComponent(p) + '=' + encodeURIComponent(data[p]));
       }
     }

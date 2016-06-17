@@ -7,7 +7,7 @@ var StageService = require('../services/stageService');
 module.exports = {
 
   index: function (request, response) {
-    StageService.list()
+    StageService.list(request.query)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
