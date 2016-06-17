@@ -13,9 +13,6 @@ var JobStageService = {
       delete stageParam.id;
       return models.JobStage.create(stageParam, {transaction: t})
     })
-    .then(function () {
-      JobStageService.setAllDefaultJobStageActive(jobID, t)
-    });
   },
 
   updateMultiple: function (jobID, stageParams, t) {
@@ -39,7 +36,7 @@ var JobStageService = {
       });
     })
     .then(function () {
-      return JobStageService.setAllDefaultJobStageActive(jobID, t)
+      return JobStageService.removeNotUsedJobStage(jobID, stageParams, t)
     });
   },
 
@@ -86,24 +83,21 @@ var JobStageService = {
     });
   },
 
-  setAllDefaultJobStageActive: function (jobId, t) {
+  removeNotUsedJobStage: function (jobId, stageParams, t) {
+    var activeStageIDs = _.map(stageParams, "stage_id");
+
     return models.JobStage.findAll({
       where: {
-        job_id: jobId
-      },
-      include: [
-        {
-          model: models.Stage,
-          where: {
-            is_default: true
-          }
+        job_id: jobId,
+        stage_id: {
+          not: activeStageIDs
         }
-      ]
+      }
     })
-    .then(function (jobStages) {
-      return models.sequelize.Promise.map(jobStages, function (jobStage) {
-        return jobStage.updateAttributes({is_active: true}, {transaction: t})
-      });
+    .then(function (notUsedJobStages) {
+      return models.sequelize.Promise.map(notUsedJobStages, function (notUsedJobStage) {
+        return notUsedJobStage.destroy({transaction: t})
+      })
     });
   }
 };

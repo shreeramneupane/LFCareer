@@ -8,8 +8,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     job_id: DataTypes.UUID,
     stage_id: DataTypes.UUID,
-    precedence_number: DataTypes.INTEGER,
-    is_active: DataTypes.BOOLEAN
+    precedence_number: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function (models) {
