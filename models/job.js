@@ -65,6 +65,7 @@ module.exports = function (sequelize, DataTypes) {
         Job.belongsTo(models.Position);
         Job.hasMany(models.Applicant);
         Job.hasMany(models.JobStage);
+        Job.belongsToMany(models.Stage, {through: models.JobStage});
       }
     },
     underscored: true,

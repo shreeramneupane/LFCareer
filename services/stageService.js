@@ -12,9 +12,9 @@ module.exports = {
     var parsedQuery = QueryParser.parse(models.Stage, query);
 
     return new Promise(function (resolve, reject) {
-      models.Stage.findAll(parsedQuery)
+      models.Stage.findAndCountAll(parsedQuery)
       .then(function (response) {
-        resolve({stages: response});
+        resolve({stages: response.rows, total_count: response.count});
       })
       .catch(function (err) {
         reject(err);
@@ -33,7 +33,7 @@ module.exports = {
       });
     });
   },
-  
+
   create: function (jobParam) {
     return new Promise(function (resolve, reject) {
       models.Stage.create(jobParam)
