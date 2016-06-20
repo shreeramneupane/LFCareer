@@ -13,6 +13,7 @@ var ApplicantEducationService = require('../services/applicantEducationService')
 var ApplicantExperienceService = require('../services/applicantExperienceService');
 var ApplicantPortfolioService = require('../services/applicantPortfolioService');
 var ApplicantSkillService = require('../services/applicantSkillService');
+var ApplicantStageService = require('../services/applicantStageService');
 var ApplicantReferenceService = require('../services/applicantReferenceService');
 var SkillService = require('../services/skillService');
 var WorkareaService = require('../services/workAreaService');
@@ -137,7 +138,8 @@ var ApplicantService = {
     ApplicantExperienceService.create(applicantID, applicantParam['experiences'], t),
     ApplicantPortfolioService.create(applicantID, applicantParam['portfolios'], t),
     ApplicantReferenceService.create(applicantID, applicantParam['references'], t),
-    ApplicantSkillService.create(applicantID, applicantParam['skills'], t)
+    ApplicantSkillService.create(applicantID, applicantParam['skills'], t),
+    ApplicantStageService.createDefault(applicantID, t)
     );
   },
 
