@@ -1,0 +1,25 @@
+.hiring-stages {
+  width: 20%;
+  min-width: 170px;
+  float: left;
+  text-align: center;
+}
+
+.applicant-table {
+  margin-top: 15px;
+}
+
+.block-full {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.hiring-stages button {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.hiring-stages-title {
+  font-size: 16px;
+  weight: 300;
+  padding-bottom: 20px;
+}

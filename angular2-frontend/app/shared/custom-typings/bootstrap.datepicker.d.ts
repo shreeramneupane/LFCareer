@@ -42,7 +42,11 @@ interface DatepickerEventObject extends JQueryEventObject {
   format(format?:string): string;
 }
 
+
 interface JQuery {
+  confirm():JQuery;
+  confirm(options:ConfirmOptions):JQuery;
+
   datepicker(): JQuery;
   datepicker(methodName:string): any;
   datepicker(methodName:string, params:any): any;

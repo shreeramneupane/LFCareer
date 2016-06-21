@@ -11,7 +11,11 @@ import { Stage }        from './stage';
 export class StageService {
   constructor(private apiService:ApiService, private converter:Converter) {
   }
-  
+
+  getAllStages(){
+    return this.apiService.fetch(AppConstants.STAGES)
+  }
+
   listStage(page, sortBy) {
     let pathParams = AppConstants.STAGES + this.converter.serialize({
       sort  : sortBy,

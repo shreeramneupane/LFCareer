@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="block full">
-      <job-form [job]="job"
+      <job-form *ngIf="stages" [job]="job" [stages]="stages"
                 (onSubmit)="onSubmit($event)"></job-form>
     </div>
   </div>

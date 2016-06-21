@@ -9,6 +9,7 @@ import { ApplicantNewComponent } from './applicants/applicant-new/applicant-new.
 import { ApplicantCreationSuccessComponent } from './applicants/applicant-creation-success/applicant-creation-success.component';
 import { ApiService }   from './shared/utils/api.util';
 import { App }          from './shared/assets/typescripts/app';
+import { ArrayUtil } from './shared/utils/array.util';
 import { Converter }    from './shared/utils/converter.util';
 import  { DateUtil } from './shared/utils/date.util';
 import { Sorter } from './shared/utils/sort.util';
@@ -19,7 +20,7 @@ import { Sorter } from './shared/utils/sort.util';
   directives: [
     ROUTER_DIRECTIVES
   ],
-  providers : [ApiService, App, Converter, DateUtil, Sorter]
+  providers : [ApiService, App, ArrayUtil, Converter, DateUtil, Sorter]
 })
 
 @RouteConfig([
