@@ -99,10 +99,19 @@ var JobService = {
             return job.updateAttributes(jobParam, {transaction: t})
             .then(function (job) {
               jobID = job.id;
-              return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
-              .then(function () {
-                return JobStageService.updateMultiple(jobID, jobParam['stages'], t)
-              });
+              return models.Applicant.count({
+                where: {
+                  job_id: jobID
+                }
+              })
+              .then(function (applicantCount) {
+                if (applicantCount === 0) {
+                  return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
+                  .then(function () {
+                    return JobStageService.updateMultiple(jobID, jobParam['stages'], t)
+                  });
+                }
+              })
             })
             .then(function () {
               return t.commit();

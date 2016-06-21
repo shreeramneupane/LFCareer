@@ -1,25 +1,21 @@
 'use strict';
 module.exports = {
-  up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('job_stages', {
+  up: function (queryInterface, Sequelize) {
+    return queryInterface.createTable('applicant_stages', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      job_id: {
+      applicant_id: {
         allowNull: false,
         type: Sequelize.UUID,
-        references: {model: 'jobs', key: 'id'}
+        references: {model: 'applicants', key: 'id'}
       },
       stage_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: {model: 'stages', key: 'id'}
-      },
-      precedence_number: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       created_at: {
         allowNull: false,
@@ -31,7 +27,7 @@ module.exports = {
       }
     });
   },
-  down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('job_stages');
+  down: function (queryInterface, Sequelize) {
+    return queryInterface.dropTable('applicant_stages');
   }
 };

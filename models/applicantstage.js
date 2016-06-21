@@ -1,23 +1,22 @@
 'use strict';
 module.exports = function (sequelize, DataTypes) {
-  var JobStage = sequelize.define('JobStage', {
+  var ApplicantStage = sequelize.define('ApplicantStage', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true
     },
-    job_id: DataTypes.UUID,
-    stage_id: DataTypes.UUID,
-    precedence_number: DataTypes.INTEGER
+    applicant_id: DataTypes.UUID,
+    stage_id: DataTypes.UUID
   }, {
     classMethods: {
       associate: function (models) {
-        JobStage.belongsTo(models.Job);
-        JobStage.belongsTo(models.Stage);
+        ApplicantStage.belongsTo(models.Applicant);
+        ApplicantStage.belongsTo(models.Stage);
       }
     },
     underscored: true,
-    tableName: 'job_stages'
+    tableName: 'applicant_stages'
   });
-  return JobStage;
+  return ApplicantStage;
 };
