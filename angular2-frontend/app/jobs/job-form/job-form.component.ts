@@ -84,17 +84,17 @@ export class JobFormComponent implements OnInit {
     let counter:number = 1;
 
     this.submitted = true;
-    if (this.formGroup.valid) {
+ /*   if (this.formGroup.valid) {
       $('.ms-list').eq(1).children('li:visible').each(function () {
         arrangedStages.push({id: $(this).children().attr('id'), precedence_number: counter, title: $(this).children().html()});
         counter++;
       });
       job.stages = arrangedStages;
       console.log(job.stages)
-      this.onSubmit.emit(job);
-    }
-    else
-      toastr.error('Please fill the required fields', 'Error!');
+ */     this.onSubmit.emit(job);
+    /* }
+     else
+     toastr.error('Please fill the required fields', 'Error!');*/
   }
 
   changeSpecAndDescription(value) {
