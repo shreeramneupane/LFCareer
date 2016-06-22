@@ -12,12 +12,18 @@ export class JobService {
   constructor(private apiService:ApiService, private converter:Converter) {
   }
 
+  sortByPrecedence(stages) {
+    stages.sort(function (a, b) {
+      return a.precedence_number - b.precedence_number;
+    })
+  }
+
   listJobs() {
     return this.apiService.fetch(AppConstants.JOBS);
   }
 
   getJob(id:string) {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.JOBS, id]));
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.JOBS, id])).map(res => res.job)
   }
 
   createJob(job:Job) {

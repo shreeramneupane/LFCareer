@@ -7,8 +7,6 @@ var config = require('config');
 @Injectable()
 export class ApiService {
   private URL:string = config.API_URL;
-  private headers = new Headers({'Content-Type': 'application/json'});
-  private options = new RequestOptions({headers: this.headers});
 
   constructor(private http:Http) {
   }
@@ -38,35 +36,78 @@ export class ApiService {
 
         //this.progressObserver.next(this.progress);
       };
-
       xhr.open('POST', this.URL + pathParams, true);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
       xhr.send(formData);
     });
   }
 
   fetch(pathParams):Observable<any> {
-    return this.http.get(this.URL + pathParams)
+    var that = this;
+    return this.http.get(this.URL + pathParams, this.getHeader())
     .map(res => res.json())
-    .catch(this.handleError);
+    .catch(res => {
+      return this.handleError(res, function () {
+        return that.fetch(pathParams)
+      })
+    })
+
   }
 
   create(pathParams:string, object:any):Observable<any> {
+    var that = this;
     let body = JSON.stringify(object);
-
-    return this.http.post(this.URL + pathParams, body, this.options)
+    return this.http.post(this.URL + pathParams, body, this.getHeader())
     .map(res => res.json())
-    .catch(this.handleError)
+    .catch(res => {
+      return this.handleError(res, function () {
+        return that.create(pathParams, object)
+      })
+    })
   }
 
-  update(pathParams:string, object:any):Observable<any> {
+  update(pathParams:string, object:any):Observable < any > {
+    var that = this;
     let body = JSON.stringify(object);
-
-    return this.http.put(this.URL + pathParams, body, this.options)
+    return this.http.put(this.URL + pathParams, body, this.getHeader())
     .map(res => res.json())
-    .catch(this.handleError)
+    .catch(res => {
+      return this.handleError(res, function () {
+        return that.update(pathParams, object)
+      })
+    })
   }
 
-  private handleError(response:any) {
-    return Observable.throw(JSON.parse(response['_body']).error.message || 'Server Error');
+  private getHeader():any {
+    let headers = new Headers({
+      'Content-Type' : 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    });
+    let options = new RequestOptions({headers: headers});
+    return options;
+  }
+
+  private errorMessage(response) {
+    return Observable.throw(response.json().error.message);
+  }
+
+  private handleError(response:any, func:any) {
+    if (response.status == 401) {
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'Accept'      : 'application/json'
+      });
+      let options = new RequestOptions({headers: headers});
+      let body = JSON.stringify({'refresh_token': localStorage.getItem('refresh_token')});
+      return this.http.post(window.location.origin + '/api/auth/auth/refreshtoken', body, options)
+      .flatMap(res => {
+        res = res.json();
+        localStorage.setItem('access_token', res.access_token);
+        localStorage.setItem('refresh_token', res.refresh_token);
+        return func();
+      })
+    } else {
+      return this.errorMessage(response);
+    }
   }
 }

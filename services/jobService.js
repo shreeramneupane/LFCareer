@@ -38,7 +38,7 @@ var JobService = {
           stage.precedence_number = stage.JobStage.precedence_number;
           stage.is_active = stage.JobStage.is_active;
         });
-        job.stages = _.map(job.stages, _.partialRight(_.pick, 'id', "title", "precedence_number", "is_active"));
+        job.stages = _.map(job.stages, _.partialRight(_.pick, 'id', "title", "precedence_number", "is_default"));
         job.stages = _.sortBy(job.stages, 'precedence_number');
         resolve({job: job});
       })

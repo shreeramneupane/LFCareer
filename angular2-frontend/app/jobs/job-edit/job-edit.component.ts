@@ -9,32 +9,47 @@ import { Job }               from '../shared/job';
 import { JobFormComponent }  from '../job-form/job-form.component';
 import { JobService }        from '../shared/job.service';
 import { PageHeader }        from '../../shared/components/page-header/pageHeader.component';
+import { StageService } from '../../stages/shared/stage.service';
 
 import * as toastr from 'toastr';
 
 @Component({
   selector  : 'job-edit',
   template  : require('./job-edit.component.html'),
-  providers : [JobService],
+  providers : [JobService, StageService],
   directives: [ROUTER_DIRECTIVES, PageHeader, JobFormComponent]
 })
 
 export class JobEditComponent implements OnInit {
   public job:Job = new Job();
+  stages:Array<any>;
 
-  constructor(private jobService:JobService, private routeParams:RouteParams, private router:Router) {
+  constructor(private jobService:JobService, private stageService:StageService, private routeParams:RouteParams, private router:Router) {
   }
 
   ngOnInit() {
     this.getJob();
   }
 
+
   getJob() {
     let id = this.routeParams.get('id');
     this.jobService.getJob(id).subscribe(
-    job => this.job = job,
+    job => {
+      this.job = job;
+      this.getStages();
+    },
     error => toastr.error(error)
     );
+  }
+
+  getStages() {
+    this.stageService.getAllStages().subscribe(
+    response => {
+      this.stages = response.stages;
+    },
+    error => toastr.error(error)
+    )
   }
 
   onSubmit(job:Job) {

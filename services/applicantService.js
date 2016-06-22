@@ -20,7 +20,7 @@ var WorkareaService = require('../services/workAreaService');
 
 var ApplicantService = {
   list: function (query) {
-    var parsedQuery = QueryParser.parse(models.Stage, query);
+    var parsedQuery = QueryParser.parse(models.Applicant, query);
     parsedQuery.include = [{model: models.Job}];
     return new Promise(function (resolve, reject) {
       models.Applicant.findAndCountAll(parsedQuery)

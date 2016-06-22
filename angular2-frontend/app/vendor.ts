@@ -23,3 +23,5 @@ import '../node_modules/bootstrap/dist/js/bootstrap.min.js';
 import './shared/assets/vendor/javascripts/plugins.js';
 import './shared/assets/vendor/javascripts/tag-it.min.js';
 
+import './shared/assets/vendor/lou-multi-select/js/jquery.multi-select.js';
+import './shared/assets/vendor/lou-multi-select/css/multi-select.css';
