@@ -6,22 +6,21 @@
     opening. Please assign to an open job or assign to an existing hiring pipeline.</p>
   <div class="form-group clearfix">
     <div class="row multiple-element">
-      <div class="col-md-6 col-lg-4 element">
+      <div class="col-sm-3 element">
         <select class="form-control"
                 [(ngModel)]="job_id">
           <option [value]="0">Assign to open job</option>
           <option *ngFor="let job of jobs" [value]="job.id">{{job.title}}</option>
         </select>
       </div>
+      <div class="col-sm-1 element assign-btn">
+        <button class="btn btn-primary" (click)="assignToJob()">Assign</button>
+      </div>
       <div class="col-sm-1 separate-fields">OR</div>
-      <div class="col-md-6 col-lg-4 element">
+      <div class="col-sm-2 element">
         <button class="btn btn-primary">Start timeline</button>
       </div>
     </div>
-    <div class="row assign-btn">
-      <div class="col-md-6 col-lg-4 element">
-        <button class="btn btn-primary" (click)="assignToJob()">Assign</button>
-      </div>
-    </div>
+
   </div>
 </div>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
 ROUTER_DIRECTIVES,
 RouteParams,
@@ -17,16 +17,18 @@ import { PageHeader } from '../../shared/components/page-header/pageHeader.compo
 import { Profile } from './profile/profile.component';
 import { Portfolios } from './portfolios/portfolios.component';
 import { References } from './references/references.component';
+import { Timeline } from './timeline/timeline.component';
 
 @Component({
   selector  : 'applicant-show',
   styles    : [require('./applicant-show.component.css')],
   template  : require('./applicant-show.component.html'),
-  directives: [ROUTER_DIRECTIVES, PageHeader, Achievements, Educations, Experiences, GeneralDetails, HiringPipeline, OtherDetails, Portfolios, Profile, References],
-  providers: [ApplicantService]
+  directives: [ROUTER_DIRECTIVES, PageHeader, Achievements, Educations, Experiences, GeneralDetails, HiringPipeline, OtherDetails, Portfolios, Profile, References, Timeline],
+  providers : [ApplicantService]
 })
-export class ApplicantShowComponent {
+export class ApplicantShowComponent implements OnInit {
   applicant:Applicant;
+
   constructor(private applicantService:ApplicantService, private routeParams:RouteParams) {
   }
 

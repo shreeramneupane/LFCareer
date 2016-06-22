@@ -31,4 +31,3 @@ var routes = requireDir('./routes');
 for (var i in routes) app.use('/v1', routes[i]);
 
 app.listen(port);
-s

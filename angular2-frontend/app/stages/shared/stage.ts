@@ -3,4 +3,5 @@ export class Stage {
   title:string;
   is_repeatable:boolean = false;
   is_default:boolean = false;
+  is_interview:boolean = false;
 }

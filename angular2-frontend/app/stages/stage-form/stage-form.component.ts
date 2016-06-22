@@ -5,6 +5,8 @@ import { ROUTER_DIRECTIVES }                      from '@angular/router-deprecat
 import { ControlMessages } from '../../shared/components/control-messages';
 import { Stage }           from '../shared/stage';
 
+import * as toastr from 'toastr';
+
 @Component({
   selector  : 'stage-form',
   template  : require('./stage-form.component.html'),
