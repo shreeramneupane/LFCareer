@@ -4,16 +4,16 @@
   </div>
   <div class="timeline block-content-full">
     <ul class="timeline-list timeline-hover">
-      <li *ngFor="let timeline of timelines" data-toggle="tooltip">
+      <li *ngFor="let timeLineItem of timelineItems" data-toggle="tooltip">
         <div class="timeline-icon"><i class='fa fa-pencil'></i>
         </div>
         <div class="timeline-time">
-          26th August, 2016
+          {{dateUtil.getRelativeDate(timeLineItem.created_at)}}
         </div>
         <div class="timeline-content">
-          <div class="push-bit timeline-item-title">Shortlisted</div>
-          <p><span class="weight-500">Remarks: </span>
-            This is a shortlist</p>
+          <div class="push-bit timeline-item-title">{{timeLineItem.title}}</div>
+          <p *ngIf="timeLineItem.remarks"><span class="weight-500">Remarks: </span>
+            {{timeLineItem.remarks}}</p>
         </div>
       </li>
     </ul>

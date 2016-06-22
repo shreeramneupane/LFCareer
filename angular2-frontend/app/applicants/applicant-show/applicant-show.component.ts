@@ -28,6 +28,7 @@ import { Timeline } from './timeline/timeline.component';
 })
 export class ApplicantShowComponent implements OnInit {
   applicant:Applicant;
+  timeline:any;
 
   constructor(private applicantService:ApplicantService, private routeParams:RouteParams) {
   }
@@ -35,6 +36,7 @@ export class ApplicantShowComponent implements OnInit {
   ngOnInit() {
     let id = this.routeParams.get('id');
     this.getApplicant(id);
+    this.getTimeline(id);
   }
 
   getApplicant(id:string):void {
@@ -44,10 +46,20 @@ export class ApplicantShowComponent implements OnInit {
     );
   }
 
+  getTimeline(id:string):void {
+    this.applicantService.getTimeline(id).subscribe(
+    timeline => this.timeline = timeline,
+    error => toastr.error(error)
+    );
+  }
+
   startTimeline(timeline:any):void {
     this.applicantService.startTimeline(timeline, this.applicant.id)
     .subscribe(
-    applicant => this.applicant = applicant,
+    applicant => {
+      this.applicant = applicant;
+      this.getTimeline(applicant.id);
+    },
     error => taostr.error(error)
     );
   }
