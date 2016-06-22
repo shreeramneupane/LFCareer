@@ -67,6 +67,7 @@ export class ApiService {
   }
 
   update(pathParams:string, object:any):Observable < any > {
+    console.log('sdjflksjdflksdf', object)
     var that = this;
     let body = JSON.stringify(object);
     return this.http.put(this.URL + pathParams, body, this.getHeader())

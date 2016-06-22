@@ -43,4 +43,12 @@ export class ApplicantShowComponent implements OnInit {
     error => toastr.error(error)
     );
   }
+
+  startTimeline(timeline:any):void {
+    this.applicantService.startTimeline(timeline, this.applicant.id)
+    .subscribe(
+    applicant => this.applicant = applicant,
+    error => taostr.error(error)
+    );
+  }
 }

@@ -3,7 +3,7 @@
   <div class="col-lg-12">
     <div class="block clearfix">
       <general-details [applicant]="applicant"></general-details>
-      <profile [applicant]="applicant"></profile>
+      <profile [applicant]="applicant"></profile>app
       <a href="#Bar" class="collapsible collapsed" data-toggle="collapse"></a>
       <div id="Bar" class="collapse">
         <experiences [experiences]="applicant?.experiences"></experiences>
@@ -13,8 +13,8 @@
         <references [references]="applicant?.references"></references>
         <other-details [applicant]="applicant"></other-details>
       </div>
-      <hiring-pipeline *ngIf="0==1"></hiring-pipeline>
-      <timeline></timeline>
+      <hiring-pipeline (startTimeline)="startTimeline($event)" *ngIf="!applicant?.is_processable"></hiring-pipeline>
+      <timeline *ngIf="applicant?.is_processable"></timeline>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
 import { Job } from '../../../jobs/shared/job';
 import { JobService } from '../../../jobs/shared/job.service';
@@ -13,8 +13,11 @@ import * as toastr from 'toastr';
 })
 
 export class HiringPipeline implements OnInit {
+  @Output() startTimeline = new EventEmitter<any>();
+
   jobs:Array<Job> = [];
   job_id:string = '0';
+  timeline:any;
 
   constructor(private jobService:JobService) {
   }
@@ -33,11 +36,19 @@ export class HiringPipeline implements OnInit {
     );
   }
 
+  startTimelinew() {
+    this.timeline = {};
+    this.timeline.is_processable = true;
+    this.startTimeline.emit(this.timeline);
+  }
+
   assignToJob() {
     if (this.job_id == '0') {
       toastr.error('Please enter job type', 'Error!');
     } else {
-      console.log('submit')
+      this.timeline = {};
+      this.timeline.job_id = this.job_id;
+      this.startTimeline.emit(this.timeline);
     }
   }
 }

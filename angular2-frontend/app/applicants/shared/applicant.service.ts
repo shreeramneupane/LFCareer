@@ -25,6 +25,11 @@ export class ApplicantService {
     .map(response=> response.applicant)
   }
 
+    startTimeline(timeline:any, id:string) {
+      console.log(timeline)
+      return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, id]), timeline);
+    }
+
   getDocument(id:string, type: string) {
     var pathParam = this.converter.getPathParam([AppConstants.APPLICANTS, id, 'documents']) + this.converter.serialize({type: type});
     return this.apiService.fetch(pathParam);
