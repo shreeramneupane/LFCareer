@@ -23,6 +23,7 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
+    is_termination: DataTypes.BOOLEAN,
     precedence_number: DataTypes.INTEGER
   }, {
     classMethods: {
