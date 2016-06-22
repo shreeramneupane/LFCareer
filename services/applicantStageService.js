@@ -19,5 +19,21 @@ module.exports = {
         stage_id: stage.id
       }, {transaction: t})
     })
+  },
+
+  list: function (applicantID) {
+    return new Promise(function (resolve, reject) {
+      models.ApplicantStage.findAndCountAll({
+        where: {
+          applicant_id: applicantID
+        }
+      })
+      .then(function (response) {
+        resolve({applicant_stages: response.rows, total_count: response.count});
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
   }
 };
