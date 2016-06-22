@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
     res.writeHead(200, headers);
     res.end();
   } else {
-    res.setHeader('Access-Control-Allow-Origin', 'http://local.vyaguta.lftechnology.com:4000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://local.vyaguta.lftechnology.com:4000, http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', true);
@@ -31,4 +31,3 @@ var routes = requireDir('./routes');
 for (var i in routes) app.use('/v1', routes[i]);
 
 app.listen(port);
-s
