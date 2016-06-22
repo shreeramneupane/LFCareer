@@ -13,6 +13,7 @@ module.exports = function (sequelize, DataTypes) {
       associate: function (models) {
         ApplicantStage.belongsTo(models.Applicant);
         ApplicantStage.belongsTo(models.Stage);
+        ApplicantStage.hasMany(models.ApplicantStageInterview);
       }
     },
     underscored: true,
