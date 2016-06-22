@@ -27,10 +27,7 @@ export class PositionListComponent implements OnInit {
   listPosition() {
     this.positionListService.listPosition()
     .subscribe(
-    response => {
-      console.log(response);
-      this.positions = response.positions
-    },
+    response => this.positions = response.positions,
     error => toastr.error(error)
     );
   }
