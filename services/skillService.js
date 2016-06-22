@@ -8,7 +8,7 @@ var QueryParser = require('../helpers/queryParser');
 module.exports = {
 
   search: function (query) {
-    var parsedQuery = QueryParser.parse(models.Stage, query);
+    var parsedQuery = QueryParser.parse(models.Skill, query);
 
     return new Promise(function (resolve, reject) {
       models.Skill.findAll(parsedQuery)

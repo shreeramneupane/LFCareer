@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Observable }                     from 'rxjs/Rx';
 
 import { Job }        from '../shared/job';
 import { JobService } from '../shared/job.service';
@@ -24,7 +25,7 @@ export class JobList implements OnInit {
     this.listJobs();
   }
 
-  listJobs() {
+  listJobs():any {
     this.jobService.listJobs()
     .subscribe(
     response => this.jobs = response.jobs,

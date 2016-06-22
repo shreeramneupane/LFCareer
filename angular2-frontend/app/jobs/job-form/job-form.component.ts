@@ -28,7 +28,6 @@ export class JobFormComponent implements OnInit {
 
   submitted:boolean = false;
   positions:any = [];
-  //stages:any = [];
   notSelectedStages:any = [];
   formGroup:ControlGroup = new ControlGroup({
     title        : new Control('', Validators.required),
@@ -86,15 +85,18 @@ export class JobFormComponent implements OnInit {
     this.submitted = true;
     if (this.formGroup.valid) {
       $('.ms-list').eq(1).children('li:visible').each(function () {
-        arrangedStages.push({id: $(this).children().attr('id'), precedence_number: counter, title: $(this).children().html()});
+        arrangedStages.push({
+          id               : $(this).children().attr('id'),
+          precedence_number: counter,
+          title            : $(this).children().html()
+        });
         counter++;
       });
       job.stages = arrangedStages;
-      console.log(job.stages)
       this.onSubmit.emit(job);
-    }
-    else
+    } else {
       toastr.error('Please fill the required fields', 'Error!');
+    }
   }
 
   changeSpecAndDescription(value) {

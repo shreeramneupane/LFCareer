@@ -10,15 +10,18 @@ var config = require(fileName)[env];
 module.exports = {
 
   authorize: function (req, res, next) {
-    if (req.originalUrl !== '/v1/applicants' && req.method !== 'POST') {
+    if (req.originalUrl === '/v1/applicants' && req.method === 'POST') {
+      next();
+    }
+    else {
       var authorization = req.get('Authorization');
       var authorizationURL = config['vyaguta_auth_url'];
 
       request({
-        url: authorizationURL,
-        method: 'GET',
+        url    : authorizationURL,
+        method : 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type' : 'application/json',
           'Authorization': authorization
         }
       }, function (err, response) {
@@ -35,9 +38,5 @@ module.exports = {
         }
       });
     }
-    else {
-      next();
-    }
-
   }
 };
