@@ -10,7 +10,6 @@ bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-  console.log(req.method, req.get('Authorization'), 'LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL')
   if (req.method === 'OPTIONS') {
     var headers = {};
     headers["Access-Control-Allow-Origin"] = "*";
@@ -32,3 +31,4 @@ var routes = requireDir('./routes');
 for (var i in routes) app.use('/v1', routes[i]);
 
 app.listen(port);
+s

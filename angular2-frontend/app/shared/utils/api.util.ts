@@ -36,8 +36,8 @@ export class ApiService {
 
         //this.progressObserver.next(this.progress);
       };
-
       xhr.open('POST', this.URL + pathParams, true);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
       xhr.send(formData);
     });
   }
