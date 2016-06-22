@@ -14,6 +14,7 @@ module.exports = function (sequelize, DataTypes) {
         ApplicantStage.belongsTo(models.Applicant);
         ApplicantStage.belongsTo(models.Stage);
         ApplicantStage.hasMany(models.ApplicantStageInterview);
+        ApplicantStage.hasMany(models.ApplicantStageRemark);
       }
     },
     underscored: true,
