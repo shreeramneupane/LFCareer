@@ -59,7 +59,8 @@ module.exports = function (sequelize, DataTypes) {
     },
     job_id: DataTypes.UUID,
     total_experience: DataTypes.STRING,
-    direct_apply: DataTypes.BOOLEAN
+    direct_apply: DataTypes.BOOLEAN,
+    is_processable: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate: function (models) {
@@ -70,7 +71,7 @@ module.exports = function (sequelize, DataTypes) {
         Applicant.hasMany(models.ApplicantExperience);
         Applicant.hasMany(models.ApplicantPortfolio);
         Applicant.hasMany(models.ApplicantReference);
-        Applicant.belongsToMany(models.Skill, { through: models.ApplicantSkill });
+        Applicant.belongsToMany(models.Skill, {through: models.ApplicantSkill});
         Applicant.belongsToMany(models.Stage, {through: models.ApplicantStage});
       }
     },

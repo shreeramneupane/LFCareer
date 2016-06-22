@@ -33,19 +33,22 @@ module.exports = {
         title: 'Hired',
         is_default: true,
         is_repeatable: false,
-        precedence_number: 5
+        precedence_number: 5,
+        is_termination: true
       },
       {
         title: 'Benched',
         is_default: true,
         is_repeatable: false,
-        precedence_number: 6
+        precedence_number: 6,
+        is_termination: true
       },
       {
         title: 'Rejected',
         is_default: true,
         is_repeatable: false,
-        precedence_number: 7
+        precedence_number: 7,
+        is_termination: true
       }
     ];
 
