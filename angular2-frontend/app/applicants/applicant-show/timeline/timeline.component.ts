@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 @Component({
   selector: 'timeline',
   styles  : [require('../applicant-show.component.css')],
@@ -7,4 +6,5 @@ import { Component, Input } from '@angular/core';
 })
 
 export class Timeline {
+  timelines:any = [{},{},{}];
 }

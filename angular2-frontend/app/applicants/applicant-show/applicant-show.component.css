@@ -58,3 +58,11 @@ a.collapsible:before {
 .assign-btn {
   text-align : right;
 }
+
+.timeline-item-title {
+  font-weight : bold;
+}
+
+.timeline-full {
+  margin-top : 15px;
+}

@@ -1,1 +1,21 @@
-<div>Timeline</div>
+<div class="block full timeline-full">
+  <div class="block-title">
+    <h2>Timeline</h2>
+  </div>
+  <div class="timeline block-content-full">
+    <ul class="timeline-list timeline-hover">
+      <li *ngFor="let timeline of timelines" data-toggle="tooltip">
+        <div class="timeline-icon"><i class='fa fa-pencil'></i>
+        </div>
+        <div class="timeline-time">
+          26th August, 2016
+        </div>
+        <div class="timeline-content">
+          <div class="push-bit timeline-item-title">Shortlisted</div>
+          <p><span class="weight-500">Remarks: </span>
+            This is a shortlist</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
