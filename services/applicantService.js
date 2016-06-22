@@ -92,6 +92,7 @@ var ApplicantService = {
 
     if (applicantParam.job_id) {
       applicantParam.direct_apply = false;
+      applicantParam.is_processable = true;
     }
 
     return new Promise(function (resolve, reject) {
@@ -144,6 +145,9 @@ var ApplicantService = {
   },
 
   update: function (id, applicantParam) {
+    if (applicantParam.job_id) {
+      applicantParam.is_processable = true;
+    }
     return new Promise(function (resolve, reject) {
       models.Applicant.find({
         where: {
