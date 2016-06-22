@@ -24,7 +24,7 @@ module.exports = {
     })
   },
 
-  list: function (applicantID) {
+  timeline: function (applicantID) {
     return new Promise(function (resolve, reject) {
       models.ApplicantStage.findAndCountAll({
         where: {
@@ -51,7 +51,7 @@ module.exports = {
     });
   },
 
-  listStage: function (applicantID, query) {
+  index: function (applicantID, query) {
     return new Promise(function (resolve, reject) {
       models.Applicant.findOne({
         where: {
