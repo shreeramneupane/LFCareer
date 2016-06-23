@@ -7,7 +7,8 @@ var JobService = require('../services/jobService');
 module.exports = {
 
   index: function (request, response) {
-    JobService.list()
+    var status = request.query['status'];
+    JobService.list(status)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

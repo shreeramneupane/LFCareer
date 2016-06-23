@@ -9,9 +9,11 @@ var JobStageService = require('../services/jobStageService');
 
 var JobService = {
 
-  list: function () {
+  list: function (status) {
+    console.log(Date.now());
+    var whereCondition = (status === 'closed' ? {where: { valid_until: { $lt: Date.now() } }} : status === 'open' ? {where: { valid_until: { $gt: Date.now() } }} : {});
     return new Promise(function (resolve, reject) {
-      models.Job.findAndCountAll({})
+      models.Job.findAndCountAll(whereCondition)
       .then(function (response) {
         resolve({jobs: response.rows, total_count: response.count});
       })
