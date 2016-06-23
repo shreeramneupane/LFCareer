@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ApiService }   from '../../shared/utils/api.util';
+import { CoreService } from '../../shared/services/core.service';
 import { AppConstants } from '../../shared/constants/app.constants';
 import { Converter }    from '../../shared/utils/converter.util';
 import { Applicant }    from './applicant';
 
 @Injectable()
 export class ApplicantService {
-  constructor(private apiService:ApiService, private converter:Converter) {
+  constructor(private apiService:ApiService, private coreService:CoreService, private converter:Converter) {
   }
   
   listApplicants(page, sortBy) {
@@ -33,7 +34,7 @@ export class ApplicantService {
   }
 
   getTimeline(id:string):Observable<any> {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id, AppConstants.STAGES]))
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id, 'timeline']))
     .map(response=>response.applicant_stages)
   }
 
@@ -75,12 +76,10 @@ export class ApplicantService {
         } else {
           newItem.title = 'Applied for ' + applicant.job.title;
         }
-        item.stage = null;
       } else {
         newItem.title = item.stage.title;
-        item.stage = null;
       }
-      var invalidKeys = ['id', 'applicant_id', 'stage_id', 'updated_at'];
+      var invalidKeys = ['id', 'applicant_id', 'stage_id', 'updated_at', 'stage'];
 
       for (var key in item) {
         if (!(invalidKeys.indexOf(key) > -1) && ((item[key] != null && item[key] !== ''))) {
@@ -90,5 +89,50 @@ export class ApplicantService {
       timelineItems.push(newItem);
     });
     return timelineItems;
+  }
+
+  filterStages(stages:any, timeline:any) {
+    console.log(timeline)
+    let validStages = [];
+    if (timeline.length && timeline[timeline.length - 1].stage.is_termination == true) {
+      return validStages;
+    }
+
+    stages.forEach(stage => {
+      if (stage.is_repeatable == true) {
+        validStages.push(stage);
+      } else {
+        let isValidStage = true;
+        for (var i = 0; i < timeline.length; i++) {
+          if (timeline[i].stage.title == stage.title) {
+            isValidStage = false;
+            break;
+          }
+        }
+        if (isValidStage == true) {
+          validStages.push(stage);
+        }
+      }
+    })
+    return validStages;
+  }
+
+  getSelectedStageId(stages:any, timeline:any) {
+    let latestTimelineId = timeline[timeline.length - 1].stage.id;
+    if (!stages.length) {
+      return 0;
+    }
+    for (var i = 0; i < stages.length; i++) {
+      if (stages[i].id == latestTimelineId && i < stages.length - 1) {
+        return stages[i + 1].id;
+      } else if (stages[i].id == latestTimelineId) {
+        return stages[stages.length - 1].id;
+      }
+    }
+    return stages[0].id;
+  }
+
+  getAutoCompleteValue(request) {
+    return this.coreService.fetch('employees' + this.converter.serialize({q: request}));
   }
 }

@@ -25,9 +25,10 @@ export class StageFormComponent {
 
   submit(stage:Stage) {
     this.submitted = true;
-    if (this.formGroup.valid)
+    if (this.formGroup.valid) {
       this.onSubmit.emit(stage);
-    else
+    } else {
       toastr.error('Please fill the required fields', 'Error!');
+    }
   }
 }
