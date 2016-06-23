@@ -13,7 +13,9 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         ApplicantStageRemark.belongsTo(models.ApplicantStage)
       }
-    }
+    },
+    underscored: true,
+    tableName: 'applicant_stage_remarks'
   });
   return ApplicantStageRemark;
 };
