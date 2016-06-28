@@ -69,3 +69,7 @@ a.collapsible:before {
 
 .timeline-list li { background: #f5f5f5; }
 .timeline-list li:nth-child(odd) { background: #ffffff; }
+
+.margin-15 {
+  margin-left: 15px;
+}

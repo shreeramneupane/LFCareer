@@ -4,27 +4,45 @@
   </div>
   <div class="timeline block-content-full">
     <ul class="timeline-list timeline-hover">
-      <li *ngFor="let timeLineItem of timelineItems" data-toggle="tooltip">
+      <li *ngFor="let timelineItem of timelineItems" data-toggle="tooltip">
         <div class="timeline-icon"><i class='fa fa-pencil'></i>
         </div>
         <div class="timeline-time">
-          {{dateUtil.getRelativeDate(timeLineItem.created_at)}}
+          {{dateUtil.getRelativeDate(timelineItem.created_at)}}
         </div>
         <div class="timeline-content">
-          <div class="push-bit timeline-item-title">{{timeLineItem.title}}</div>
-          <p *ngIf="timeLineItem.remarks"><span class="weight-500">Remarks: </span>
-            {{timeLineItem.remarks}}</p>
+          <div class="push-bit timeline-item-title">{{timelineItem.title}}</div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.schedule">Schedule:
+            {{dateUtil.getFormattedDate(timelineItem.interview.schedule)}}
+          </div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.room">Meeting Room: {{timelineItem.interview.room}}
+          </div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers?.length">
+          Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers"
+                class="label label-blue text-uppercase">{{interviewer}}</span>
+          </div>
+
+          <p *ngIf="timelineItem.remarks"><span class="weight-500">Remarks: </span>
+            {{timelineItem.remarks}}</p>
+          <div *ngIf="timelineItem.has_button" class="push-bit clearfix">
+            <a class="cursor-pointer" (click)="editSchedule()">Reschedule</a>
+            <a class="margin-15 cursor-pointer" (click)="addRemarks()">Proceed</a>
+          </div>
         </div>
       </li>
-      <li *ngIf="stages">
+      <li *ngIf="selectedStageId">
         <div class="timeline-icon"><i class='fa fa-plus'></i>
         </div>
         <div class="timeline-time">
           {{getTodaysDate()}}
         </div>
         <div class="timeline-content">
-          <interview-stage *ngIf="isInterview"></interview-stage>
-          <non-interview-stage *ngIf="!isInterview" (changeStage)="changeStage($event)" (submit)="submit($event)" [stages]="stages" [selectedStageId]="selectedStageId" ></non-interview-stage>
+          <interview-stage *ngIf="isInterview" (changeStage)="changeStage($event)" (submit)="submit($event)"
+                           [stages]="stages" [selectedStageId]="selectedStageId" [interviewStage]="interviewStage"
+                           [lastTimelineItem]="lastTimelineItem" (cancel)="cancelEdit($event)"></interview-stage>
+          <non-interview-stage *ngIf="!isInterview && stages.length" (changeStage)="changeStage($event)"
+                               (submit)="submit($event)"
+                               [stages]="stages" [selectedStageId]="selectedStageId"></non-interview-stage>
           <!--<div class="push-bit clearfix">
             <div class="col-md-6 col-lg-4 element">
               <select class="form-control" [(ngModel)]="selectedStageId" (change)="changeStage($event.target.value)">

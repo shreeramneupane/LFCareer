@@ -39,7 +39,6 @@ export class ApplicantService {
   }
 
   startTimeline(timeline:any, id:string) {
-    console.log(timeline)
     return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, id]), timeline);
   }
 
@@ -66,8 +65,12 @@ export class ApplicantService {
 
   filterTimeline(timeline:any, applicant:Applicant) {
     let timelineItems = [];
+    if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remarks == '' || !timeline[timeline.length - 1].hasOwnProperty('remarks'))) {
+      timeline[timeline.length - 1]['has_button'] = true;
+    }
+
     timeline.forEach(function (item) {
-      let newItem = {};
+      let newItem = {title: ''};
       if (item.stage.title == 'Pending') {
         if (applicant.direct_apply && applicant.job) {
           newItem.title = 'Direct Apply (' + applicant.job.title + ')';
@@ -79,7 +82,7 @@ export class ApplicantService {
       } else {
         newItem.title = item.stage.title;
       }
-      var invalidKeys = ['id', 'applicant_id', 'stage_id', 'updated_at', 'stage'];
+      var invalidKeys = ['applicant_id', 'stage_id', 'updated_at', 'stage'];
 
       for (var key in item) {
         if (!(invalidKeys.indexOf(key) > -1) && ((item[key] != null && item[key] !== ''))) {
@@ -92,7 +95,6 @@ export class ApplicantService {
   }
 
   filterStages(stages:any, timeline:any) {
-    console.log(timeline)
     let validStages = [];
     if (timeline.length && timeline[timeline.length - 1].stage.is_termination == true) {
       return validStages;
@@ -120,6 +122,8 @@ export class ApplicantService {
   getSelectedStageId(stages:any, timeline:any) {
     let latestTimelineId = timeline[timeline.length - 1].stage.id;
     if (!stages.length) {
+      return 0;
+    } else if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remarks == '' || !timeline[timeline.length - 1].hasOwnProperty('remarks'))) {
       return 0;
     }
     for (var i = 0; i < stages.length; i++) {

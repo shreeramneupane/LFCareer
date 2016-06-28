@@ -25,13 +25,38 @@ export class Timeline implements OnInit {
   stages:any;
   selectedStageId:any;
   selectedStage:any;
+  lastTimelineItem:any;
 
+  interviewStage:string;
   isInterview:boolean;
 
   constructor(private applicantService:ApplicantService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil) {
   }
 
   ngOnInit() {
+    this.timeline.push({
+      "id"          : "0cb0fd80-384a-11e6-876d-9bedf7bd240e",
+      "applicant_id": "0c816200-384a-11e6-876d-9bedf7bd240f",
+      "stage_id"    : "44286860-37a1-11e6-85ed-457d7aa2735b",
+      "created_at"  : "2016-06-22T07:22:17.304Z",
+      "updated_at"  : "2016-06-22T07:22:17.304Z",
+      "stage"       : {
+        "id"               : "44286860-37a1-11e6-85ed-457d7aa2735b",
+        "title"            : "Face to Face Interview",
+        "is_default"       : true,
+        "is_repeatable"    : true,
+        "is_termination"   : false,
+        "is_interview"     : true,
+        "precedence_number": 2,
+        "created_at"       : "2016-06-21T11:14:05.415Z",
+        "updated_at"       : "2016-06-21T11:14:05.415Z"
+      },
+      "interview"   : {
+        "schedule"    : '2016-07-21T11:14:05.415Z',
+        "room"        : 'Manakamana',
+        "interviewers": ["Bishal"]
+      }
+    })
     this.timelineItems = this.applicantService.filterTimeline(this.timeline, this.applicant);
     this.applicantService.getStages(this.applicant.id)
     .subscribe(
@@ -44,25 +69,6 @@ export class Timeline implements OnInit {
     );
   }
 
-  ngAfterViewChecked() {
-    var that = this;
-    $('#datepicker').datepicker({
-      format   : 'yyyy/mm/dd',
-      startDate: new Date(),
-      autoclose: true
-    }).on('changeDate', function () {
-      that.selectedStage.date = $('#scheduledDate').val();
-    });
-    $("#employees").tagit({
-      placeholderText: 'Interviewer',
-      allowSpaces    : true,
-      autocomplete   : {
-        delay: 0, minLength: 1, source: function (request, response) {
-          that.getAutoCompleteValue(request, response);
-        }
-      }
-    });
-  }
 
   getTodaysDate() {
     return this.dateUtil.getFormattedDate(new Date());
@@ -91,12 +97,35 @@ export class Timeline implements OnInit {
   checkStage(stage:any):void {
     if (stage.is_interview == true) {
       this.isInterview = true;
+      if (this.timelineItems[this.timelineItems.length - 1].has_button) {
+        this.interviewStage = 'none';
+      } else {
+        this.interviewStage = 'add';
+      }
     } else {
       this.isInterview = false;
     }
   }
 
+  editSchedule():void {
+    this.interviewStage = 'edit';
+    this.lastTimelineItem = this.timelineItems[this.timelineItems.length - 1];
+    this.timelineItems.splice(this.timelineItems.length - 1, 1);
+    this.selectedStageId = this.timeline[this.timeline.length - 1].stage.id;
+  }
+
+  addRemarks():void {
+    this.interviewStage = 'addRemarks';
+    this.selectedStageId = this.timeline[this.timeline.length - 1].stage.id;
+  }
+
   submit(stage:any):void {
-    console.log('submitted');
+    console.log(stage);
+  }
+
+  cancelEdit() {
+    this.interviewStage = 'none';
+    this.selectedStageId = 0;
+    this.timelineItems.push(this.lastTimelineItem);
   }
 }
