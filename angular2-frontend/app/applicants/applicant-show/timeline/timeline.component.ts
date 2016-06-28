@@ -116,6 +116,8 @@ export class Timeline implements OnInit {
 
   addRemarks():void {
     this.interviewStage = 'addRemarks';
+    this.lastTimelineItem = this.timelineItems[this.timelineItems.length - 1];
+    this.timelineItems.splice(this.timelineItems.length - 1, 1);
     this.selectedStageId = this.timeline[this.timeline.length - 1].stage.id;
   }
 

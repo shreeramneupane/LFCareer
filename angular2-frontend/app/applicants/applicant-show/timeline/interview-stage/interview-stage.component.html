@@ -1,4 +1,5 @@
-<interview-stage-remarks *ngIf="interviewStage == 'addRemarks'"></interview-stage-remarks>
+<interview-stage-remarks *ngIf="interviewStage == 'addRemarks'" (submit)="submitStage($event)"
+                         (cancel)="cancelEdit($event)" [lastTimelineItem]="lastTimelineItem"></interview-stage-remarks>
 <interview-stage-form *ngIf="interviewStage=='add' || interviewStage == 'edit'" (changeStage)="changeStage($event)"
                       (submit)="submitStage($event)" (cancel)="cancelEdit($event)"
                       [stages]="stages" [selectedStageId]="selectedStageId"

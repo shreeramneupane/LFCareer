@@ -22,13 +22,11 @@ export class InterviewForm {
   selectedStage:any = {id: '', title: '', interview: {schedule: '', interviewers: []}};
   initialStage:any = {id: '', title: '', interview: {schedule: '', interviewers: []}};
 
-  asdf:any = ['asdfdd'];
-
   constructor(private arrayUtil:ArrayUtil) {
   }
 
   refreshStage() {
-    this.selectedStage.interview = {schedule: '', interviewers: []};
+    this.selectedStage.interview = {schedule: '', room: '', interviewers: []};
   }
 
   ngOnInit() {

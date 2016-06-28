@@ -11,27 +11,31 @@ export class InterviewRemarks {
   ngOnInit() {
     console.log('remarks');
   }
-  //@Input() stages;
-  //@Input() selectedStageId;
-  /*@Input()
-   @Output() changeStage = new EventEmitter<any>();
-   @Output() submit = new EventEmitter<any>();
 
-   refreshStage() {
-   this.selectedStage.remark = '';
-   }
+  @Input() lastTimelineItem;
 
-   changeStageId(stageId) {
-   this.refreshStage(stageId);
-   this.changeStage.emit(stageId);
-   }
+  @Output() submit = new EventEmitter<any>();
+  @Output() cancel = new EventEmitter<any>();
 
-   submitStage() {
-   /!*this.selectedStage.id = this.selectedStageId;
-   if (this.selectedStage.remark == '') {
-   toastr.error('Please fill the remarks', 'Error!');
-   } else {*!/
-   this.submit.emit(this.selectedStage);
-   //}
-   }*/
+  selectedStage:any = {id: '', remark: ''};
+
+
+  refreshStage() {
+    this.selectedStage.remark = '';
+  }
+
+  submitStage() {
+    this.selectedStage.id = this.lastTimelineItem.id;
+    if (this.selectedStage.remark == '') {
+      toastr.error('Please fill the remarks', 'Error!');
+    } else {
+      this.submit.emit(this.selectedStage);
+    }
+  }
+
+  cancelEdit() {
+    console.log('ssss')
+    this.selectedStage.remark = '';
+    this.cancel.emit();
+  }
 }
