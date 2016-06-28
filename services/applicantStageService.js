@@ -34,6 +34,7 @@ var ApplicantStageService = {
         where: {
           applicant_id: applicantID
         },
+        order: 'created_at ASC',
         include: [
           {model: models.Stage},
           {model: models.ApplicantStageRemark},
