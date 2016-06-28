@@ -24,6 +24,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     is_termination: DataTypes.BOOLEAN,
+    is_interview: DataTypes.BOOLEAN,
     precedence_number: DataTypes.INTEGER
   }, {
     classMethods: {
