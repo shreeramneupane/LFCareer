@@ -19,6 +19,7 @@
   </div>
   <div class="col-md-6 col-lg-4 element" *ngIf="selectedStage.title=='Face to Face Interview'">
     <select class="form-control" [(ngModel)]="selectedStage.interview.room">
+      <option value="0" selected>Select meeting room</option>
       <option value="Manakamana">Manakamana</option>
       <option value="Bouddha">Bouddha</option>
       <option value="Swayambhu">Swayambhu</option>

@@ -55,7 +55,8 @@ export class Timeline implements OnInit {
         "schedule"    : '2016-07-21T11:14:05.415Z',
         "room"        : 'Manakamana',
         "interviewers": ["Bishal"]
-      }
+      },
+      "remark": 'this is a remark'
     })
     this.timelineItems = this.applicantService.filterTimeline(this.timeline, this.applicant);
     this.applicantService.getStages(this.applicant.id)
@@ -63,7 +64,11 @@ export class Timeline implements OnInit {
     stages => {
       this.stages = this.applicantService.filterStages(stages, this.timeline);
       this.selectedStageId = this.applicantService.getSelectedStageId(this.stages, this.timeline);
-      this.checkStage(this.timeline[this.timeline.length - 1].stage);
+      if(!this.interviewStage){
+        this.changeStage(this.selectedStageId);
+      }else {
+        this.changeStage(this.timeline[this.timeline.length - 1].stage.id);
+      }
     },
     error => toastr.error(error)
     );
@@ -82,6 +87,7 @@ export class Timeline implements OnInit {
   }
 
   changeStage(stageId) {
+    console.log('fffffffffffffffffffff')
     /*this.selectedStage = {};
      let newStage = this.arrayUtil.filterObjectByKey(this.stages, 'id', stage);
      this.selectedStage.id = newStage[0].id;
@@ -90,13 +96,17 @@ export class Timeline implements OnInit {
      this.selectedStage.interviewers = [];
      this.selectedStage.room = '';
      }*/
+    this.selectedStageId = stageId;
     let stage = this.arrayUtil.filterObjectByKey(this.stages, 'id', stageId)[0];
+    console.log(stage)
     this.checkStage(stage);
   }
 
   checkStage(stage:any):void {
+    console.log('dddssssssssssssssssssssssssssssssssssssssssssssssss')
     if (stage.is_interview == true) {
       this.isInterview = true;
+      console.log(stage)
       if (this.timelineItems[this.timelineItems.length - 1].has_button) {
         this.interviewStage = 'none';
       } else {
@@ -104,6 +114,7 @@ export class Timeline implements OnInit {
       }
     } else {
       this.isInterview = false;
+      console.log('flase')
     }
   }
 

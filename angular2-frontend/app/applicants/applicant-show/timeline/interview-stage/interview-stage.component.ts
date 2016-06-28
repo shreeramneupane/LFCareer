@@ -18,26 +18,12 @@ export class Interview {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
-  ngOnInit() {
-    console.log('interview')
-  }
-  refreshStage() {
-    this.selectedStage.remark = '';
-  }
-
   changeStageId(stageId) {
-    this.refreshStage(stageId);
     this.changeStage.emit(stageId);
   }
 
   submitStage(stage:any) {
-    /*this.selectedStage.id = this.selectedStageId;
-     if (this.selectedStage.remark == '') {
-     toastr.error('Please fill the remarks', 'Error!');
-     } else {*/
-    console.log('ssss')
     this.submit.emit(stage);
-    //}
   }
 
   cancelEdit() {

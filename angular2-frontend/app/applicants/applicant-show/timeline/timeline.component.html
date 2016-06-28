@@ -22,8 +22,8 @@
                 class="label label-blue text-uppercase">{{interviewer}}</span>
           </div>
 
-          <p *ngIf="timelineItem.remarks"><span class="weight-500">Remarks: </span>
-            {{timelineItem.remarks}}</p>
+          <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>
+            {{timelineItem.remark}}</p>
           <div *ngIf="timelineItem.has_button" class="push-bit clearfix">
             <a class="cursor-pointer" (click)="editSchedule()">Reschedule</a>
             <a class="margin-15 cursor-pointer" (click)="addRemarks()">Proceed</a>

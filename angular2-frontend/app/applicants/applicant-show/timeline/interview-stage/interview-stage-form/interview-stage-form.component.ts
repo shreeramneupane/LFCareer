@@ -19,14 +19,14 @@ export class InterviewForm {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
-  selectedStage:any = {id: '', title: '', interview: {schedule: '', interviewers: []}};
-  initialStage:any = {id: '', title: '', interview: {schedule: '', interviewers: []}};
+  selectedStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
+  initialStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
 
   constructor(private arrayUtil:ArrayUtil) {
   }
 
   refreshStage() {
-    this.selectedStage.interview = {schedule: '', room: '', interviewers: []};
+    this.selectedStage.interview = {schedule: '', room: '0', interviewers: []};
   }
 
   ngOnInit() {
@@ -48,11 +48,13 @@ export class InterviewForm {
       startDate: new Date(),
       autoclose: true
     }).on('changeDate', function () {
-      console.log(that.selectedStage.interview.schedule)
       that.selectedStage.interview.schedule = $('#scheduledDate').val();
     });
-    $('#datepicker').datepicker('setDate', new Date(this.selectedStage.interview.schedule))
-
+    if (this.interviewStage == 'edit') {
+      $('#datepicker').datepicker('setDate', new Date(this.selectedStage.interview.schedule));
+    } else {
+      $('#datepicker').datepicker('setDate', new Date());
+    }
     $("#employees").tagit({
       placeholderText: 'Interviewer',
       allowSpaces    : true,
@@ -73,13 +75,13 @@ export class InterviewForm {
   }
 
   submitStage() {
-    /*this.selectedStage.id = this.selectedStageId;
-     if (this.selectedStage.remark == '') {
-     toastr.error('Please fill the remarks', 'Error!');
-     } else {*/
-    console.log(this.selectedStage)
-    this.submit.emit(this.selectedStage);
-    //}
+    this.selectedStage.id = this.selectedStageId;
+    this.selectedStage.interview.interviewers = $('#employees').tagit('assignedTags');
+    if (!this.selectedStage.interview.schedule || !this.selectedStage.interview.interviewers.length) {
+      toastr.error('Please fill required data', 'Error!');
+    } else {
+      this.submit.emit(this.selectedStage);
+    }
   }
 
   cancelEdit() {

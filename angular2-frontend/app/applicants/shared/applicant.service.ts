@@ -65,7 +65,7 @@ export class ApplicantService {
 
   filterTimeline(timeline:any, applicant:Applicant) {
     let timelineItems = [];
-    if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remarks == '' || !timeline[timeline.length - 1].hasOwnProperty('remarks'))) {
+    if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == '' || !timeline[timeline.length - 1].hasOwnProperty('remark'))) {
       timeline[timeline.length - 1]['has_button'] = true;
     }
 
@@ -123,7 +123,7 @@ export class ApplicantService {
     let latestTimelineId = timeline[timeline.length - 1].stage.id;
     if (!stages.length) {
       return 0;
-    } else if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remarks == '' || !timeline[timeline.length - 1].hasOwnProperty('remarks'))) {
+    } else if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == '' || !timeline[timeline.length - 1].hasOwnProperty('remark'))) {
       return 0;
     }
     for (var i = 0; i < stages.length; i++) {
