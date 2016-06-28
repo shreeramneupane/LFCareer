@@ -28,26 +28,50 @@ var ApplicantStageService = {
     })
   },
 
-  timeline: function (applicantID) {
+  timeline: function (applicantID, authorizationToken) {
     return new Promise(function (resolve, reject) {
       models.ApplicantStage.findAndCountAll({
         where: {
           applicant_id: applicantID
         },
         include: [
-          {model: models.Stage}
+          {model: models.Stage},
+          {model: models.ApplicantStageRemark},
+          {model: models.ApplicantStageInterview}
         ]
       })
       .then(function (response) {
         var applicantStages = _.map(response.rows, 'dataValues');
         _.each(applicantStages, function (applicantStage) {
           applicantStage.stage = applicantStage.Stage;
+          applicantStage.remark = null;
+          applicantStage.interview = null;
+          if (applicantStage.ApplicantStageRemark) {
+            applicantStage.remark = applicantStage.ApplicantStageRemark.remark;
+          }
+          if (applicantStage.ApplicantStageInterview) {
+            applicantStage.interview = applicantStage.ApplicantStageInterview;
+            applicantStage.interview['dataValues'].interviewers = null;
+          }
           delete applicantStage.Stage;
+          delete applicantStage.ApplicantStageRemark;
+          delete applicantStage.ApplicantStageInterview;
         });
-        resolve({
-          applicant_stages: applicantStages,
-          total_count: response.count
-        });
+
+        Promise.map(applicantStages, function (applicantStage) {
+          return ApplicantStageInterviewService.list(applicantStage, authorizationToken)
+          .then(function (interviewers) {
+            if (interviewers) {
+              applicantStage.interview['dataValues'].interviewers = interviewers;
+            }
+          })
+        })
+        .then(function () {
+          resolve({
+            applicant_stages: applicantStages,
+            total_count: response.count
+          });
+        })
       })
       .catch(function (err) {
         reject(err);
@@ -97,6 +121,8 @@ var ApplicantStageService = {
   create: function (applicantID, stageParam, authorizationToken) {
     var stageID = stageParam.id;
     delete stageParam.id;
+    var applicantStageID;
+
     return new Promise(function (resolve, reject) {
       verifyJobStage(applicantID, stageID)
       .then(function (isVerifiedJobStage) {
@@ -123,7 +149,7 @@ var ApplicantStageService = {
                       stage_id: stageID
                     }, {transaction: t})
                     .then(function (applicantStage) {
-                      var applicantStageID = applicantStage.id;
+                      applicantStageID = applicantStage.id;
                       return Promise.join(
                       ApplicantStageInterviewService.create(applicantStageID, stageParam, stageID, authorizationToken, t),
                       ApplicantStageRemarkService.create(applicantStageID, stageParam.remark, t)
@@ -138,9 +164,10 @@ var ApplicantStageService = {
                     });
                   })
                   .then(function () {
-                    ApplicantStageService.timeline(applicantID)
-                    .then(function (applicantTimeline) {
-                      resolve(applicantTimeline);
+                    resolve({
+                      "applicant_stage": {
+                        "id": applicantStageID
+                      }
                     });
                   })
                   .catch(function (err) {

@@ -7,8 +7,9 @@ var ApplicantStageService = require('../services/applicantStageService');
 module.exports = {
 
   timeline: function (request, response) {
+    var authorizationToken = request.get('Authorization');
     var applicantID = request.params.applicant_id;
-    ApplicantStageService.timeline(applicantID)
+    ApplicantStageService.timeline(applicantID, authorizationToken)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

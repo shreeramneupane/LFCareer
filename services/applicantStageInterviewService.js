@@ -5,10 +5,53 @@ var env = process.env.NODE_ENV || 'development';
 var HttpStatus = require('http-status-codes');
 var request = require('request');
 var fileName = "../secret-config.json";
+var Promise = require('bluebird');
 
 var config = require(fileName)[env];
 
 var ApplicantStageInterviewService = {
+
+  list: function (applicantStage, authorizationToken) {
+    return new Promise(function (resolve) {
+      if (applicantStage.interview) {
+        var interviewerURL = config['vyaguta_employee_detail_url'];
+        var interviewers = [];
+        var interviewersID = applicantStage.interview.interviewers_id.split(',');
+        Promise.map(interviewersID, function (interviewerID) {
+          interviewerURL = interviewerURL.replace(':id', interviewerID);
+
+          var name = null;
+          return new Promise(function (resolveInner) {
+            return request({
+              url: interviewerURL,
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authorizationToken
+              }
+            }, function (err, response) {
+              if (!err && response.statusCode == HttpStatus.OK) {
+                var interviewerDetail = JSON.parse(response.body);
+                name = interviewerDetail.firstName + ' ' + interviewerDetail.lastName;
+                resolveInner(name);
+              }
+            })
+          })
+          .then(function (interviewerName) {
+            interviewers.push(interviewerName);
+          })
+        })
+        .then(function () {
+          resolve(interviewers);
+        })
+        .catch(function (err) {
+        })
+      }
+      else {
+        resolve(false);
+      }
+    });
+  },
 
   create: function (applicantStageID, stageParam, stageID, authorizationToken, t) {
     if (stageParam.interview) {
