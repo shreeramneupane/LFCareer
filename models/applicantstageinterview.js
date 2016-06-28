@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     schedule: DataTypes.DATE,
     meeting_room: DataTypes.STRING,
-    interviewer_id: DataTypes.UUID,
+    interviewers_id: DataTypes.UUID,
     applicant_stage_id: DataTypes.UUID
   }, {
     classMethods: {

@@ -46,7 +46,7 @@ params['sort'] = function (keys, model) {
   var modelAttributes = _.keys(model.attributes);
   var sortParams = [];
 
-  if (typeof(keys) === 'string') {
+  if (typeof(keys) === 'string' || typeof(keys) === 'date') {
     keys = [keys];
   }
 

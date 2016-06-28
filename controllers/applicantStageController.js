@@ -38,9 +38,10 @@ module.exports = {
   },
 
   create: function (request, response) {
+    var authorizationToken = request.get('Authorization');
     var applicantID = request.params.applicant_id;
     var stageParam = request.body;
-    ApplicantStageService.create(applicantID, stageParam)
+    ApplicantStageService.create(applicantID, stageParam, authorizationToken)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

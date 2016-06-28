@@ -1,12 +1,15 @@
 "use strict";
 
 var _ = require('lodash');
+var Promise = require("bluebird");
+
 var models = require('../models/index');
 
 var ApplicantStageRemarkService = require('../services/applicantStageRemarkService');
+var ApplicantStageInterviewService = require('../services/applicantStageInterviewService');
 var QueryParser = require('../helpers/queryParser');
 
-module.exports = {
+var ApplicantStageService = {
 
   createDefault: function (applicantID, t) {
     return models.Stage.min('precedence_number')
@@ -69,7 +72,7 @@ module.exports = {
           models.JobStage.findAndCountAll(parsedQuery)
           .then(function (jobStages) {
             var stages = [];
-            var jobStages = _.map(jobStages.rows, 'dataValues');
+            jobStages = _.map(jobStages.rows, 'dataValues');
             _.each(jobStages, function (jobStage) {
               jobStage.Stage.precedence_number = jobStage.precedence_number;
               stages.push(jobStage.Stage)
@@ -91,8 +94,9 @@ module.exports = {
     });
   },
 
-  create: function (applicantID, stageParam) {
+  create: function (applicantID, stageParam, authorizationToken) {
     var stageID = stageParam.id;
+    delete stageParam.id;
     return new Promise(function (resolve, reject) {
       verifyJobStage(applicantID, stageID)
       .then(function (isVerifiedJobStage) {
@@ -107,8 +111,8 @@ module.exports = {
             }
             else {
               nonRepeatableStageAlreadyDefined(applicantID, stageID)
-              .then(function (isnonRepeatableStageAlreadyDefined) {
-                if (isnonRepeatableStageAlreadyDefined) {
+              .then(function (isNonRepeatableStageAlreadyDefined) {
+                if (isNonRepeatableStageAlreadyDefined) {
                   reject(new Error('Applicant had already been assigned to provided stage.'));
                 }
                 else {
@@ -120,7 +124,10 @@ module.exports = {
                     }, {transaction: t})
                     .then(function (applicantStage) {
                       var applicantStageID = applicantStage.id;
-                      return ApplicantStageRemarkService.create(applicantStageID, stageParam.remark, t)
+                      return Promise.join(
+                      ApplicantStageInterviewService.create(applicantStageID, stageParam, stageID, authorizationToken, t),
+                      ApplicantStageRemarkService.create(applicantStageID, stageParam.remark, t)
+                      )
                     })
                     .then(function () {
                       return t.commit();
@@ -131,20 +138,50 @@ module.exports = {
                     });
                   })
                   .then(function () {
-                    resolve({applicant: {id: applicantID}});
+                    ApplicantStageService.timeline(applicantID)
+                    .then(function (applicantTimeline) {
+                      resolve(applicantTimeline);
+                    });
                   })
                   .catch(function (err) {
                     reject(err);
                   });
                 }
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     });
   }
 };
+
+function verifyJobStage(applicantID, stageID) {
+  return new Promise(function (resolve, reject) {
+    models.Applicant.find({
+      where: {id: applicantID}
+    })
+    .then(function (applicant) {
+      if (applicant.job_id) {
+        models.JobStage.count({
+          where: {stage_id: stageID, job_id: applicant.job_id}
+        })
+        .then(function (count) {
+          resolve(count);
+        })
+      }
+      else {
+        models.Stage.count({where: {id: stageID, is_default: true}})
+        .then(function (count) {
+          resolve(count);
+        })
+      }
+    })
+    .catch(function (err) {
+      reject(err)
+    });
+  });
+}
 
 function timelineTerminated(applicantID) {
   return new Promise(function (resolve, reject) {
@@ -176,29 +213,4 @@ function nonRepeatableStageAlreadyDefined(applicantID, stageID) {
   });
 }
 
-function verifyJobStage(applicantID, stageID) {
-  return new Promise(function (resolve, reject) {
-    models.Applicant.find({
-      where: {id: applicantID}
-    })
-    .then(function (applicant) {
-      if (applicant.job_id) {
-        models.JobStage.count({
-          where: {stage_id: stageID, job_id: applicant.job_id}
-        })
-        .then(function (count) {
-          resolve(count);
-        })
-      }
-      else {
-        models.Stage.count({where: {id: stageID, is_default: true}})
-        .then(function (count) {
-          resolve(count);
-        })
-      }
-    })
-    .catch(function (err) {
-      reject(err)
-    });
-  });
-}
+module.exports = ApplicantStageService;
