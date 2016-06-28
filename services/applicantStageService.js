@@ -65,6 +65,9 @@ var ApplicantStageService = {
               applicantStage.interview['dataValues'].interviewers = interviewers;
             }
           })
+          .catch(function (err) {
+            reject(err);
+          })
         })
         .then(function () {
           resolve({

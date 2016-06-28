@@ -12,7 +12,7 @@ var config = require(fileName)[env];
 var ApplicantStageInterviewService = {
 
   list: function (applicantStage, authorizationToken) {
-    return new Promise(function (resolve) {
+    return new Promise(function (resolve, reject) {
       if (applicantStage.interview) {
         var interviewerURL = config['vyaguta_employee_detail_url'];
         var interviewers = [];
@@ -21,7 +21,7 @@ var ApplicantStageInterviewService = {
           interviewerURL = interviewerURL.replace(':id', interviewerID);
 
           var name = null;
-          return new Promise(function (resolveInner) {
+          return new Promise(function (resolveInner, rejectInner) {
             return request({
               url: interviewerURL,
               method: 'GET',
@@ -35,6 +35,9 @@ var ApplicantStageInterviewService = {
                 name = interviewerDetail.firstName + ' ' + interviewerDetail.lastName;
                 resolveInner(name);
               }
+              else {
+                rejectInner(new Error("Can't retrieve Interviewer details."))
+              }
             })
           })
           .then(function (interviewerName) {
@@ -45,6 +48,7 @@ var ApplicantStageInterviewService = {
           resolve(interviewers);
         })
         .catch(function (err) {
+          reject(err);
         })
       }
       else {
