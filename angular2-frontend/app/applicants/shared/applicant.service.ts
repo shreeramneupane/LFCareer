@@ -136,7 +136,8 @@ export class ApplicantService {
     return stages[0].id;
   }
 
-  getAutoCompleteValue(request) {
-    return this.coreService.fetch('employees' + this.converter.serialize({q: request}));
+  getAutoCompleteValue(term) {
+    console.log(term)
+    return this.coreService.fetch('employees' + this.converter.serialize({q: term}));
   }
 }

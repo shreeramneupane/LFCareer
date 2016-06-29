@@ -7,13 +7,14 @@ var config = require('config');
 @Injectable()
 export class CoreService {
   URL:string = window.location.origin + '/api/core/';
+
   constructor(private http:Http) {
   }
 
   fetch(pathParams):Observable<any> {
     var that = this;
     return this.http.get(this.URL + pathParams, this.getHeader())
-    .map(res => {console.log(res)})
+    .map(res => res.json())
     .catch(res => {
       return this.handleError(res, function () {
         return that.fetch(pathParams)

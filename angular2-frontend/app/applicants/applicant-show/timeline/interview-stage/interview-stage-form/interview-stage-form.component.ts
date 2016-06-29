@@ -3,6 +3,7 @@ import * as toastr from 'toastr';
 import * as moment from 'moment';
 
 import { ArrayUtil } from '../../../../../shared/utils/array.util';
+import { ApplicantService } from '../../../../shared/applicant.service';
 
 @Component({
   selector: 'interview-stage-form',
@@ -19,10 +20,13 @@ export class InterviewForm {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
+  suggestions:any = [];
+  selectedInterviewers:any = [];
+
   selectedStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
   initialStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
 
-  constructor(private arrayUtil:ArrayUtil) {
+  constructor(private arrayUtil:ArrayUtil, private applicantService:ApplicantService) {
   }
 
   refreshStage() {
@@ -40,9 +44,12 @@ export class InterviewForm {
     } else {
       this.selectedStage.title = this.arrayUtil.filterObjectByKey(this.stages, 'id', this.selectedStageId)[0].title;
     }
+    this.initializeDatePicker();
+    this.initializeTag();
+  }
+
+  initializeDatePicker() {
     var that = this;
-    console.log(new Date('2016-06-21T11:14:05.415Z'))
-    console.log(new Date())
     $('#datepicker').datepicker({
       format   : 'yyyy/mm/dd',
       startDate: new Date(),
@@ -55,18 +62,61 @@ export class InterviewForm {
     } else {
       $('#datepicker').datepicker('setDate', new Date());
     }
+  }
+
+  initializeTag() {
     $("#employees").tagit({
       placeholderText: 'Interviewer',
       allowSpaces    : true,
-      /*autocomplete   : {
-       delay: 0, minLength: 1, source: function (request, response) {
-       that.getAutoCompleteValue(request, response);
-       }
-       }*/
+      autocomplete   : {
+        delay    : 0,
+        minLength: 1,
+        change   : function (event, ui) {
+          console.log('bbbbbbbbbbbbbbbbbb')
+        },
+        source   : (request, response) => {
+          this.getAutoCompleteValue(request, response);
+        }
+      },
+      beforeTagAdded : (event, ui) => {
+        let obj = this.arrayUtil.filterObjectByKey(this.suggestions, 'label', ui.tagLabel)[0];
+
+        if (!obj) {
+          return false;
+        }else {
+          this.selectedInterviewers.push(obj);
+        }
+      },
+      beforeTagRemoved: (event, ui) => {
+        let obj = this.arrayUtil.filterObjectByKey(this.selectedInterviewers, 'label', ui.tagLabel)[0];
+        let index = this.selectedInterviewers.indexOf(obj);
+        this.selectedInterviewers.splice(index, 1);
+      }
     });
+
     this.selectedStage.interview.interviewers.forEach((tag) => {
       $('#employees').tagit("createTag", tag);
     })
+  }
+
+  getAutoCompleteValue(request, response) {
+    this.applicantService.getAutoCompleteValue(request.term)
+    .subscribe(
+    resp => {
+      let employees = [];
+      resp.data.forEach(employee => {
+        let middleName = (employee.middleName == 'NULL' || !employee.middleName) ? '' : employee.middleName + ' ';
+        let newEmployee = {
+          id   : employee.id,
+          label: employee.firstName + ' ' + middleName + employee.lastName
+        };
+        employees.push(newEmployee);
+      });
+      this.suggestions = employees;
+      response(employees);
+    },
+    error => console.log(error)
+    )
   }
 
   changeStageId(stageId) {
