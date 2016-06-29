@@ -3,7 +3,7 @@ import * as toastr from 'toastr';
 import * as moment from 'moment';
 
 import { ArrayUtil } from '../../../../../shared/utils/array.util';
-import { ApplicantService } from '../../../../shared/applicant.service';
+import { TimelineService } from '../../timeline.service';
 
 @Component({
   selector: 'interview-stage-form',
@@ -26,7 +26,7 @@ export class InterviewForm {
   selectedStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
   initialStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
 
-  constructor(private arrayUtil:ArrayUtil, private applicantService:ApplicantService) {
+  constructor(private arrayUtil:ArrayUtil, private timelineService:TimelineService) {
   }
 
   refreshStage() {
@@ -100,7 +100,7 @@ export class InterviewForm {
   }
 
   getAutoCompleteValue(request, response) {
-    this.applicantService.getAutoCompleteValue(request.term)
+    this.timelineService.getAutoCompleteValue(request.term)
     .subscribe(
     resp => {
       let employees = [];

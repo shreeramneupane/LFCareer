@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApplicantService } from '../../shared/applicant.service';
+import { TimelineService } from './timeline.service';
 import { Interview } from './interview-stage/interview-stage.component';
 import { NonInterview } from './non-interview-stage/non-interview-stage.component';
 
@@ -30,7 +30,7 @@ export class Timeline implements OnInit {
   interviewStage:string;
   isInterview:boolean;
 
-  constructor(private applicantService:ApplicantService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil) {
+  constructor(private timelineService:TimelineService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil) {
   }
 
   ngOnInit() {
@@ -58,12 +58,12 @@ export class Timeline implements OnInit {
       },
       "remark": 'this is a remark'
     })
-    this.timelineItems = this.applicantService.filterTimeline(this.timeline, this.applicant);
-    this.applicantService.getStages(this.applicant.id)
+    this.timelineItems = this.timelineService.filterTimeline(this.timeline, this.applicant);
+    this.timelineService.getStages(this.applicant.id)
     .subscribe(
     stages => {
-      this.stages = this.applicantService.filterStages(stages, this.timeline);
-      this.selectedStageId = this.applicantService.getSelectedStageId(this.stages, this.timeline);
+      this.stages = this.timelineService.filterStages(stages, this.timeline);
+      this.selectedStageId = this.timelineService.getSelectedStageId(this.stages, this.timeline);
       if(!this.interviewStage){
         this.changeStage(this.selectedStageId);
       }else {
@@ -80,7 +80,7 @@ export class Timeline implements OnInit {
   }
 
   getAutoCompleteValue(request, response) {
-    this.applicantService.getAutoCompleteValue(request.term).subscribe(
+    this.timelineService.getAutoCompleteValue(request.term).subscribe(
     response => console.log(response),
     error => console.log(error)
     );
