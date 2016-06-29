@@ -10,7 +10,7 @@ var ApplicantStageInterviewController = require('../controllers/applicantStageIn
 router.get('/applicants/:applicant_id/timeline', ApplicantStageController.timeline);
 router.get('/applicants/:applicant_id/stages', ApplicantStageController.index);
 router.post('/applicants/:applicant_id/stages', ApplicantStageController.create);
-router.post('/applicant_stage_reviews/:applicant_stage_id/review', ApplicantStageReviewController.create);
+router.post('/applicant_stage_reviews', ApplicantStageReviewController.create);
 router.put('/applicant_stage_interviews/:id', ApplicantStageInterviewController.update);
 
 module.exports = router;

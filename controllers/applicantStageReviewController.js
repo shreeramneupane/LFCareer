@@ -7,7 +7,7 @@ var ApplicantStageRemarkService = require('../services/applicantStageRemarkServi
 module.exports = {
 
   create: function (request, response) {
-    var applicantStageID = request.params.applicant_stage_id;
+    var applicantStageID = request.body.applicant_stage_id;
     var remark = request.body.remark;
     ApplicantStageRemarkService.add(applicantStageID, remark)
     .then(function (data) {
