@@ -74,6 +74,31 @@ var ApplicantStageInterviewService = {
     }
   },
 
+  update: function (applicantStageInterviewID, applicantStageInterviewParam) {
+    return new Promise(function (resolve, reject) {
+      models.ApplicantStageInterview.find({
+        where: {
+          id: applicantStageInterviewID
+        }
+      })
+      .then(function (applicantStageInterview) {
+        if (applicantStageInterview) {
+          applicantStageInterview.updateAttributes({
+            schedule: applicantStageInterviewParam.schedule,
+            meeting_room: applicantStageInterviewParam.meeting_room,
+            interviewers_id: applicantStageInterviewParam.interviewers_id.toString(),
+          })
+          .then(function (response) {
+            resolve({applicant_stage_interview: response});
+          });
+        }
+      })
+      .catch(function (err) {
+        reject(err);
+      });
+    });
+  },
+
   verifyInterviewStage: function (stageId) {
     return new Promise(function (resolve, reject) {
       return models.Stage.findOne({
