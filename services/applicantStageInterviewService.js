@@ -33,10 +33,12 @@ var ApplicantStageInterviewService = {
               if (!err && response.statusCode == HttpStatus.OK) {
                 var interviewerDetail = JSON.parse(response.body);
                 name = interviewerDetail.firstName + ' ' + interviewerDetail.lastName;
-                resolveInner(name);
+                resolveInner({id: interviewerDetail.id, name: name});
               }
               else {
-                rejectInner(new Error("Can't retrieve Interviewer details."))
+                var error = new Error("Can't retrieve Interviewer details.")
+                error.code = response.statusCode;
+                rejectInner(error);
               }
             })
           })
@@ -134,7 +136,9 @@ var ApplicantStageInterviewService = {
           }
         }, function (err, response) {
           if (err || response.statusCode !== HttpStatus.OK || JSON.parse(response.body).hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
-            reject(new Error('Interviewer can not be validated.'));
+            var error = new Error("Interviewer can not be validated.")
+            error.code = response.statusCode;
+            reject(error);
           }
           else {
             resolve(true);
