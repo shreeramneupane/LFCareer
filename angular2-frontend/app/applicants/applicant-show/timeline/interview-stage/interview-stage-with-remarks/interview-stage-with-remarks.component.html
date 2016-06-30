@@ -1,0 +1,22 @@
+<div class="push-bit timeline-item-title clearfix">
+  {{lastTimelineItem?.title}}
+</div>
+
+<div class="push-bit clearfix">
+  <div class="col-sm-12 element">
+    <textarea placeholder="Remarks" class="form-control" rows="5"
+              [(ngModel)]="selectedStage.remark"
+    ></textarea>
+  </div>
+</div>
+
+<div class="push-bit clearfix">
+  <div class="col-sm-12">
+    <button class="btn btn-sm btn-danger margin-15 pull-right" (click)="cancelEdit()">
+      Cancel
+    </button>
+    <button class="btn btn-sm btn-success pull-right" (click)="submitStage()">
+      Proceed
+    </button>
+  </div>
+</div>
