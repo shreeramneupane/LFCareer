@@ -48,7 +48,7 @@ var ApplicantStageService = {
           applicantStage.remark = null;
           applicantStage.interview = null;
           if (applicantStage.ApplicantStageRemark) {
-            applicantStage.remark = applicantStage.ApplicantStageRemark.remark;
+            applicantStage.remark = applicantStage.ApplicantStageRemark;
           }
           if (applicantStage.ApplicantStageInterview) {
             applicantStage.interview = applicantStage.ApplicantStageInterview;
