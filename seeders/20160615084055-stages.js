@@ -21,13 +21,15 @@ module.exports = {
         title: 'Phone Interview',
         is_default: true,
         is_repeatable: true,
-        precedence_number: 3
+        precedence_number: 3,
+        is_interview: true
       },
       {
         title: 'Face to Face Interview',
         is_default: true,
         is_repeatable: true,
-        precedence_number: 4
+        precedence_number: 4,
+        is_interview: true
       },
       {
         title: 'Hired',
