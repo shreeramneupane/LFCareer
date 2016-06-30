@@ -1,18 +1,20 @@
 import { Injectable }                     from '@angular/core';
 import { Headers, Http, RequestOptions }  from '@angular/http';
 import { Observable }                     from 'rxjs/Rx';
-
+import { LoaderService } from '../services/loader.service';
 var config = require('config');
 
 @Injectable()
 export class ApiService {
   private URL:string = config.API_URL;
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private loaderService:LoaderService) {
   }
 
   uploadFile(pathParams, documents):Observable<any> {
-    return Observable.create(observer => {
+    this.loaderService.apiRequest();
+
+    let source = Observable.create(observer => {
       let formData:FormData = new FormData(),
       xhr:XMLHttpRequest = new XMLHttpRequest();
 
@@ -40,11 +42,14 @@ export class ApiService {
       xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
       xhr.send(formData);
     });
+    source.subscribe(this.loaderService.apiResponse());
+    return source;
   }
 
   fetch(pathParams):Observable<any> {
     var that = this;
-    return this.http.get(this.URL + pathParams, this.getHeader())
+    this.loaderService.apiRequest();
+    let source = this.http.get(this.URL + pathParams, this.getHeader())
     .map(res => res.json())
     .catch(res => {
       return this.handleError(res, function () {
@@ -52,30 +57,41 @@ export class ApiService {
       })
     })
 
+    source.subscribe(this.loaderService.apiResponse());
+    return source;
+
   }
 
   create(pathParams:string, object:any):Observable<any> {
     var that = this;
     let body = JSON.stringify(object);
-    return this.http.post(this.URL + pathParams, body, this.getHeader())
+    this.loaderService.apiRequest();
+
+    let source = this.http.post(this.URL + pathParams, body, this.getHeader())
     .map(res => res.json())
     .catch(res => {
       return this.handleError(res, function () {
         return that.create(pathParams, object)
       })
     })
+    source.subscribe(this.loaderService.apiResponse());
+    return source;
   }
 
   update(pathParams:string, object:any):Observable < any > {
     var that = this;
     let body = JSON.stringify(object);
-    return this.http.put(this.URL + pathParams, body, this.getHeader())
+
+    this.loaderService.apiRequest();
+    let source = this.http.put(this.URL + pathParams, body, this.getHeader())
     .map(res => res.json())
     .catch(res => {
       return this.handleError(res, function () {
         return that.update(pathParams, object)
       })
     })
+    source.subscribe(this.loaderService.apiResponse());
+    return source;
   }
 
   private getHeader():any {

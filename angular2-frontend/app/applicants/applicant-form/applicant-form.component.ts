@@ -193,7 +193,7 @@ export class ApplicantFormComponent {
       .css('content', 'url(' + e.target.result + ')');
     }
 
-    if (ValidationService.fileValidator('image', event.target.files[0].name)) {
+    if (ValidationService.fileValidator('image', event.target.files[0] && event.target.files[0].name)) {
       reader.readAsDataURL(event.target.files[0]);
       this.documents.profile_picture = event.target.files[0];
     } else {
@@ -202,7 +202,7 @@ export class ApplicantFormComponent {
   }
 
   uploadResume(event) {
-    if (ValidationService.fileValidator('document', event.target.files[0].name)) {
+    if (ValidationService.fileValidator('document', event.target.files[0] && event.target.files[0].name)) {
       $('#resume-input').val(event.target.files[0].name);
       this.documents.resume = event.target.files[0];
     } else {
