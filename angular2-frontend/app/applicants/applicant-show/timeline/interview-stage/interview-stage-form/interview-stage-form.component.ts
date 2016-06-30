@@ -23,20 +23,21 @@ export class InterviewForm {
   suggestions:any = [];
   selectedInterviewers:any = [];
 
-  selectedStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
-  initialStage:any = {id: '', title: '', interview: {schedule: '', room: '0', interviewers: []}};
+  selectedStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
+  initialStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
 
   constructor(private arrayUtil:ArrayUtil, private timelineService:TimelineService) {
   }
 
   refreshStage() {
-    this.selectedStage.interview = {schedule: '', room: '0', interviewers: []};
+    this.selectedStage.interview = {schedule: '', meeting_room: '0', interviewers_id: []};
   }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
+    console.log('ddddddddsssssssssssssssss')
     if (this.interviewStage == 'edit') {
       this.selectedStage = ({}, this.lastTimelineItem);
       this.selectedStage = jQuery.extend(true, {}, this.lastTimelineItem);
@@ -58,6 +59,7 @@ export class InterviewForm {
       that.selectedStage.interview.schedule = $('#scheduledDate').val();
     });
     if (this.interviewStage == 'edit') {
+      console.log(this.selectedStage.interview.schedule)
       $('#datepicker').datepicker('setDate', new Date(this.selectedStage.interview.schedule));
     } else {
       $('#datepicker').datepicker('setDate', new Date());
@@ -66,24 +68,20 @@ export class InterviewForm {
 
   initializeTag() {
     $("#employees").tagit({
-      placeholderText: 'Interviewer',
-      allowSpaces    : true,
-      autocomplete   : {
+      placeholderText : 'Interviewer',
+      allowSpaces     : true,
+      autocomplete    : {
         delay    : 0,
         minLength: 1,
-        change   : function (event, ui) {
-          console.log('bbbbbbbbbbbbbbbbbb')
-        },
         source   : (request, response) => {
           this.getAutoCompleteValue(request, response);
         }
       },
-      beforeTagAdded : (event, ui) => {
+      beforeTagAdded  : (event, ui) => {
         let obj = this.arrayUtil.filterObjectByKey(this.suggestions, 'label', ui.tagLabel)[0];
-
         if (!obj) {
           return false;
-        }else {
+        } else {
           this.selectedInterviewers.push(obj);
         }
       },
@@ -93,9 +91,11 @@ export class InterviewForm {
         this.selectedInterviewers.splice(index, 1);
       }
     });
+    this.suggestions = this.selectedStage.interview.interviewers || [];
+    this.arrayUtil.changeKeyName(this.suggestions, 'name', 'label');
 
-    this.selectedStage.interview.interviewers.forEach((tag) => {
-      $('#employees').tagit("createTag", tag);
+    this.suggestions.forEach((tag) => {
+      $('#employees').tagit("createTag", tag.label);
     })
   }
 
@@ -126,16 +126,24 @@ export class InterviewForm {
 
   submitStage() {
     this.selectedStage.id = this.selectedStageId;
-    this.selectedStage.interview.interviewers = $('#employees').tagit('assignedTags');
-    if (!this.selectedStage.interview.schedule || !this.selectedStage.interview.interviewers.length) {
+    this.selectedStage.interview.interviewers_id = this.selectedInterviewers.map(interviewer => {
+      return interviewer.id;
+    });
+    if (!this.selectedStage.interview.schedule || !this.selectedStage.interview.interviewers_id.length) {
       toastr.error('Please fill required data', 'Error!');
     } else {
-      this.submit.emit(this.selectedStage);
+      let mode = (this.interviewStage == 'edit') ? 'edit' : 'add';
+      let requiredStage = {
+        schedule       : this.selectedStage.interview.schedule,
+        meeting_room   : this.selectedStage.interview.meeting_room,
+        interviewers_id: this.selectedStage.interview.interviewers_id
+      };
+
+      this.submit.emit({stage: (mode == 'edit') ? requiredStage : this.selectedStage, mode: mode});
     }
   }
 
   cancelEdit() {
-    console.log('ssss')
     this.selectedStage = this.initialStage;
     this.cancel.emit();
   }

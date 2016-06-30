@@ -12,7 +12,7 @@ export class NonInterview {
   @Input() selectedStageId;
 
   @Output() changeStage = new EventEmitter<any>();
-  @Output() submit = new EventEmitter<any>();
+  @Output() submit = new EventEmitter<any, string>();
 
   selectedStage:any = {
     id    : this.selectedStageId,
@@ -37,7 +37,7 @@ export class NonInterview {
     if (this.selectedStage.remark == '') {
       toastr.error('Please fill the remarks', 'Error!');
     } else {
-      this.submit.emit(this.selectedStage);
+      this.submit.emit({stage: this.selectedStage, mode: 'add'});
     }
   }
 }

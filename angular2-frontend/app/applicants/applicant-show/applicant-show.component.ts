@@ -4,6 +4,7 @@ ROUTER_DIRECTIVES,
 RouteParams,
 Router
 } from '@angular/router-deprecated';
+import * as toastr from 'toastr';
 
 import { Achievements } from './achievements/achievements.component.ts';
 import { Applicant } from '../shared/applicant';
@@ -18,25 +19,25 @@ import { Profile } from './profile/profile.component';
 import { Portfolios } from './portfolios/portfolios.component';
 import { References } from './references/references.component';
 import { Timeline } from './timeline/timeline.component';
+import { TimelineService } from './timeline/timeline.service';
 
 @Component({
   selector  : 'applicant-show',
   styles    : [require('./applicant-show.component.css')],
   template  : require('./applicant-show.component.html'),
   directives: [ROUTER_DIRECTIVES, PageHeader, Achievements, Educations, Experiences, GeneralDetails, HiringPipeline, OtherDetails, Portfolios, Profile, References, Timeline],
-  providers : [ApplicantService]
+  providers : [ApplicantService, TimelineService]
 })
 export class ApplicantShowComponent implements OnInit {
   applicant:Applicant;
   timeline:any;
 
-  constructor(private applicantService:ApplicantService, private routeParams:RouteParams) {
+  constructor(private applicantService:ApplicantService, private timelineService:TimelineService, private routeParams:RouteParams) {
   }
 
   ngOnInit() {
     let id = this.routeParams.get('id');
     this.getApplicant(id);
-    this.getTimeline(id);
   }
 
   getApplicant(id:string):void {
@@ -46,21 +47,13 @@ export class ApplicantShowComponent implements OnInit {
     );
   }
 
-  getTimeline(id:string):void {
-    this.applicantService.getTimeline(id).subscribe(
-    timeline => this.timeline = timeline,
-    error => toastr.error(error)
-    );
-  }
-
   startTimeline(timeline:any):void {
-    this.applicantService.startTimeline(timeline, this.applicant.id)
+    this.timelineService.startTimeline(timeline, this.applicant.id)
     .subscribe(
-    applicant => {
-      this.applicant = applicant;
-      this.getTimeline(applicant.id);
+    response => {
+      this.applicant = response.applicant;
     },
-    error => taostr.error(error)
+    error => toastr.error(error)
     );
   }
 }

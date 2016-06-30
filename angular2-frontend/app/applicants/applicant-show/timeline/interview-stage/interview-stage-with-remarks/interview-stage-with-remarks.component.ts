@@ -17,7 +17,7 @@ export class InterviewRemarks {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
-  selectedStage:any = {id: '', remark: ''};
+  selectedStage:any = {applicant_stage_id: '', remark: ''};
 
 
   refreshStage() {
@@ -25,11 +25,11 @@ export class InterviewRemarks {
   }
 
   submitStage() {
-    this.selectedStage.id = this.lastTimelineItem.id;
+    this.selectedStage.applicant_stage_id = this.lastTimelineItem.id;
     if (this.selectedStage.remark == '') {
       toastr.error('Please fill the remarks', 'Error!');
     } else {
-      this.submit.emit(this.selectedStage);
+      this.submit.emit({stage: this.selectedStage, mode: 'add remarks'});
     }
   }
 

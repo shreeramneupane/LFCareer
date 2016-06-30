@@ -26,7 +26,7 @@ export class TimelineService {
 
   filterTimeline(timeline:any, applicant:Applicant) {
     let timelineItems = [];
-    if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == '' || !timeline[timeline.length - 1].hasOwnProperty('remark'))) {
+    if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == null)) {
       timeline[timeline.length - 1]['has_button'] = true;
     }
 
@@ -84,7 +84,7 @@ export class TimelineService {
     let latestTimelineId = timeline[timeline.length - 1].stage.id;
     if (!stages.length) {
       return 0;
-    } else if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == '' || !timeline[timeline.length - 1].hasOwnProperty('remark'))) {
+    } else if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == null)) {
       return 0;
     }
     for (var i = 0; i < stages.length; i++) {
@@ -98,7 +98,27 @@ export class TimelineService {
   }
 
   getAutoCompleteValue(term) {
-    console.log(term)
-    return this.coreService.fetch('employees' + this.converter.serialize({q: term}));
+    return this.coreService.fetch('employees' + this.converter.serialize({q: term, hrStatus: 'Permanent'}));
+  }
+
+  startTimeline(timeline:any, id:string) {
+    return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, id]), timeline);
+  }
+
+  submit(data:any, id:string) {
+    console.log(data.mode)
+    switch (data.mode) {
+      case 'add':
+        console.log(data.stage);
+        return this.apiService.create(this.converter.getPathParam([AppConstants.APPLICANTS, id, 'stages']), data.stage);
+        break;
+      case 'edit':
+        console.log(id, data.stage);
+        return this.apiService.update(this.converter.getPathParam(['applicant_stage_interviews', id]), data.stage);
+        break;
+      case 'add remarks':
+        console.log(id, data.stage);
+        return this.apiService.create('applicant_stage_reviews', data.stage);
+    }
   }
 }

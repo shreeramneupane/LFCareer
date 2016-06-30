@@ -13,8 +13,9 @@
         <references [references]="applicant?.references"></references>
         <other-details [applicant]="applicant"></other-details>
       </div>
-      <hiring-pipeline (startTimeline)="startTimeline($event)" *ngIf="applicant && !applicant?.is_processable"></hiring-pipeline>
-      <timeline *ngIf="applicant?.is_processable && timeline && applicant" [applicant]="applicant" [timeline]="timeline" ></timeline>
+      <hiring-pipeline (startTimeline)="startTimeline($event)"
+                       *ngIf="applicant && !applicant?.is_processable"></hiring-pipeline>
+      <timeline *ngIf="applicant?.is_processable && applicant" [applicant]="applicant"></timeline>
     </div>
   </div>
 </div>

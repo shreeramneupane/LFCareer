@@ -18,4 +18,11 @@ export class ArrayUtil {
       return (item[key] == value)
     });
   }
+
+  changeKeyName(array, oldName, newName) {
+    for (var i = 0; i < array.length; i++) {
+      array[i][newName] = array[i][oldName];
+      delete array[i][oldName];
+    }
+  }
 }

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router }  from '@angular/router-deprecated';
+
 import { TimelineService } from './timeline.service';
 import { Interview } from './interview-stage/interview-stage.component';
 import { NonInterview } from './non-interview-stage/non-interview-stage.component';
@@ -7,6 +9,7 @@ import { DateUtil } from '../../../shared/utils/date.util';
 import { ArrayUtil } from '../../../shared/utils/array.util';
 
 import * as moment from 'moment';
+import * as toastr from 'toastr';
 
 @Component({
   selector  : 'timeline',
@@ -18,9 +21,9 @@ import * as moment from 'moment';
 
 export class Timeline implements OnInit {
   //timelines:any = [{}, {}, {}];
-  @Input() timeline;
   @Input() applicant;
 
+  timeline:any;
   timelineItems:any;
   stages:any;
   selectedStageId:any;
@@ -30,50 +33,36 @@ export class Timeline implements OnInit {
   interviewStage:string;
   isInterview:boolean;
 
-  constructor(private timelineService:TimelineService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil) {
+  constructor(private timelineService:TimelineService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil, private router:Router) {
   }
 
   ngOnInit() {
-    this.timeline.push({
-      "id"          : "0cb0fd80-384a-11e6-876d-9bedf7bd240e",
-      "applicant_id": "0c816200-384a-11e6-876d-9bedf7bd240f",
-      "stage_id"    : "44286860-37a1-11e6-85ed-457d7aa2735b",
-      "created_at"  : "2016-06-22T07:22:17.304Z",
-      "updated_at"  : "2016-06-22T07:22:17.304Z",
-      "stage"       : {
-        "id"               : "44286860-37a1-11e6-85ed-457d7aa2735b",
-        "title"            : "Face to Face Interview",
-        "is_default"       : true,
-        "is_repeatable"    : true,
-        "is_termination"   : false,
-        "is_interview"     : true,
-        "precedence_number": 2,
-        "created_at"       : "2016-06-21T11:14:05.415Z",
-        "updated_at"       : "2016-06-21T11:14:05.415Z"
+    this.getTimeline(this.applicant.id);
+
+  }
+
+  getTimeline(id:string):void {
+    this.timelineService.getTimeline(id).subscribe(
+    timeline => {
+      this.timeline = timeline;
+      this.timelineItems = this.timelineService.filterTimeline(this.timeline, this.applicant);
+      this.timelineService.getStages(this.applicant.id)
+      .subscribe(
+      stages => {
+        this.stages = this.timelineService.filterStages(stages, this.timeline);
+        this.selectedStageId = this.timelineService.getSelectedStageId(this.stages, this.timeline);
+        if (this.selectedStageId) {
+          this.changeStage(this.selectedStageId);
+        } else if (this.stages.length) {
+          this.changeStage(this.timeline[this.timeline.length - 1].stage.id);
+        }
       },
-      "interview"   : {
-        "schedule"    : '2016-07-21T11:14:05.415Z',
-        "room"        : 'Manakamana',
-        "interviewers": ["Bishal"]
-      },
-      "remark": 'this is a remark'
-    })
-    this.timelineItems = this.timelineService.filterTimeline(this.timeline, this.applicant);
-    this.timelineService.getStages(this.applicant.id)
-    .subscribe(
-    stages => {
-      this.stages = this.timelineService.filterStages(stages, this.timeline);
-      this.selectedStageId = this.timelineService.getSelectedStageId(this.stages, this.timeline);
-      if(!this.interviewStage){
-        this.changeStage(this.selectedStageId);
-      }else {
-        this.changeStage(this.timeline[this.timeline.length - 1].stage.id);
-      }
+      error => toastr.error(error)
+      );
     },
     error => toastr.error(error)
     );
   }
-
 
   getTodaysDate() {
     return this.dateUtil.getFormattedDate(new Date());
@@ -87,31 +76,20 @@ export class Timeline implements OnInit {
   }
 
   changeStage(stageId) {
-    console.log('fffffffffffffffffffff')
-    /*this.selectedStage = {};
-     let newStage = this.arrayUtil.filterObjectByKey(this.stages, 'id', stage);
-     this.selectedStage.id = newStage[0].id;
-     if (newStage[0].is_interview == true) {
-     this.selectedStage.date = moment().format('YYYY/MM/DD');;
-     this.selectedStage.interviewers = [];
-     this.selectedStage.room = '';
-     }*/
     this.selectedStageId = stageId;
     let stage = this.arrayUtil.filterObjectByKey(this.stages, 'id', stageId)[0];
-    console.log(stage)
     this.checkStage(stage);
   }
 
   checkStage(stage:any):void {
-    console.log('dddssssssssssssssssssssssssssssssssssssssssssssssss')
     if (stage.is_interview == true) {
       this.isInterview = true;
-      console.log(stage)
       if (this.timelineItems[this.timelineItems.length - 1].has_button) {
         this.interviewStage = 'none';
       } else {
         this.interviewStage = 'add';
       }
+      console.log(this.interviewStage)
     } else {
       this.isInterview = false;
       console.log('flase')
@@ -132,8 +110,21 @@ export class Timeline implements OnInit {
     this.selectedStageId = this.timeline[this.timeline.length - 1].stage.id;
   }
 
-  submit(stage:any):void {
-    console.log(stage);
+  submit(data:any):void {
+    let id = 0;
+    if (data.mode == 'add') {
+      id = this.applicant.id;
+    } else if (data.mode == 'edit') {
+      console.log(this.lastTimelineItem)
+      id = this.lastTimelineItem.interview.id
+    }
+    this.timelineService.submit(data, id)
+    .subscribe(
+    response => {
+      toastr.success('Stage added');
+      this.getTimeline(this.applicant.id);
+    }
+    )
   }
 
   cancelEdit() {
