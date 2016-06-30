@@ -106,18 +106,14 @@ export class TimelineService {
   }
 
   submit(data:any, id:string) {
-    console.log(data.mode)
     switch (data.mode) {
       case 'add':
-        console.log(data.stage);
         return this.apiService.create(this.converter.getPathParam([AppConstants.APPLICANTS, id, 'stages']), data.stage);
         break;
       case 'edit':
-        console.log(id, data.stage);
         return this.apiService.update(this.converter.getPathParam(['applicant_stage_interviews', id]), data.stage);
         break;
       case 'add remarks':
-        console.log(id, data.stage);
         return this.apiService.create('applicant_stage_reviews', data.stage);
     }
   }

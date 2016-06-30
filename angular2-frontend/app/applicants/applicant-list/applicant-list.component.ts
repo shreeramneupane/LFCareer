@@ -35,14 +35,6 @@ export class ApplicantListComponent implements OnInit {
     return moment(date).format("MMM Do YYYY");
   }
 
-  downloadResume(id:string) {
-    this.applicantService.getDocument(id, 'resume').subscribe(
-    response => console.log(response),
-    error => console.log(error)
-    )
-
-  }
-  
   listApplicants(page, sortBy) {
     this.applicantService.listApplicants(page, sortBy)
     .subscribe(

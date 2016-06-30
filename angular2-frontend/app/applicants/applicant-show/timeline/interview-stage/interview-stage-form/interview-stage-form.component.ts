@@ -16,6 +16,7 @@ export class InterviewForm {
   @Input() selectedStageId;
   @Input() lastTimelineItem;
   @Input() interviewStage;
+
   @Output() changeStage = new EventEmitter<any>();
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
@@ -37,7 +38,6 @@ export class InterviewForm {
   }
 
   ngOnChanges() {
-    console.log('ddddddddsssssssssssssssss')
     if (this.interviewStage == 'edit') {
       this.selectedStage = ({}, this.lastTimelineItem);
       this.selectedStage = jQuery.extend(true, {}, this.lastTimelineItem);
@@ -59,7 +59,6 @@ export class InterviewForm {
       that.selectedStage.interview.schedule = $('#scheduledDate').val();
     });
     if (this.interviewStage == 'edit') {
-      console.log(this.selectedStage.interview.schedule)
       $('#datepicker').datepicker('setDate', new Date(this.selectedStage.interview.schedule));
     } else {
       $('#datepicker').datepicker('setDate', new Date());
@@ -115,7 +114,7 @@ export class InterviewForm {
       this.suggestions = employees;
       response(employees);
     },
-    error => console.log(error)
+    error => toastr.error(error)
     )
   }
 

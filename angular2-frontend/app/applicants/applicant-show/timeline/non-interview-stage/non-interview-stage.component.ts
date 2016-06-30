@@ -19,10 +19,6 @@ export class NonInterview {
     remark: ''
   };
 
-  ngOnInit() {
-    console.log('asdf')
-  }
-
   refreshStage() {
     this.selectedStage.remark = '';
   }

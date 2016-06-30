@@ -8,10 +8,6 @@ import * as toastr from 'toastr';
 })
 
 export class InterviewRemarks {
-  ngOnInit() {
-    console.log('remarks');
-  }
-
   @Input() lastTimelineItem;
 
   @Output() submit = new EventEmitter<any>();
@@ -34,7 +30,6 @@ export class InterviewRemarks {
   }
 
   cancelEdit() {
-    console.log('ssss')
     this.selectedStage.remark = '';
     this.cancel.emit();
   }

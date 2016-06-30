@@ -68,13 +68,6 @@ export class Timeline implements OnInit {
     return this.dateUtil.getFormattedDate(new Date());
   }
 
-  getAutoCompleteValue(request, response) {
-    this.timelineService.getAutoCompleteValue(request.term).subscribe(
-    response => console.log(response),
-    error => console.log(error)
-    );
-  }
-
   changeStage(stageId) {
     this.selectedStageId = stageId;
     let stage = this.arrayUtil.filterObjectByKey(this.stages, 'id', stageId)[0];
@@ -89,10 +82,8 @@ export class Timeline implements OnInit {
       } else {
         this.interviewStage = 'add';
       }
-      console.log(this.interviewStage)
     } else {
       this.isInterview = false;
-      console.log('flase')
     }
   }
 
@@ -115,7 +106,6 @@ export class Timeline implements OnInit {
     if (data.mode == 'add') {
       id = this.applicant.id;
     } else if (data.mode == 'edit') {
-      console.log(this.lastTimelineItem)
       id = this.lastTimelineItem.interview.id
     }
     this.timelineService.submit(data, id)
