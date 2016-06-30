@@ -32,7 +32,11 @@ var ApplicantStageInterviewService = {
             }, function (err, response) {
               if (!err && response.statusCode == HttpStatus.OK) {
                 var interviewerDetail = JSON.parse(response.body);
-                name = interviewerDetail.firstName + ' ' + interviewerDetail.lastName;
+                var middleName = interviewerDetail.middleName;
+                if(middleName) {
+                  middleName = middleName + ' '
+                }
+                name = interviewerDetail.firstName + ' ' + middleName + interviewerDetail.lastName;
                 resolveInner(name);
               }
               else {
