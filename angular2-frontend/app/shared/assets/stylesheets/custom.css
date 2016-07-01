@@ -812,6 +812,7 @@ html, body, #page-container, #main-container, #sidebar {
 .ui-autocomplete {
   max-height : 100px;
   overflow-y : auto;
+  overflow-x : hidden;
 }
 
 #nprogress {

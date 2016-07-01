@@ -12,7 +12,7 @@ export class NonInterview {
   @Input() selectedStageId;
 
   @Output() changeStage = new EventEmitter<any>();
-  @Output() submit = new EventEmitter<any, string>();
+  @Output() submit = new EventEmitter<any>();
 
   selectedStage:any = {
     id    : this.selectedStageId,
@@ -24,7 +24,7 @@ export class NonInterview {
   }
 
   changeStageId(stageId) {
-    this.refreshStage(stageId);
+    this.refreshStage();
     this.changeStage.emit(stageId);
   }
 

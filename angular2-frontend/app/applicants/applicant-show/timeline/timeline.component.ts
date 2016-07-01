@@ -7,6 +7,7 @@ import { NonInterview } from './non-interview-stage/non-interview-stage.componen
 
 import { DateUtil } from '../../../shared/utils/date.util';
 import { ArrayUtil } from '../../../shared/utils/array.util';
+import { LoaderService } from '../../../shared/services/loader.service';
 
 import * as moment from 'moment';
 import * as toastr from 'toastr';
@@ -33,7 +34,7 @@ export class Timeline implements OnInit {
   interviewStage:string;
   isInterview:boolean;
 
-  constructor(private timelineService:TimelineService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil, private router:Router) {
+  constructor(private timelineService:TimelineService, private dateUtil:DateUtil, private arrayUtil:ArrayUtil, private router:Router, private loaderService:LoaderService) {
   }
 
   ngOnInit() {
@@ -42,6 +43,7 @@ export class Timeline implements OnInit {
   }
 
   getTimeline(id:string):void {
+    this.loaderService.apiRequest();
     this.timelineService.getTimeline(id).subscribe(
     timeline => {
       this.timeline = timeline;
@@ -49,6 +51,7 @@ export class Timeline implements OnInit {
       this.timelineService.getStages(this.applicant.id)
       .subscribe(
       stages => {
+        this.loaderService.apiResponse();
         this.stages = this.timelineService.filterStages(stages, this.timeline);
         this.selectedStageId = this.timelineService.getSelectedStageId(this.stages, this.timeline);
         if (this.selectedStageId) {
@@ -57,10 +60,16 @@ export class Timeline implements OnInit {
           this.changeStage(this.timeline[this.timeline.length - 1].stage.id);
         }
       },
-      error => toastr.error(error)
+      error => {
+        toastr.error(error);
+        this.loaderService.apiResponse();
+      }
       );
     },
-    error => toastr.error(error)
+    error => {
+      toastr.error(error);
+      this.loaderService.apiResponse();
+    }
     );
   }
 

@@ -119,7 +119,7 @@ export class InterviewForm {
   }
 
   changeStageId(stageId) {
-    this.refreshStage(stageId);
+    this.refreshStage();
     this.changeStage.emit(stageId);
   }
 
@@ -142,8 +142,8 @@ export class InterviewForm {
     }
   }
 
-  cancelEdit() {
+  cancelEdit(event) {
     this.selectedStage = this.initialStage;
-    this.cancel.emit();
+    this.cancel.emit(event);
   }
 }

@@ -46,6 +46,17 @@ export class ApiService {
     return source;
   }
 
+  fetchAutCompleteValue(pathParams:string):Observable<any> {
+    var that = this;
+    return this.http.get(this.URL + pathParams, this.getHeader())
+    .map(res => res.json())
+    .catch(res => {
+      return this.handleError(res, function () {
+        return that.fetchAutCompleteValue(pathParams)
+      })
+    })
+  }
+
   fetch(pathParams):Observable<any> {
     var that = this;
     this.loaderService.apiRequest();
@@ -57,9 +68,8 @@ export class ApiService {
       })
     })
 
-    source.subscribe(this.loaderService.apiResponse());
+    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
     return source;
-
   }
 
   create(pathParams:string, object:any):Observable<any> {
@@ -74,7 +84,7 @@ export class ApiService {
         return that.create(pathParams, object)
       })
     })
-    source.subscribe(this.loaderService.apiResponse());
+    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
     return source;
   }
 
@@ -90,7 +100,7 @@ export class ApiService {
         return that.update(pathParams, object)
       })
     })
-    source.subscribe(this.loaderService.apiResponse());
+    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
     return source;
   }
 
@@ -107,7 +117,7 @@ export class ApiService {
     return Observable.throw(response.json().error.message);
   }
 
-  private handleError(response:any, func:any) {
+  private handleError(response:any, func:any):any {
     if (response.status == 401) {
       let headers = new Headers({
         'Content-Type': 'application/json',
@@ -116,7 +126,7 @@ export class ApiService {
       let options = new RequestOptions({headers: headers});
       let body = JSON.stringify({'refresh_token': localStorage.getItem('refresh_token')});
       return this.http.post(window.location.origin + '/api/auth/auth/refreshtoken', body, options)
-      .flatMap(res => {
+      .flatMap((res:any) => {
         res = res.json();
         localStorage.setItem('access_token', res.access_token);
         localStorage.setItem('refresh_token', res.refresh_token);

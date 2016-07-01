@@ -36,7 +36,7 @@ export class CoreService {
     return Observable.throw(response.json().error.message);
   }
 
-  private handleError(response:any, func:any) {
+  private handleError(response:any, func:any):any {
     if (response.status == 401) {
       let headers = new Headers({
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export class CoreService {
       let options = new RequestOptions({headers: headers});
       let body = JSON.stringify({'refresh_token': localStorage.getItem('refresh_token')});
       return this.http.post(window.location.origin + '/api/auth/auth/refreshtoken', body, options)
-      .flatMap(res => {
+      .flatMap((res:any) => {
         res = res.json();
         localStorage.setItem('access_token', res.access_token);
         localStorage.setItem('refresh_token', res.refresh_token);
