@@ -1,14 +1,14 @@
 import { Injectable }                     from '@angular/core';
 import { Headers, Http, RequestOptions }  from '@angular/http';
 import { Observable }                     from 'rxjs/Rx';
-
+import { LoaderService } from '../services/loader.service';
 var config = require('config');
 
 @Injectable()
 export class ApiService {
   private URL:string = config.API_URL;
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private loaderService:LoaderService) {
   }
 
   uploadFile(pathParams, documents):Observable<any> {
@@ -42,26 +42,47 @@ export class ApiService {
     });
   }
 
-  fetch(pathParams):Observable<any> {
+  fetchAutCompleteValue(pathParams:string):Observable<any> {
     var that = this;
     return this.http.get(this.URL + pathParams, this.getHeader())
     .map(res => res.json())
     .catch(res => {
       return this.handleError(res, function () {
-        return that.fetch(pathParams)
+        return that.fetchAutCompleteValue(pathParams)
       })
     })
+  }
 
+  fetch(pathParams):Observable<any> {
+    var that = this;
+    this.loaderService.apiRequest();
+    return this.http.get(this.URL + pathParams, this.getHeader())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json()
+    }
+    )
+    .catch(res => {
+      this.loaderService.apiResponse();
+      return this.handleError(res, function () {
+        return that.fetch(pathParams);
+      })
+    })
   }
 
   create(pathParams:string, object:any):Observable<any> {
     var that = this;
     let body = JSON.stringify(object);
+    this.loaderService.apiRequest();
     return this.http.post(this.URL + pathParams, body, this.getHeader())
-    .map(res => res.json())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json();
+    })
     .catch(res => {
+      this.loaderService.apiResponse();
       return this.handleError(res, function () {
-        return that.create(pathParams, object)
+        return that.create(pathParams, object);
       })
     })
   }
@@ -69,9 +90,14 @@ export class ApiService {
   update(pathParams:string, object:any):Observable < any > {
     var that = this;
     let body = JSON.stringify(object);
+    this.loaderService.apiRequest();
     return this.http.put(this.URL + pathParams, body, this.getHeader())
-    .map(res => res.json())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json();
+    })
     .catch(res => {
+      this.loaderService.apiResponse();
       return this.handleError(res, function () {
         return that.update(pathParams, object)
       })
@@ -91,7 +117,7 @@ export class ApiService {
     return Observable.throw(response.json().error.message);
   }
 
-  private handleError(response:any, func:any) {
+  private handleError(response:any, func:any):any {
     if (response.status == 401) {
       let headers = new Headers({
         'Content-Type': 'application/json',
@@ -100,7 +126,7 @@ export class ApiService {
       let options = new RequestOptions({headers: headers});
       let body = JSON.stringify({'refresh_token': localStorage.getItem('refresh_token')});
       return this.http.post(window.location.origin + '/api/auth/auth/refreshtoken', body, options)
-      .flatMap(res => {
+      .flatMap((res:any) => {
         res = res.json();
         localStorage.setItem('access_token', res.access_token);
         localStorage.setItem('refresh_token', res.refresh_token);

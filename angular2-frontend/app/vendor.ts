@@ -25,3 +25,6 @@ import './shared/assets/vendor/javascripts/tag-it.min.js';
 
 import './shared/assets/vendor/lou-multi-select/js/jquery.multi-select.js';
 import './shared/assets/vendor/lou-multi-select/css/multi-select.css';
+
+import '../node_modules/nprogress/nprogress.css';
+import '../node_modules/nprogress/nprogress.js'

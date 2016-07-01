@@ -20,8 +20,8 @@ export class ApplicantService {
     return this.apiService.fetch(pathParams);
   }
 
-  getSkills(query:string) {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q: query}));
+  getSkills(query:string):Observable<any> {
+    return this.apiService.fetchAutCompleteValue(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q: query}));
   }
 
   getApplicant(id:string):Observable<Applicant> {

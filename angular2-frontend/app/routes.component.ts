@@ -14,6 +14,7 @@ import { CoreService } from './shared/services/core.service';
 import { Converter }    from './shared/utils/converter.util';
 import  { DateUtil } from './shared/utils/date.util';
 import { Sorter } from './shared/utils/sort.util';
+import { LoaderService } from './shared/services/loader.service';
 
 @Component({
   selector  : 'lfcareer-app',
@@ -21,7 +22,7 @@ import { Sorter } from './shared/utils/sort.util';
   directives: [
     ROUTER_DIRECTIVES
   ],
-  providers : [ApiService, App, ArrayUtil, CoreService, Converter, DateUtil, Sorter]
+  providers : [ApiService, App, ArrayUtil, CoreService, Converter, DateUtil, LoaderService, Sorter]
 })
 
 @RouteConfig([

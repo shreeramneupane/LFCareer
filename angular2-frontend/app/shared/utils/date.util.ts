@@ -7,8 +7,8 @@ export class DateUtil {
     return moment(date).format("MMM Do YYYY");
   }
 
-  getRelativeDate(date):string {
-    var duration = moment.duration(moment().diff(date));
+  getRelativeDate(date:any):string {
+    let duration:any = moment.duration(moment().diff(date));
     if (duration.asWeeks() > 1) {
       return this.getFormattedDate(date);
     } else {

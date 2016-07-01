@@ -29,8 +29,8 @@ export class InterviewRemarks {
     }
   }
 
-  cancelEdit() {
+  cancelEdit(event) {
     this.selectedStage.remark = '';
-    this.cancel.emit();
+    this.cancel.emit(event);
   }
 }

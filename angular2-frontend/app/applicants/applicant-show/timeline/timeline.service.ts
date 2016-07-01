@@ -5,7 +5,6 @@ import { ApiService }   from '../../../shared/utils/api.util';
 import { CoreService } from '../../../shared/services/core.service';
 import { AppConstants } from '../../../shared/constants/app.constants';
 import { Converter }    from '../../../shared/utils/converter.util';
-import { Applicant }    from './applicant';
 
 @Injectable()
 export class TimelineService {
@@ -24,7 +23,7 @@ export class TimelineService {
     .map(response=>response.applicant_stages)
   }
 
-  filterTimeline(timeline:any, applicant:Applicant) {
+  filterTimeline(timeline:any, applicant:any) {
     let timelineItems = [];
     if (timeline[timeline.length - 1].stage.is_interview && (timeline[timeline.length - 1].remark == null)) {
       timeline[timeline.length - 1]['has_button'] = true;
@@ -105,14 +104,12 @@ export class TimelineService {
     return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, id]), timeline);
   }
 
-  submit(data:any, id:string) {
+  submit(data:any, id:any) {
     switch (data.mode) {
       case 'add':
         return this.apiService.create(this.converter.getPathParam([AppConstants.APPLICANTS, id, 'stages']), data.stage);
-        break;
       case 'edit':
         return this.apiService.update(this.converter.getPathParam(['applicant_stage_interviews', id]), data.stage);
-        break;
       case 'add remarks':
         return this.apiService.create('applicant_stage_reviews', data.stage);
     }

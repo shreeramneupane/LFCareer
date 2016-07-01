@@ -812,4 +812,14 @@ html, body, #page-container, #main-container, #sidebar {
 .ui-autocomplete {
   max-height : 100px;
   overflow-y : auto;
+  overflow-x : hidden;
+}
+
+#nprogress {
+  position : relative;
+  z-index  : 1200;
+}
+
+#nprogress .bar {
+  background : #6cc068 !important;
 }

@@ -26,7 +26,7 @@ export class Interview {
     this.submit.emit(stage);
   }
 
-  cancelEdit() {
-    this.cancel.emit();
+  cancelEdit(event) {
+    this.cancel.emit(event);
   }
 }
