@@ -12,9 +12,7 @@ export class ApiService {
   }
 
   uploadFile(pathParams, documents):Observable<any> {
-    this.loaderService.apiRequest();
-
-    let source = Observable.create(observer => {
+    return Observable.create(observer => {
       let formData:FormData = new FormData(),
       xhr:XMLHttpRequest = new XMLHttpRequest();
 
@@ -42,8 +40,6 @@ export class ApiService {
       xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'))
       xhr.send(formData);
     });
-    source.subscribe(this.loaderService.apiResponse());
-    return source;
   }
 
   fetchAutCompleteValue(pathParams:string):Observable<any> {
