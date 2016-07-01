@@ -60,48 +60,52 @@ export class ApiService {
   fetch(pathParams):Observable<any> {
     var that = this;
     this.loaderService.apiRequest();
-    let source = this.http.get(this.URL + pathParams, this.getHeader())
-    .map(res => res.json())
+    return this.http.get(this.URL + pathParams, this.getHeader())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json()
+    }
+    )
     .catch(res => {
+      this.loaderService.apiResponse();
       return this.handleError(res, function () {
-        return that.fetch(pathParams)
+        return that.fetch(pathParams);
       })
     })
-
-    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
-    return source;
   }
 
   create(pathParams:string, object:any):Observable<any> {
     var that = this;
     let body = JSON.stringify(object);
     this.loaderService.apiRequest();
-
-    let source = this.http.post(this.URL + pathParams, body, this.getHeader())
-    .map(res => res.json())
+    return this.http.post(this.URL + pathParams, body, this.getHeader())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json();
+    })
     .catch(res => {
+      this.loaderService.apiResponse();
       return this.handleError(res, function () {
-        return that.create(pathParams, object)
+        return that.create(pathParams, object);
       })
     })
-    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
-    return source;
   }
 
   update(pathParams:string, object:any):Observable < any > {
     var that = this;
     let body = JSON.stringify(object);
-
     this.loaderService.apiRequest();
-    let source = this.http.put(this.URL + pathParams, body, this.getHeader())
-    .map(res => res.json())
+    return this.http.put(this.URL + pathParams, body, this.getHeader())
+    .map(res => {
+      this.loaderService.apiResponse();
+      return res.json();
+    })
     .catch(res => {
+      this.loaderService.apiResponse();
       return this.handleError(res, function () {
         return that.update(pathParams, object)
       })
     })
-    source.subscribe(response => this.loaderService.apiResponse(), error => this.loaderService.apiResponse());
-    return source;
   }
 
   private getHeader():any {
