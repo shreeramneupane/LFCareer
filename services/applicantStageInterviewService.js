@@ -24,21 +24,21 @@ var ApplicantStageInterviewService = {
           var name = null;
           return new Promise(function (resolveInner, rejectInner) {
             return request({
-              url: interviewerURL,
-              method: 'GET',
+              url    : interviewerURL,
+              method : 'GET',
               headers: {
-                'Content-Type': 'application/json',
+                'Content-Type' : 'application/json',
                 'Authorization': authorizationToken
               }
             }, function (err, response) {
               if (!err && response.statusCode == HttpStatus.OK) {
                 var interviewerDetail = JSON.parse(response.body);
-                var middleName = interviewerDetail.middleName;
-                if(middleName) {
+                var middleName = '';
+                if (interviewerDetail.middleName && interviewerDetail.middleName != 'NULL') {
                   middleName = middleName + ' '
                 }
                 name = interviewerDetail.firstName + ' ' + middleName + interviewerDetail.lastName;
-                resolveInner(name);
+                resolveInner({id: interviewerDetail.id, name: name});
               }
               else {
                 var error = new Error("Can't retrieve Interviewer details.")
@@ -71,9 +71,9 @@ var ApplicantStageInterviewService = {
         return ApplicantStageInterviewService.validateInterviewers(authorizationToken, stageParam.interview.interviewers_id)
         .then(function () {
           return models.ApplicantStageInterview.create({
-            schedule: stageParam.interview.schedule,
-            meeting_room: stageParam.interview.meeting_room,
-            interviewers_id: stageParam.interview.interviewers_id.toString(),
+            schedule          : stageParam.interview.schedule,
+            meeting_room      : stageParam.interview.meeting_room,
+            interviewers_id   : stageParam.interview.interviewers_id.toString(),
             applicant_stage_id: applicantStageID
           }, {transaction: t})
         })
@@ -91,8 +91,8 @@ var ApplicantStageInterviewService = {
       .then(function (applicantStageInterview) {
         if (applicantStageInterview) {
           applicantStageInterview.updateAttributes({
-            schedule: applicantStageInterviewParam.schedule,
-            meeting_room: applicantStageInterviewParam.meeting_room,
+            schedule       : applicantStageInterviewParam.schedule,
+            meeting_room   : applicantStageInterviewParam.meeting_room,
             interviewers_id: applicantStageInterviewParam.interviewers_id.toString()
           })
           .then(function (response) {
@@ -110,7 +110,7 @@ var ApplicantStageInterviewService = {
     return new Promise(function (resolve, reject) {
       return models.Stage.findOne({
         where: {
-          id: stageId,
+          id          : stageId,
           is_interview: true
         }
       })
@@ -133,10 +133,10 @@ var ApplicantStageInterviewService = {
       return models.sequelize.Promise.map(interviewersID, function (interviewerID) {
         interviewerValidationURL = interviewerValidationURL.replace(':id', interviewerID);
         return request({
-          url: interviewerValidationURL,
-          method: 'GET',
+          url    : interviewerValidationURL,
+          method : 'GET',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type' : 'application/json',
             'Authorization': authorizationToken
           }
         }, function (err, response) {
