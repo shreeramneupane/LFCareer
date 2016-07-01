@@ -16,7 +16,7 @@ module.exports = {
       },
       interviewers_id: {
         allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.STRING
       },
       applicant_stage_id: {
         allowNull: false,

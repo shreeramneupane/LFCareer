@@ -14,10 +14,11 @@ var ApplicantStageInterviewService = {
   list: function (applicantStage, authorizationToken) {
     return new Promise(function (resolve, reject) {
       if (applicantStage.interview) {
-        var interviewerURL = config['vyaguta_employee_detail_url'];
         var interviewers = [];
+        var interviewerURL = null;
         var interviewersID = applicantStage.interview.interviewers_id.split(',');
         Promise.map(interviewersID, function (interviewerID) {
+          interviewerURL = config['vyaguta_employee_detail_url'];
           interviewerURL = interviewerURL.replace(':id', interviewerID);
 
           var name = null;
@@ -32,8 +33,12 @@ var ApplicantStageInterviewService = {
             }, function (err, response) {
               if (!err && response.statusCode == HttpStatus.OK) {
                 var interviewerDetail = JSON.parse(response.body);
-                name = interviewerDetail.firstName + ' ' + interviewerDetail.lastName;
-                resolveInner({id: interviewerDetail.id, name: name});
+                var middleName = interviewerDetail.middleName;
+                if(middleName) {
+                  middleName = middleName + ' '
+                }
+                name = interviewerDetail.firstName + ' ' + middleName + interviewerDetail.lastName;
+                resolveInner(name);
               }
               else {
                 var error = new Error("Can't retrieve Interviewer details.")
@@ -88,7 +93,7 @@ var ApplicantStageInterviewService = {
           applicantStageInterview.updateAttributes({
             schedule: applicantStageInterviewParam.schedule,
             meeting_room: applicantStageInterviewParam.meeting_room,
-            interviewers_id: applicantStageInterviewParam.interviewers_id.toString(),
+            interviewers_id: applicantStageInterviewParam.interviewers_id.toString()
           })
           .then(function (response) {
             resolve({applicant_stage_interview: response});
