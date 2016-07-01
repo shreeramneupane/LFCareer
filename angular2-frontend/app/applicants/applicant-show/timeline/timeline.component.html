@@ -5,7 +5,7 @@
   <div class="timeline block-content-full">
     <ul class="timeline-list timeline-hover">
       <li *ngFor="let timelineItem of timelineItems" data-toggle="tooltip">
-        <div class="timeline-icon"><i class='fa fa-pencil'></i>
+        <div class="timeline-icon"><i class="glyphicon glyphicon-pushpin"></i>
         </div>
         <div class="timeline-time">
           {{dateUtil.getRelativeDate(timelineItem.updated_at)}}

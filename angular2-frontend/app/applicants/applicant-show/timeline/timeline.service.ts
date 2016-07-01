@@ -40,7 +40,7 @@ export class TimelineService {
           newItem.title = 'Applied for ' + applicant.job.title;
         }
       } else {
-        newItem.title = item.stage.is_interview ? item.stage.title + ' Scheduled' : item.stage.title;
+        newItem.title = item.stage.title;
       }
       var invalidKeys = ['applicant_id', 'stage_id', 'created_at', 'stage'];
 

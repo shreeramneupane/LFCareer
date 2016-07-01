@@ -20,7 +20,7 @@ catch (err) {
 }
 
 var s3fsImpl = new S3FS(config['bucket_name'], {
-  accessKeyId: config['accessKeyId'],
+  accessKeyId    : config['accessKeyId'],
   secretAccessKey: config['secretAccessKey']
 });
 
@@ -52,8 +52,8 @@ var ApplicantDocumentService = {
       });
 
       var params = {
-        applicant_id: applicantID,
-        resume: resumeURL,
+        applicant_id   : applicantID,
+        resume         : resumeURL,
         profile_picture: profilePictureURL
       };
       return models.ApplicantDocument.create(params)
@@ -85,20 +85,20 @@ var ApplicantDocumentService = {
             throw new Error("Can't found " + documentType + " of the provided applicant!");
           }
           request.get(ApplicantDocumentService.getFullURL(document[documentType]), function (err, response, body) {
-            if (err) {
-              new Error("Can't download " + documentType + " of the provided applicant.");
-            }
-            else if (response.statusCode == 200) {
+            if (response.statusCode == 200) {
+              console.log(response);
               var data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
               resolve({[documentType]: data});
             }
+            else {
+              console.log('here', 'KKKKKKKKKKKKKKKKKKKKKKKKKKKK')
+              reject(new Error("Can't download " + documentType + " of the provided applicant."));
+            }
           });
-        })
-        .catch(function (err) {
-          reject(err);
         });
       })
       .catch(function (err) {
+        console.log(err, '((((((((((((())))))))))))')
         reject(err);
       });
     });
