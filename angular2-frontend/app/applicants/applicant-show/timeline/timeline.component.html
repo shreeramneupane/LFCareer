@@ -8,7 +8,7 @@
         <div class="timeline-icon"><i class='fa fa-pencil'></i>
         </div>
         <div class="timeline-time">
-          {{dateUtil.getRelativeDate(timelineItem.created_at)}}
+          {{dateUtil.getRelativeDate(timelineItem.updated_at)}}
         </div>
         <div class="timeline-content">
           <div class="push-bit timeline-item-title">{{timelineItem.title}}</div>
@@ -23,7 +23,7 @@
           </div>
 
           <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>
-            {{timelineItem.remark}}</p>
+            {{timelineItem.remark.remark}}</p>
           <div *ngIf="timelineItem.has_button" class="push-bit clearfix">
             <a class="cursor-pointer" (click)="editSchedule()">Reschedule</a>
             <a class="margin-15 cursor-pointer" (click)="addRemarks()">Proceed</a>

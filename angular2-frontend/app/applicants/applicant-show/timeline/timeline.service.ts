@@ -40,9 +40,9 @@ export class TimelineService {
           newItem.title = 'Applied for ' + applicant.job.title;
         }
       } else {
-        newItem.title = item.stage.title;
+        newItem.title = item.stage.is_interview ? item.stage.title + ' Scheduled' : item.stage.title;
       }
-      var invalidKeys = ['applicant_id', 'stage_id', 'updated_at', 'stage'];
+      var invalidKeys = ['applicant_id', 'stage_id', 'created_at', 'stage'];
 
       for (var key in item) {
         if (!(invalidKeys.indexOf(key) > -1) && ((item[key] != null && item[key] !== ''))) {
@@ -50,6 +50,14 @@ export class TimelineService {
         }
       }
       timelineItems.push(newItem);
+      if (item.stage.is_interview && item.remark) {
+        timelineItems[timelineItems.length - 1].remark = null;
+        timelineItems.push({
+          title     : item.stage.title + ' Completed',
+          remark    : item.remark,
+          updated_at: item.remark.updated_at
+        });
+      }
     });
     return timelineItems;
   }
