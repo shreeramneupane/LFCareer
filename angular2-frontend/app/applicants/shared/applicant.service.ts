@@ -19,19 +19,19 @@ export class ApplicantService {
     });
     return this.apiService.fetch(pathParams);
   }
-  
+
+  getSkills(query:string) {
+    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q: query}));
+  }
+
   getApplicant(id:string):Observable<Applicant> {
     return this.apiService.fetch(this.converter.getPathParam([AppConstants.APPLICANTS, id]))
     .map(response=> response.applicant)
   }
 
-  getDocument(id:string, type: string) {
+  getDocument(id:string, type:string) {
     var pathParam = this.converter.getPathParam([AppConstants.APPLICANTS, id, 'documents']) + this.converter.serialize({type: type});
     return this.apiService.fetch(pathParam);
-  }
-
-  getSkills(query:string) {
-    return this.apiService.fetch(this.converter.getPathParam([AppConstants.SKILLS, 'search']) + this.converter.serialize({q: query}));
   }
 
   uploadDocuments(documents:any, id:string) {
@@ -45,4 +45,5 @@ export class ApplicantService {
   updateApplicant(applicant:Applicant):Observable<Applicant> {
     return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, applicant.id]), applicant);
   }
+
 }

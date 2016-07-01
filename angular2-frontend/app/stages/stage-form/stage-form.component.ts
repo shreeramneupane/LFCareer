@@ -5,6 +5,8 @@ import { ROUTER_DIRECTIVES }                      from '@angular/router-deprecat
 import { ControlMessages } from '../../shared/components/control-messages';
 import { Stage }           from '../shared/stage';
 
+import * as toastr from 'toastr';
+
 @Component({
   selector  : 'stage-form',
   template  : require('./stage-form.component.html'),
@@ -23,9 +25,10 @@ export class StageFormComponent {
 
   submit(stage:Stage) {
     this.submitted = true;
-    if (this.formGroup.valid)
+    if (this.formGroup.valid) {
       this.onSubmit.emit(stage);
-    else
+    } else {
       toastr.error('Please fill the required fields', 'Error!');
+    }
   }
 }

@@ -56,5 +56,20 @@ a.collapsible:before {
 }
 
 .assign-btn {
+  text-align : right;
+}
+
+.timeline-item-title {
+  font-weight : bold;
+}
+
+.timeline-full {
   margin-top : 15px;
+}
+
+.timeline-list li { background: #f5f5f5; }
+.timeline-list li:nth-child(odd) { background: #ffffff; }
+
+.margin-15 {
+  margin-left: 15px;
 }

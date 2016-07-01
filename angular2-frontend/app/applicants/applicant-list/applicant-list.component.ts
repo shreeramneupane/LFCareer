@@ -24,7 +24,7 @@ export class ApplicantListComponent implements OnInit {
   sorter:any;
 
   constructor(private applicantService:ApplicantService, private sorterService:Sorter) {
-    this.sorter = this.sorterService.getSorterObject(['name', 'appliedFor', 'experience', 'appliedDate']);
+    this.sorter = this.sorterService.getSorterObject(['name', 'appliedFor', 'total_experience', 'created_at']);
   }
   
   ngOnInit() {
@@ -35,25 +35,29 @@ export class ApplicantListComponent implements OnInit {
     return moment(date).format("MMM Do YYYY");
   }
 
-  downloadResume(id:string) {
-    this.applicantService.getDocument(id, 'resume').subscribe(
-    response => console.log(response),
-    error => console.log(error)
-    )
-
-  }
-  
   listApplicants(page, sortBy) {
     this.applicantService.listApplicants(page, sortBy)
     .subscribe(
     response => {
-      {
-        this.applicants = response.applicants,
-        this.totalCount = response.total_count
-      }
+      this.applicants = response.applicants;
+      this.totalCount = response.total_count;
+      this.addJobAppliedField();
+
     },
     error => toastr.error(error)
     );
+  }
+
+  addJobAppliedField() {
+    this.applicants.map(applicant => {
+      if (applicant.direct_apply && applicant.job) {
+        applicant.appliedFor = applicant.job + '(Direct Apply)';
+      } else if (applicant.direct_apply) {
+        applicant.appliedFor = 'Direct Apply';
+      } else {
+        applicant.appliedFor = applicant.job;
+      }
+    })
   }
 
   refreshList(page) {

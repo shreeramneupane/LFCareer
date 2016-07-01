@@ -1147,8 +1147,8 @@ li.dropdown-header {
 
 .timeline-list .timeline-time {
   float      : left;
-  width      : 70px;
-  text-align : right;
+  width      : 80px;
+  text-align : center;
 }
 
 .timeline-list .timeline-content {

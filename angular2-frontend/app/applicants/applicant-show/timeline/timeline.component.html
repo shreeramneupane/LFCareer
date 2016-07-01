@@ -1,0 +1,51 @@
+<div class="block full timeline-full">
+  <div class="block-title">
+    <h2>Timeline</h2>
+  </div>
+  <div class="timeline block-content-full">
+    <ul class="timeline-list timeline-hover">
+      <li *ngFor="let timelineItem of timelineItems" data-toggle="tooltip">
+        <div class="timeline-icon"><i class='fa fa-pencil'></i>
+        </div>
+        <div class="timeline-time">
+          {{dateUtil.getRelativeDate(timelineItem.created_at)}}
+        </div>
+        <div class="timeline-content">
+          <div class="push-bit timeline-item-title">{{timelineItem.title}}</div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.schedule">Schedule:
+            {{dateUtil.getFormattedDate(timelineItem.interview.schedule)}}
+          </div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.room">Meeting Room: {{timelineItem.interview.room}}
+          </div>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers?.length">
+            Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers"
+                                class="label label-blue text-uppercase">{{interviewer.name}}</span>
+          </div>
+
+          <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>
+            {{timelineItem.remark}}</p>
+          <div *ngIf="timelineItem.has_button" class="push-bit clearfix">
+            <a class="cursor-pointer" (click)="editSchedule()">Reschedule</a>
+            <a class="margin-15 cursor-pointer" (click)="addRemarks()">Proceed</a>
+          </div>
+        </div>
+      </li>
+      <li *ngIf="selectedStageId && stages?.length && interviewStage != 'none'">
+        <div class="timeline-icon"><i class='fa fa-plus'></i>
+        </div>
+        <div class="timeline-time">
+          Now
+        </div>
+        <div class="timeline-content">
+          <interview-stage *ngIf="isInterview && interviewStage != 'none'" (changeStage)="changeStage($event)"
+                           (submit)="submit($event)"
+                           [stages]="stages" [selectedStageId]="selectedStageId" [interviewStage]="interviewStage"
+                           [lastTimelineItem]="lastTimelineItem" (cancel)="cancelEdit($event)"></interview-stage>
+          <non-interview-stage *ngIf="!isInterview && stages.length" (changeStage)="changeStage($event)"
+                               (submit)="submit($event)"
+                               [stages]="stages" [selectedStageId]="selectedStageId"></non-interview-stage>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

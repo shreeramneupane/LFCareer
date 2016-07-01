@@ -15,9 +15,10 @@ var ApplicantStageInterviewService = {
     return new Promise(function (resolve, reject) {
       if (applicantStage.interview) {
         var interviewers = [];
+        var interviewerURL = null;
         var interviewersID = applicantStage.interview.interviewers_id.split(',');
         Promise.map(interviewersID, function (interviewerID) {
-          var interviewerURL = config['vyaguta_employee_detail_url'];
+          interviewerURL = config['vyaguta_employee_detail_url'];
           interviewerURL = interviewerURL.replace(':id', interviewerID);
 
           var name = null;
@@ -40,7 +41,9 @@ var ApplicantStageInterviewService = {
                 resolveInner(name);
               }
               else {
-                rejectInner(new Error("Can't retrieve Interviewer details."))
+                var error = new Error("Can't retrieve Interviewer details.")
+                error.code = response.statusCode;
+                rejectInner(error);
               }
             })
           })
@@ -138,7 +141,9 @@ var ApplicantStageInterviewService = {
           }
         }, function (err, response) {
           if (err || response.statusCode !== HttpStatus.OK || JSON.parse(response.body).hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
-            reject(new Error('Interviewer can not be validated.'));
+            var error = new Error("Interviewer can not be validated.")
+            error.code = response.statusCode;
+            reject(error);
           }
           else {
             resolve(true);

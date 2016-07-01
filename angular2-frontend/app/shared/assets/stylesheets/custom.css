@@ -761,7 +761,18 @@ html, body, #page-container, #main-container, #sidebar {
 }
 
 .tagit-label {
-  color : green;
+  font-weight : 400;
+  font-size   : 12px;
+  color       : white;
+}
+
+.tagit-choice {
+  background : #607D8B !important;
+  padding    : 1px auto 1px 4px !important;
+}
+
+.ui-icon {
+  background-image : url('../images/ui-icons_ffffff_256x240.png') !important;
 }
 
 .ui-widget-content {
@@ -796,4 +807,9 @@ html, body, #page-container, #main-container, #sidebar {
   user-select           : none;
   /* Non-prefixed version, currently
                        not supported by any browser */
+}
+
+.ui-autocomplete {
+  max-height : 100px;
+  overflow-y : auto;
 }

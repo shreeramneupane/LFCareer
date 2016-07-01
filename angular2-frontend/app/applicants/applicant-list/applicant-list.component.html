@@ -7,36 +7,33 @@
     <table class="table table-vcenter table-bordered table-hover table-striped">
       <thead>
       <tr>
-        <th>S.No.</th>
-        <th class="cursor-pointer noselect" (click)="sort('name')">Name<i class="fa pull-right" ngClass="{{sorter.name}}"></i></th>
-        <th class="cursor-pointer noselect" (click)="sort('appliedFor')">Job Applied For(Static)<i class="fa pull-right" ngClass="{{sorter.appliedFor}}"></i></th>
-        <th class="cursor-pointer noselect" (click)="sort('experience')">Experience(Static)<i class="fa pull-right" ngClass="{{sorter.experience}}"></i></th>
+        <th>S.N.</th>
+        <th class="cursor-pointer noselect" (click)="sort('name')">Name<i class="fa pull-right"
+                                                                          ngClass="{{sorter.name}}"></i></th>
+        <th class="cursor-pointer noselect" (click)="sort('appliedFor')">Job Applied For<i class="fa pull-right"
+                                                                                           ngClass="{{sorter.appliedFor}}"></i>
+        </th>
+        <th class="cursor-pointer noselect" (click)="sort('total_experience')">Experience<i class="fa pull-right"
+                                                                                              ngClass="{{sorter.total_experience}}"></i>
+        </th>
         <th>Hiring Stage(Static)</th>
         <th>Phone</th>
-        <th>Linkedin</th>
-        <th>Resume</th>
-        <th class="cursor-pointer noselect" (click)="sort('appliedDate')">Applied Date<i class="fa pull-right" ngClass="{{sorter.appliedDate}}"></i></th>
-        <th class="text-center">Actions</th>
+        <th class="cursor-pointer noselect" (click)="sort('created_at')">Applied Date<i class="fa pull-right"
+                                                                                         ngClass="{{sorter.created_at}}"></i>
+        </th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let applicant of applicants;  let index = index">
         <td>{{(currentPage - 1) * 10 + index + 1}}</td>
-        <td>{{applicant.name}}</td>
-        <td>{{applicant.direct_apply ? 'Direct Apply' : 'Indirect Apply'}}</td>
-        <td>3 years</td>
+        <td><a [routerLink]="['ApplicantShow', {id: applicant.id}]" title="Applicant Detail"
+        >
+          {{applicant.name}}</a></td>
+        <td>{{applicant?.appliedFor}}</td>
+        <td>{{applicant?.total_experience}}</td>
         <td>Pending</td>
         <td>{{applicant.phone_number}}</td>
-        <td><a href="{{'https://www.linkedin.com/in/' + applicant.linkedin}}" target="_blank" *ngIf="applicant.linkedin != null">View</a></td>
-        <td><a (click)="downloadResume(applicant.id)" class="cursor-pointer">Download</a></td>
         <td>{{getDate(applicant.created_at)}}</td>
-        <td class="text-center">
-          <div class="btn-group">
-            <a [routerLink]="['ApplicantShow', {id: applicant.id}]" data-toggle="tooltip" title="Applicant Detail"
-               class="btn btn-sm btn-default">
-              <i class="glyphicon glyphicon-list-alt"></i></a>
-          </div>
-        </td>
       </tr>
       </tbody>
     </table>
