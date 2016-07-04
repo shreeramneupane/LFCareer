@@ -89,8 +89,9 @@ var ApplicantDocumentService = {
               new Error("Can't download " + documentType + " of the provided applicant.");
             }
             else if (response.statusCode == 200) {
+              var filePath = response.request.uri.path;
               var data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
-              resolve({[documentType]: data});
+              resolve({[documentType]: data, extension: filePath.substr(filePath.lastIndexOf('.')+1)});
             }
           });
         })
