@@ -2,7 +2,7 @@ node_modules
 .idea
 *.log
 secret-config.json
-config/config.json
+config/secret_config/dbConfig.json
 
 
 # Angular Front end Gitignore
