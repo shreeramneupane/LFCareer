@@ -3,7 +3,7 @@
 var env = process.env.NODE_ENV || 'development';
 var HttpStatus = require('http-status-codes');
 var request = require('request');
-var fileName = "../secret-config.json";
+var fileName = "../config/vyagutaConfig.json";
 
 var config = require(fileName)[env];
 
@@ -15,7 +15,7 @@ module.exports = {
     }
     else {
       var authorization = req.get('Authorization');
-      var authorizationURL = config['vyaguta_auth_url'];
+      var authorizationURL = config['auth_userinfo_url'];
 
       request({
         url    : authorizationURL,
