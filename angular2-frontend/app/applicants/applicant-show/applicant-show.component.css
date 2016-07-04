@@ -67,9 +67,29 @@ a.collapsible:before {
   margin-top : 15px;
 }
 
-.timeline-list li { background: #f5f5f5; }
-.timeline-list li:nth-child(odd) { background: #ffffff; }
+.timeline-list li {
+  background : #f5f5f5;
+}
+
+.timeline-list li:nth-child(odd) {
+  background : #ffffff;
+}
 
 .margin-15 {
-  margin-left: 15px;
+  margin-left : 15px;
+}
+
+.timepicker {
+  width : 40%;
+  float : left;
+}
+
+.angle-icon {
+  width  : 10%;
+  float  : left;
+  height : 36px;
+}
+
+.edit-interview {
+  padding-left : 15px;
 }

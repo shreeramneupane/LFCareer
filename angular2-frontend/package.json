@@ -21,6 +21,7 @@
     "angular2-in-memory-web-api": "0.0.7",
     "bootstrap": "^3.3.6",
     "bootstrap-datepicker": "^1.6.1",
+    "bootstrap-timepicker": "^0.5.2",
     "es6-shim": "^0.35.0",
     "font-awesome": "^4.6.1",
     "jquery": "^2.2.3",

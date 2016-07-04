@@ -24,6 +24,9 @@ export class InterviewForm {
   suggestions:any = [];
   selectedInterviewers:any = [];
 
+  meetingFrom:string = "10:00 AM";
+  meetingTo:string = "02:00 PM";
+
   selectedStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
   initialStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
 
@@ -47,6 +50,7 @@ export class InterviewForm {
     }
     this.initializeDatePicker();
     this.initializeTag();
+    this.initializeTimePicker();
   }
 
   initializeDatePicker() {
@@ -62,6 +66,38 @@ export class InterviewForm {
       $('#datepicker').datepicker('setDate', new Date(this.selectedStage.interview.schedule));
     } else {
       $('#datepicker').datepicker('setDate', new Date());
+    }
+  }
+
+  initializeTimePicker() {
+    $('#timepicker1').timepicker({
+      defaultTime: this.interviewStage == 'edit' ? this.meetingFrom : null
+    }).on('changeTime.timepicker', e => {
+      if (this.timelineService.checkTime(e, this.meetingTo) < 0) {
+        this.meetingFrom = e.target.value;
+      } else {
+        $('#timepicker1').timepicker('setTime', this.meetingFrom);
+      }
+    });
+
+    $('#timepicker2').timepicker({
+      defaultTime: this.interviewStage == 'edit' ? this.meetingTo : null
+    }).on('changeTime.timepicker', e => {
+      if (this.timelineService.checkTime(e, this.meetingFrom) > 0) {
+        this.meetingTo = e.target.value;
+      } else {
+        $('#timepicker2').timepicker('setTime', this.meetingTo);
+      }
+    });
+
+    $('#timepicker1').click(function () {
+      $('#timepicker1').timepicker('showWidget');
+    });
+    $('#timepicker2').click(function () {
+      $('#timepicker2').timepicker('showWidget');
+    });
+
+    if (this.interviewStage == 'edit') {
     }
   }
 
