@@ -8,8 +8,7 @@ module.exports = {
       'applicant_stage_interviews',
       'from_time',
       {
-        type: Sequelize.TIME,
-        allowNull: false
+        type: Sequelize.TIME
       }),
       queryInterface.addColumn(
       'applicant_stage_interviews',
