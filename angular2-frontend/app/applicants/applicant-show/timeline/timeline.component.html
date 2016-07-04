@@ -17,9 +17,9 @@
           </div>
           <div class="push-bit" *ngIf="timelineItem?.interview?.room">Meeting Room: {{timelineItem.interview.room}}
           </div>
-          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers?.length">
-            Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers"
-                                class="label label-blue text-uppercase">{{interviewer.name}}</span>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers_email?.length">
+            Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers_email"
+                                class="label label-blue-grey">{{interviewer}}</span>
           </div>
 
           <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>

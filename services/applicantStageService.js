@@ -52,30 +52,17 @@ var ApplicantStageService = {
           }
           if (applicantStage.ApplicantStageInterview) {
             applicantStage.interview = applicantStage.ApplicantStageInterview;
-            applicantStage.interview['dataValues'].interviewers = null;
+            applicantStage.interview.interviewers_email = applicantStage.interview.interviewers_email.split(',');
           }
           delete applicantStage.Stage;
           delete applicantStage.ApplicantStageRemark;
           delete applicantStage.ApplicantStageInterview;
         });
 
-        Promise.map(applicantStages, function (applicantStage) {
-          return ApplicantStageInterviewService.list(applicantStage, authorizationToken)
-          .then(function (interviewers) {
-            if (interviewers) {
-              applicantStage.interview['dataValues'].interviewers = interviewers;
-            }
-          })
-          .catch(function (err) {
-            reject(err);
-          })
-        })
-        .then(function () {
-          resolve({
-            applicant_stages: applicantStages,
-            total_count: response.count
-          });
-        })
+        resolve({
+          applicant_stages: applicantStages,
+          total_count: response.count
+        });
       })
       .catch(function (err) {
         reject(err);
@@ -122,7 +109,7 @@ var ApplicantStageService = {
     });
   },
 
-  create: function (applicantID, stageParam, authorizationToken) {
+  create: function (applicantID, stageParam) {
     var stageID = stageParam.id;
     delete stageParam.id;
     var applicantStageID;
@@ -131,7 +118,7 @@ var ApplicantStageService = {
       verifyJobStage(applicantID, stageID)
       .then(function (isVerifiedJobStage) {
         if (!isVerifiedJobStage) {
-          reject(new Error("Applicant can't be processed by the provided stage"));
+          reject(new Error("Applicant can't be processed by the provided stage."));
         }
         else {
           timelineTerminated(applicantID)
@@ -155,7 +142,7 @@ var ApplicantStageService = {
                     .then(function (applicantStage) {
                       applicantStageID = applicantStage.id;
                       return Promise.join(
-                      ApplicantStageInterviewService.create(applicantStageID, stageParam, stageID, authorizationToken, t),
+                      ApplicantStageInterviewService.create(applicantStageID, stageParam.interview, stageID, t),
                       ApplicantStageRemarkService.create(applicantStageID, stageParam.remark, t)
                       )
                     })
