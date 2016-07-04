@@ -1,0 +1,5 @@
+{
+  "development": {
+    "auth_userinfo_url": "http://dev.vyaguta.lftechnology.com/api/auth/userinfo"
+  }
+}

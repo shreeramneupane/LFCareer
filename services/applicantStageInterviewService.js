@@ -1,13 +1,8 @@
 "use strict";
 
 var models = require('../models/index');
-var env = process.env.NODE_ENV || 'development';
-var HttpStatus = require('http-status-codes');
-var request = require('request');
-var fileName = "../secret-config.json";
 var Promise = require('bluebird');
 
-var config = require(fileName)[env];
 var Regex = require('../config/regex');
 
 var ApplicantStageInterviewService = {

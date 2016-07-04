@@ -79,27 +79,29 @@ export class InterviewForm {
   }
 
   initializeTimePicker() {
-    let from = this.$('#timepicker1').timepicker({
-      defaultTime: this.interviewStage == 'edit' ? this.meetingFrom : null
+    $('#timepicker1').timepicker({
+      defaultTime: this.selectedStage.interview.from_time
     }).on('changeTime.timepicker', e => {
-      if (this.timelineService.checkTime(e, this.meetingTo) < 0) {
-        this.meetingFrom = e.target.value;
-      } else {
-        $('#timepicker1').timepicker('setTime', this.meetingFrom);
+      if (!this.selectedStage.interview.to_time || this.timelineService.checkTime(e, this.selectedStage.interview.to_time) < 0) {
+        this.selectedStage.interview.from_time = e.target.value;
+      } else if (this.selectedStage.interview.from_time) {
+        $('#timepicker1').timepicker('setTime', this.selectedStage.interview.from_time);
       }
     });
 
     $('#timepicker2').timepicker({
-      defaultTime: this.interviewStage == 'edit' ? this.meetingTo : null
+      defaultTime: this.selectedStage.interview.to_time
     }).on('changeTime.timepicker', e => {
-      if (this.timelineService.checkTime(e, this.meetingFrom) > 0) {
-        this.meetingTo = e.target.value;
-      } else {
-        $('#timepicker2').timepicker('setTime', this.meetingTo);
+      if (!this.selectedStage.interview.from_time || this.timelineService.checkTime(e, this.selectedStage.interview.from_time) > 0) {
+        this.selectedStage.interview.to_time = e.target.value;
+      } else if (this.selectedStage.interview.to_time) {
+        $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
       }
     });
 
+    console.log($('#timepicker1'));
     $('#timepicker1').click(function () {
+      console.log('sssss')
       $('#timepicker1').timepicker('showWidget');
     });
     $('#timepicker2').click(function () {
