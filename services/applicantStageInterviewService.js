@@ -20,6 +20,8 @@ var ApplicantStageInterviewService = {
         .then(function () {
           return models.ApplicantStageInterview.create({
             schedule: applicantStageInterviewParam.schedule,
+            from_time: applicantStageInterviewParam.from_time,
+            to_time: applicantStageInterviewParam.to_time,
             meeting_room: applicantStageInterviewParam.meeting_room,
             interviewers_email: applicantStageInterviewParam.interviewers_email.toString(),
             applicant_stage_id: applicantStageID
@@ -42,6 +44,8 @@ var ApplicantStageInterviewService = {
           if (applicantStageInterview) {
             return applicantStageInterview.updateAttributes({
               schedule: applicantStageInterviewParam.schedule,
+              from_time: applicantStageInterviewParam.from_time,
+              to_time: applicantStageInterviewParam.to_time,
               meeting_room: applicantStageInterviewParam.meeting_room,
               interviewers_email: applicantStageInterviewParam.interviewers_email.toString()
             })

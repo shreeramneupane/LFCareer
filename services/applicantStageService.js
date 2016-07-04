@@ -147,11 +147,9 @@ var ApplicantStageService = {
                       )
                     })
                     .then(function () {
-                      console.log('This is true ++++++++++++++++++++++++');
-                      // return t.commit();
+                      return t.commit();
                     })
                     .catch(function (err) {
-                      console.log('This is false ((((((((((((((((((((((((');
                       t.rollback();
                       throw new Error(err);
                     });

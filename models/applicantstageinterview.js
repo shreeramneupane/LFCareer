@@ -7,6 +7,8 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     schedule: DataTypes.DATE,
+    from_time: DataTypes.TIME,
+    to_time: DataTypes.TIME,
     meeting_room: DataTypes.STRING,
     interviewers_email: DataTypes.UUID,
     applicant_stage_id: DataTypes.UUID
