@@ -8,72 +8,22 @@ var fileName = "../secret-config.json";
 var Promise = require('bluebird');
 
 var config = require(fileName)[env];
+var Regex = require('../config/regex');
 
 var ApplicantStageInterviewService = {
 
-  list: function (applicantStage, authorizationToken) {
-    return new Promise(function (resolve, reject) {
-      if (applicantStage.interview) {
-        var interviewers = [];
-        var interviewerURL = null;
-        var interviewersID = applicantStage.interview.interviewers_id.split(',');
-        Promise.map(interviewersID, function (interviewerID) {
-          interviewerURL = config['vyaguta_employee_detail_url'];
-          interviewerURL = interviewerURL.replace(':id', interviewerID);
-
-          var name = null;
-          return new Promise(function (resolveInner, rejectInner) {
-            return request({
-              url: interviewerURL,
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': authorizationToken
-              }
-            }, function (err, response) {
-              if (!err && response.statusCode == HttpStatus.OK) {
-                var interviewerDetail = JSON.parse(response.body);
-                var middleName = interviewerDetail.middleName;
-                if(middleName) {
-                  middleName = middleName + ' '
-                }
-                name = interviewerDetail.firstName + ' ' + middleName + interviewerDetail.lastName;
-                resolveInner(name);
-              }
-              else {
-                var error = new Error("Can't retrieve Interviewer details.")
-                error.code = response.statusCode;
-                rejectInner(error);
-              }
-            })
-          })
-          .then(function (interviewerName) {
-            interviewers.push(interviewerName);
-          })
-        })
-        .then(function () {
-          resolve(interviewers);
-        })
-        .catch(function (err) {
-          reject(err);
-        })
-      }
-      else {
-        resolve(false);
-      }
-    });
-  },
-
-  create: function (applicantStageID, stageParam, stageID, authorizationToken, t) {
-    if (stageParam.interview) {
+  create: function (applicantStageID, applicantStageInterviewParam, stageID, t) {
+    if (applicantStageInterviewParam) {
       return ApplicantStageInterviewService.verifyInterviewStage(stageID)
       .then(function () {
-        return ApplicantStageInterviewService.validateInterviewers(authorizationToken, stageParam.interview.interviewers_id)
+        return ApplicantStageInterviewService.validateInterviewers(applicantStageInterviewParam.interviewers_email)
         .then(function () {
           return models.ApplicantStageInterview.create({
-            schedule: stageParam.interview.schedule,
-            meeting_room: stageParam.interview.meeting_room,
-            interviewers_id: stageParam.interview.interviewers_id.toString(),
+            schedule: applicantStageInterviewParam.schedule,
+            from_time: applicantStageInterviewParam.from_time,
+            to_time: applicantStageInterviewParam.to_time,
+            meeting_room: applicantStageInterviewParam.meeting_room,
+            interviewers_email: applicantStageInterviewParam.interviewers_email.toString(),
             applicant_stage_id: applicantStageID
           }, {transaction: t})
         })
@@ -89,16 +39,21 @@ var ApplicantStageInterviewService = {
         }
       })
       .then(function (applicantStageInterview) {
-        if (applicantStageInterview) {
-          applicantStageInterview.updateAttributes({
-            schedule: applicantStageInterviewParam.schedule,
-            meeting_room: applicantStageInterviewParam.meeting_room,
-            interviewers_id: applicantStageInterviewParam.interviewers_id.toString()
-          })
-          .then(function (response) {
-            resolve({applicant_stage_interview: response});
-          });
-        }
+        return ApplicantStageInterviewService.validateInterviewers(applicantStageInterviewParam.interviewers_email)
+        .then(function () {
+          if (applicantStageInterview) {
+            return applicantStageInterview.updateAttributes({
+              schedule: applicantStageInterviewParam.schedule,
+              from_time: applicantStageInterviewParam.from_time,
+              to_time: applicantStageInterviewParam.to_time,
+              meeting_room: applicantStageInterviewParam.meeting_room,
+              interviewers_email: applicantStageInterviewParam.interviewers_email.toString()
+            })
+            .then(function (response) {
+              resolve({applicant_stage_interview: response});
+            });
+          }
+        })
       })
       .catch(function (err) {
         reject(err);
@@ -123,32 +78,17 @@ var ApplicantStageInterviewService = {
         }
       })
     })
-  }
-  ,
+  },
 
-  validateInterviewers: function (authorizationToken, interviewersID) {
-    var interviewerValidationURL = config['vyaguta_employee_detail_url'];
-
+  validateInterviewers: function (interviewersEmail) {
     return new Promise(function (resolve, reject) {
-      return models.sequelize.Promise.map(interviewersID, function (interviewerID) {
-        interviewerValidationURL = interviewerValidationURL.replace(':id', interviewerID);
-        return request({
-          url: interviewerValidationURL,
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': authorizationToken
-          }
-        }, function (err, response) {
-          if (err || response.statusCode !== HttpStatus.OK || JSON.parse(response.body).hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
-            var error = new Error("Interviewer can not be validated.")
-            error.code = response.statusCode;
-            reject(error);
-          }
-          else {
-            resolve(true);
-          }
-        });
+      return models.sequelize.Promise.map(interviewersEmail, function (interviewerEmail) {
+        if (!Regex['email'].test(interviewerEmail)) {
+          reject(new Error('Please provide valid email address of interviewers'));
+        }
+      })
+      .then(function () {
+        resolve(true);
       })
     });
   }
