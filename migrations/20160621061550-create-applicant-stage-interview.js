@@ -14,7 +14,7 @@ module.exports = {
       meeting_room: {
         type: Sequelize.STRING
       },
-      interviewers_id: {
+      interviewers_email: {
         allowNull: false,
         type: Sequelize.STRING
       },
