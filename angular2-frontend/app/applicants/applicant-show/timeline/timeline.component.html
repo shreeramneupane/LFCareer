@@ -21,6 +21,12 @@
             Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers_email"
                                 class="label label-blue-grey">{{interviewer}}</span>
           </div>
+          <div class="push-bit"
+               *ngIf="(timelineItem?.interview?.meeting_room && timelineItem.interview.meeting_room != '0') || timelineItem?.interview?.from_time">
+            Meeting
+            <span *ngIf="timelineItem?.interview?.meeting_room != '0'">in {{timelineItem.interview.meeting_room}}</span>
+            <span *ngIf="timelineItem?.interview?.from_time">from {{dateUtil.getFormattedTime(timelineItem.interview.from_time)}} to {{dateUtil.getFormattedTime(timelineItem.interview.to_time)}}</span>
+          </div>
 
           <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>
             {{timelineItem.remark.remark}}</p>

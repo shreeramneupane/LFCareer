@@ -23,9 +23,6 @@ export class InterviewForm {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
-  meetingFrom:string = "10:00 AM";
-  meetingTo:string = "02:00 PM";
-
   initialStage:any = {
     id       : '',
     title    : '',
@@ -34,16 +31,6 @@ export class InterviewForm {
   selectedStage:any = this.initialStage;
 
   constructor(private arrayUtil:ArrayUtil, private timelineService:TimelineService) {
-  }
-
-  refreshStage() {
-    this.selectedStage.interview = {
-      schedule          : '',
-      meeting_room      : '0',
-      interviewers_email: [],
-      from_time         : null,
-      to_time           : null
-    };
   }
 
   ngOnInit() {
@@ -79,29 +66,37 @@ export class InterviewForm {
   }
 
   initializeTimePicker() {
+    var that = this;
     $('#timepicker1').timepicker({
       defaultTime: this.selectedStage.interview.from_time
-    }).on('changeTime.timepicker', e => {
-      if (!this.selectedStage.interview.to_time || this.timelineService.checkTime(e, this.selectedStage.interview.to_time) < 0) {
+    }).on('hide.timepicker', e => {
+      if (!this.selectedStage.interview.from_time) {
         this.selectedStage.interview.from_time = e.target.value;
-      } else if (this.selectedStage.interview.from_time) {
+        this.selectedStage.interview.to_time = moment(e.target.value, 'HH:mm:ss').add(1, 'h').format('hh:mm A');
+        $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
+
+      } else if ((e.time.hours == 12 && e.time.minutes == 0) || this.timelineService.checkTime(e, this.selectedStage.interview.to_time) < 0) {
+        this.selectedStage.interview.from_time = e.target.value;
+      } else {
         $('#timepicker1').timepicker('setTime', this.selectedStage.interview.from_time);
       }
     });
 
     $('#timepicker2').timepicker({
       defaultTime: this.selectedStage.interview.to_time
-    }).on('changeTime.timepicker', e => {
-      if (!this.selectedStage.interview.from_time || this.timelineService.checkTime(e, this.selectedStage.interview.from_time) > 0) {
+    }).on('hide.timepicker', e => {
+      if (!this.selectedStage.interview.from_time) {
         this.selectedStage.interview.to_time = e.target.value;
-      } else if (this.selectedStage.interview.to_time) {
+        this.selectedStage.interview.from_time = moment(e.time, 'HH:mm:ss').add(-1, 'h').format('hh:mm A');
+        $('#timepicker1').timepicker('setTime', this.selectedStage.interview.from_time);
+      } else if ((e.time.hours == 12 && e.time.minutes == 0) || this.timelineService.checkTime(e, this.selectedStage.interview.from_time) > 0) {
+        this.selectedStage.interview.to_time = e.target.value;
+      } else {
         $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
       }
     });
 
-    console.log($('#timepicker1'));
     $('#timepicker1').click(function () {
-      console.log('sssss')
       $('#timepicker1').timepicker('showWidget');
     });
     $('#timepicker2').click(function () {
@@ -149,24 +144,26 @@ export class InterviewForm {
   }
 
   changeStageId(stageId) {
-    this.refreshStage();
+    this.selectedStage = this.initialStage;
     this.changeStage.emit(stageId);
   }
 
   submitStage() {
     this.selectedStage.id = this.selectedStageId;
     this.selectedStage.interview.interviewers_email = $('#employees').tagit('assignedTags');
-    if (!this.selectedStage.interview.schedule || !this.selectedStage.interview.interviewers_email.length) {
-      toastr.error('Please fill required data', 'Error!');
+    if (!this.selectedStage.interview.schedule) {
+      toastr.error('Please fill schedule date', 'Error!');
+    } else if (!this.selectedStage.interview.interviewers_email.length) {
+      toastr.error("Please fill interviewer's email", 'Error!');
     } else {
       let mode = (this.interviewStage == 'edit') ? 'edit' : 'add';
       let requiredStage = {
         schedule          : this.selectedStage.interview.schedule,
         meeting_room      : this.selectedStage.interview.meeting_room,
-        interviewers_email: this.selectedStage.interview.interviewers_email
-      }
-      ;
-
+        interviewers_email: this.selectedStage.interview.interviewers_email,
+        from_time         : this.selectedStage.interview.from_time,
+        to_time           : this.selectedStage.interview.to_time
+      };
       this.submit.emit({stage: (mode == 'edit') ? requiredStage : this.selectedStage, mode: mode});
     }
   }
