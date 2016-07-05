@@ -8,7 +8,12 @@ export class Converter {
     }
     var str = [];
     for (var p in data) {
-      if (data[p] != null && data.hasOwnProperty(p)) {
+      if (data[p] instanceof Array) {
+        data[p].forEach(function (entry) {
+          str.push(encodeURIComponent(p) + '=' + encodeURIComponent(entry));
+        });
+      }
+      else if (data[p] && data.hasOwnProperty(p)) {
         str.push(encodeURIComponent(p) + '=' + encodeURIComponent(data[p]));
       }
     }

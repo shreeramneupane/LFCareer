@@ -27,7 +27,7 @@ export class PositionShowComponent implements OnInit {
 
   getPosition(id:string) {
     this.positionService.getPosition(id).subscribe(
-    position => this.position = position,
+    response => this.position = response.position,
     error => toastr.error(error)
     );
   }

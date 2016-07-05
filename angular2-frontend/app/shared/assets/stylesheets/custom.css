@@ -823,3 +823,16 @@ html, body, #page-container, #main-container, #sidebar {
 #nprogress .bar {
   background : #6cc068 !important;
 }
+
+.bootstrap-timepicker-widget.dropdown-menu.open {
+  display : inline-block;
+  width   : 81px !important;
+}
+
+.ui-autocomplete-input {
+  width : 250px !important;
+}
+
+.ui-state-focus {
+  font-weight : 100 !important;
+}

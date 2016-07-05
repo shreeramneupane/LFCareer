@@ -4,11 +4,13 @@ import * as moment from 'moment';
 
 import { ArrayUtil } from '../../../../../shared/utils/array.util';
 import { TimelineService } from '../../timeline.service';
+import { ValidationService } from '../../../../../shared/utils/validation.util';
 
 @Component({
-  selector: 'interview-stage-form',
-  styles  : [require('../../../applicant-show.component.css')],
-  template: require('./interview-stage-form.component.html'),
+  selector : 'interview-stage-form',
+  styles   : [require('../../../applicant-show.component.css')],
+  template : require('./interview-stage-form.component.html'),
+  providers: [ValidationService]
 })
 
 export class InterviewForm {
@@ -21,17 +23,14 @@ export class InterviewForm {
   @Output() submit = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<any>();
 
-  suggestions:any = [];
-  selectedInterviewers:any = [];
-
-  selectedStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
-  initialStage:any = {id: '', title: '', interview: {schedule: '', meeting_room: '0', interviewers_id: []}};
+  initialStage:any = {
+    id       : '',
+    title    : '',
+    interview: {schedule: '', meeting_room: '0', interviewers_email: [], from_time: null, to_time: null}
+  };
+  selectedStage:any = this.initialStage;
 
   constructor(private arrayUtil:ArrayUtil, private timelineService:TimelineService) {
-  }
-
-  refreshStage() {
-    this.selectedStage.interview = {schedule: '', meeting_room: '0', interviewers_id: []};
   }
 
   ngOnInit() {
@@ -47,6 +46,7 @@ export class InterviewForm {
     }
     this.initializeDatePicker();
     this.initializeTag();
+    this.initializeTimePicker();
   }
 
   initializeDatePicker() {
@@ -65,36 +65,66 @@ export class InterviewForm {
     }
   }
 
+  initializeTimePicker() {
+    var that = this;
+    $('#timepicker1').timepicker({
+      defaultTime: this.selectedStage.interview.from_time
+    }).on('hide.timepicker', e => {
+      if (!this.selectedStage.interview.from_time) {
+        this.selectedStage.interview.from_time = e.target.value;
+        this.selectedStage.interview.to_time = moment(e.target.value, 'HH:mm:ss').add(1, 'h').format('hh:mm A');
+        $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
+
+      } else if ((e.time.hours == 12 && e.time.minutes == 0) || this.timelineService.checkTime(e, this.selectedStage.interview.to_time) < 0) {
+        this.selectedStage.interview.from_time = e.target.value;
+      } else {
+        $('#timepicker1').timepicker('setTime', this.selectedStage.interview.from_time);
+      }
+    });
+
+    $('#timepicker2').timepicker({
+      defaultTime: this.selectedStage.interview.to_time
+    }).on('hide.timepicker', e => {
+      if (!this.selectedStage.interview.from_time) {
+        this.selectedStage.interview.to_time = e.target.value;
+        this.selectedStage.interview.from_time = moment(e.time, 'HH:mm:ss').add(-1, 'h').format('hh:mm A');
+        $('#timepicker1').timepicker('setTime', this.selectedStage.interview.from_time);
+      } else if ((e.time.hours == 12 && e.time.minutes == 0) || this.timelineService.checkTime(e, this.selectedStage.interview.from_time) > 0) {
+        this.selectedStage.interview.to_time = e.target.value;
+      } else {
+        $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
+      }
+    });
+
+    $('#timepicker1').click(function () {
+      $('#timepicker1').timepicker('showWidget');
+    });
+    $('#timepicker2').click(function () {
+      $('#timepicker2').timepicker('showWidget');
+    });
+  }
+
   initializeTag() {
     $("#employees").tagit({
-      placeholderText : 'Interviewer',
-      allowSpaces     : true,
-      autocomplete    : {
+      placeholderText: 'Interviewer',
+      allowSpaces    : true,
+      autocomplete   : {
         delay    : 0,
         minLength: 1,
         source   : (request, response) => {
           this.getAutoCompleteValue(request, response);
         }
       },
-      beforeTagAdded  : (event, ui) => {
-        let obj = this.arrayUtil.filterObjectByKey(this.suggestions, 'label', ui.tagLabel)[0];
-        if (!obj) {
+      beforeTagAdded : (event, ui) => {
+        if (ValidationService.emailValidator({value: ui.tagLabel})) {
+          toastr.error('Please enter valid email', 'Error!');
           return false;
-        } else {
-          this.selectedInterviewers.push(obj);
         }
-      },
-      beforeTagRemoved: (event, ui) => {
-        let obj = this.arrayUtil.filterObjectByKey(this.selectedInterviewers, 'label', ui.tagLabel)[0];
-        let index = this.selectedInterviewers.indexOf(obj);
-        this.selectedInterviewers.splice(index, 1);
       }
     });
-    this.suggestions = this.selectedStage.interview.interviewers || [];
-    this.arrayUtil.changeKeyName(this.suggestions, 'name', 'label');
 
-    this.suggestions.forEach((tag) => {
-      $('#employees').tagit("createTag", tag.label);
+    this.selectedStage.interview.interviewers_email.forEach((tag) => {
+      $('#employees').tagit("createTag", tag);
     })
   }
 
@@ -103,15 +133,10 @@ export class InterviewForm {
     .subscribe(
     resp => {
       let employees = [];
+
       resp.data.forEach(employee => {
-        let middleName = (employee.middleName == 'NULL' || !employee.middleName) ? '' : employee.middleName + ' ';
-        let newEmployee = {
-          id   : employee.id,
-          label: employee.firstName + ' ' + middleName + employee.lastName
-        };
-        employees.push(newEmployee);
+        employees.push(employee.primaryEmail);
       });
-      this.suggestions = employees;
       response(employees);
     },
     error => toastr.error(error)
@@ -119,25 +144,26 @@ export class InterviewForm {
   }
 
   changeStageId(stageId) {
-    this.refreshStage();
+    this.selectedStage = this.initialStage;
     this.changeStage.emit(stageId);
   }
 
   submitStage() {
     this.selectedStage.id = this.selectedStageId;
-    this.selectedStage.interview.interviewers_id = this.selectedInterviewers.map(interviewer => {
-      return interviewer.id;
-    });
-    if (!this.selectedStage.interview.schedule || !this.selectedStage.interview.interviewers_id.length) {
-      toastr.error('Please fill required data', 'Error!');
+    this.selectedStage.interview.interviewers_email = $('#employees').tagit('assignedTags');
+    if (!this.selectedStage.interview.schedule) {
+      toastr.error('Please fill schedule date', 'Error!');
+    } else if (!this.selectedStage.interview.interviewers_email.length) {
+      toastr.error("Please fill interviewer's email", 'Error!');
     } else {
       let mode = (this.interviewStage == 'edit') ? 'edit' : 'add';
       let requiredStage = {
-        schedule       : this.selectedStage.interview.schedule,
-        meeting_room   : this.selectedStage.interview.meeting_room,
-        interviewers_id: this.selectedStage.interview.interviewers_id
+        schedule          : this.selectedStage.interview.schedule,
+        meeting_room      : this.selectedStage.interview.meeting_room,
+        interviewers_email: this.selectedStage.interview.interviewers_email,
+        from_time         : this.selectedStage.interview.from_time,
+        to_time           : this.selectedStage.interview.to_time
       };
-
       this.submit.emit({stage: (mode == 'edit') ? requiredStage : this.selectedStage, mode: mode});
     }
   }

@@ -28,7 +28,9 @@ export class PositionEditComponent implements OnInit {
   ngOnInit() {
     let id = this.routeParams.get('id');
     this.positionService.getPosition(id).subscribe(
-    position => this.position = position,
+    response => {
+      this.position = response.position
+    },
     error => toastr.error(error)
     );
   }

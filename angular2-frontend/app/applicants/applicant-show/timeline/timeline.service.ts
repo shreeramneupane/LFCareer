@@ -42,7 +42,7 @@ export class TimelineService {
       } else {
         newItem.title = item.stage.title;
       }
-      var invalidKeys = ['applicant_id', 'stage_id', 'updated_at', 'stage'];
+      var invalidKeys = ['applicant_id', 'stage_id', 'created_at', 'stage'];
 
       for (var key in item) {
         if (!(invalidKeys.indexOf(key) > -1) && ((item[key] != null && item[key] !== ''))) {
@@ -50,6 +50,14 @@ export class TimelineService {
         }
       }
       timelineItems.push(newItem);
+      if (item.stage.is_interview && item.remark) {
+        timelineItems[timelineItems.length - 1].remark = null;
+        timelineItems.push({
+          title     : item.stage.title + ' Completed',
+          remark    : item.remark,
+          updated_at: item.remark.updated_at
+        });
+      }
     });
     return timelineItems;
   }
@@ -102,6 +110,25 @@ export class TimelineService {
 
   startTimeline(timeline:any, id:string) {
     return this.apiService.update(this.converter.getPathParam([AppConstants.APPLICANTS, id]), timeline);
+  }
+
+  checkTime(time1, time2) {
+    return (this.getTotalMinutes(time1) - this.getTotalMinutesFromString(time2));
+  }
+
+  getTotalMinutes(current) {
+    let hours = current.time.hours == 12 ? 0 : current.time.hours;
+    let minutes = current.time.minutes;
+    let meridian = current.time.meridian == 'PM' ? 12 : 0;
+    return minutes + (hours + meridian) * 60;
+  }
+
+  getTotalMinutesFromString(time) {
+    let time = time.split(' ');
+    let meridian = time[1] == 'PM' ? 12 : 0;
+    let timeWithoutMeridian = time[0].split(':');
+    let hours = parseInt(timeWithoutMeridian[0]) == 12 ? 0 : parseInt(timeWithoutMeridian[0]);
+    return (parseInt(timeWithoutMeridian[1]) + (hours + meridian) * 60)
   }
 
   submit(data:any, id:any) {

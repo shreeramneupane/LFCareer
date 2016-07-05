@@ -112,15 +112,20 @@ export class Timeline implements OnInit {
 
   submit(data:any):void {
     let id = 0;
+    let message = '';
     if (data.mode == 'add') {
       id = this.applicant.id;
+      message = 'Stage added successfully';
     } else if (data.mode == 'edit') {
-      id = this.lastTimelineItem.interview.id
+      id = this.lastTimelineItem.interview.id;
+      message = 'Stage edited successfully';
+    } else {
+      message = 'Review added successfully';
     }
     this.timelineService.submit(data, id)
     .subscribe(
     response => {
-      toastr.success('Stage added');
+      toastr.success(message);
       this.getTimeline(this.applicant.id);
     }
     )

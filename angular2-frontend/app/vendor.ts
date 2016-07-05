@@ -28,3 +28,6 @@ import './shared/assets/vendor/lou-multi-select/css/multi-select.css';
 
 import '../node_modules/nprogress/nprogress.css';
 import '../node_modules/nprogress/nprogress.js'
+
+import '../node_modules/bootstrap-timepicker/css/bootstrap-timepicker.css';
+import '../node_modules/bootstrap-timepicker/js/bootstrap-timepicker.js';

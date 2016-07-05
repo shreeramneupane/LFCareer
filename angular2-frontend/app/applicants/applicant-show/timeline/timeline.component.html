@@ -5,10 +5,10 @@
   <div class="timeline block-content-full">
     <ul class="timeline-list timeline-hover">
       <li *ngFor="let timelineItem of timelineItems" data-toggle="tooltip">
-        <div class="timeline-icon"><i class='fa fa-pencil'></i>
+        <div class="timeline-icon"><i class="glyphicon glyphicon-pushpin"></i>
         </div>
         <div class="timeline-time">
-          {{dateUtil.getRelativeDate(timelineItem.created_at)}}
+          {{dateUtil.getRelativeDate(timelineItem.updated_at)}}
         </div>
         <div class="timeline-content">
           <div class="push-bit timeline-item-title">{{timelineItem.title}}</div>
@@ -17,13 +17,19 @@
           </div>
           <div class="push-bit" *ngIf="timelineItem?.interview?.room">Meeting Room: {{timelineItem.interview.room}}
           </div>
-          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers?.length">
-            Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers"
-                                class="label label-blue text-uppercase">{{interviewer.name}}</span>
+          <div class="push-bit" *ngIf="timelineItem?.interview?.interviewers_email?.length">
+            Interviewers: <span *ngFor="let interviewer of timelineItem.interview.interviewers_email"
+                                class="label label-blue-grey">{{interviewer}}</span>
+          </div>
+          <div class="push-bit"
+               *ngIf="(timelineItem?.interview?.meeting_room && timelineItem.interview.meeting_room != '0') || timelineItem?.interview?.from_time">
+            Meeting
+            <span *ngIf="timelineItem?.interview?.meeting_room != '0'">in {{timelineItem.interview.meeting_room}}</span>
+            <span *ngIf="timelineItem?.interview?.from_time">from {{dateUtil.getFormattedTime(timelineItem.interview.from_time)}} to {{dateUtil.getFormattedTime(timelineItem.interview.to_time)}}</span>
           </div>
 
           <p *ngIf="timelineItem?.remark"><span class="weight-500">Remark: </span>
-            {{timelineItem.remark}}</p>
+            {{timelineItem.remark.remark}}</p>
           <div *ngIf="timelineItem.has_button" class="push-bit clearfix">
             <a class="cursor-pointer" (click)="editSchedule()">Reschedule</a>
             <a class="margin-15 cursor-pointer" (click)="addRemarks()">Proceed</a>
