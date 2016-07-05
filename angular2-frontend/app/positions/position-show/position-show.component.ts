@@ -16,7 +16,7 @@ import * as toastr from 'toastr';
 
 export class PositionShowComponent implements OnInit {
   public position:Position;
-
+  
   constructor(private positionService:PositionService, private routeParams:RouteParams) {
   }
 

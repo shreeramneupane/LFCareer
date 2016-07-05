@@ -66,13 +66,12 @@ export class InterviewForm {
   }
 
   initializeTimePicker() {
-    var that = this;
     $('#timepicker1').timepicker({
       defaultTime: this.selectedStage.interview.from_time
-    }).on('hide.timepicker', e => {
+    }).on('hide.timepicker', (e:any) => {
       if (!this.selectedStage.interview.from_time) {
         this.selectedStage.interview.from_time = e.target.value;
-        this.selectedStage.interview.to_time = moment(e.target.value, 'HH:mm:ss').add(1, 'h').format('hh:mm A');
+        this.selectedStage.interview.to_time = moment(this.selectedStage.interview.from_time, 'HH:mm:ss').add(1, 'h').format('hh:mm A');
         $('#timepicker2').timepicker('setTime', this.selectedStage.interview.to_time);
 
       } else if ((e.time.hours == 12 && e.time.minutes == 0) || this.timelineService.checkTime(e, this.selectedStage.interview.to_time) < 0) {
@@ -84,7 +83,7 @@ export class InterviewForm {
 
     $('#timepicker2').timepicker({
       defaultTime: this.selectedStage.interview.to_time
-    }).on('hide.timepicker', e => {
+    }).on('hide.timepicker', (e:any) => {
       if (!this.selectedStage.interview.from_time) {
         this.selectedStage.interview.to_time = e.target.value;
         this.selectedStage.interview.from_time = moment(e.time, 'HH:mm:ss').add(-1, 'h').format('hh:mm A');

@@ -124,9 +124,9 @@ export class TimelineService {
   }
 
   getTotalMinutesFromString(time) {
-    let time = time.split(' ');
-    let meridian = time[1] == 'PM' ? 12 : 0;
-    let timeWithoutMeridian = time[0].split(':');
+    let timeInArray = time.split(' ');
+    let meridian = timeInArray[1] == 'PM' ? 12 : 0;
+    let timeWithoutMeridian = timeInArray[0].split(':');
     let hours = parseInt(timeWithoutMeridian[0]) == 12 ? 0 : parseInt(timeWithoutMeridian[0]);
     return (parseInt(timeWithoutMeridian[1]) + (hours + meridian) * 60)
   }

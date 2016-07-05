@@ -20,7 +20,7 @@ export class PositionService {
     return this.apiService.fetch(AppConstants.POSITIONS);
   }
 
-  getPosition(id:string):Observable<Position> {
+  getPosition(id:string):Observable<any> {
     return this.apiService.fetch(this.converter.getPathParam([AppConstants.POSITIONS, id]));
   }
 
