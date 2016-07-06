@@ -85,11 +85,32 @@ a.collapsible:before {
 }
 
 .angle-icon {
-  width  : 10%;
+  width  : 20%;
   float  : left;
   height : 36px;
 }
 
 .edit-interview {
   padding-left : 15px;
+}
+
+a.remarks.collapsible.collapsed:before {
+  content : 'Show Interviewer Responses';
+}
+
+a.remarks.collapsible:before {
+  content : 'Hide Interviewer Responses';
+}
+
+a.interviewer-remarks.collapsible.collapsed:before {
+  content : '';
+}
+
+a.interviewer-remarks.collapsible:before {
+  content : '';
+}
+
+.remarks-table {
+  margin-top  : 10px;
+  margin-left : 5px;
 }

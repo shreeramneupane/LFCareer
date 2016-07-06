@@ -14,7 +14,21 @@ export class InterviewRemarks {
   @Output() cancel = new EventEmitter<any>();
 
   selectedStage:any = {applicant_stage_id: '', remark: ''};
+  remarks = [{
+    id               : 'asdfsdfsdfsdf',
+    email            : 'bishalshrestha@lftechnology.com',
+    rating           : 7,
+    remark           : 'He is very good and we cannot find better than him',
+    furtherProcessing: 'true'
+  }, {
+    id               : 'slkdjflksjdfsdlfj',
+    email            : 'shreeramneupane@lftechnology.com',
+    rating           : 7,
+    remark           : 'He is average and we can find better than him',
+    furtherProcessing: 'false'
+  }];
 
+  remarkKeys = Object.keys(this.remarks[0]);
 
   refreshStage() {
     this.selectedStage.remark = '';

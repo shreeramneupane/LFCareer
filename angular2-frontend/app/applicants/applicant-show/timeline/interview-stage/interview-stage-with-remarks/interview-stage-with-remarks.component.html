@@ -1,7 +1,34 @@
-<div class="push-bit timeline-item-title clearfix">
+<div class="push-bit timeline-item-title clearfix margin-15">
   {{lastTimelineItem?.title}}
 </div>
-
+<div class="push-bit clearfix margin-15">
+  <a href="#remarks" class="remarks collapsible collapsed" data-toggle="collapse"></a>
+  <div id="remarks" class="remarks collapse">
+    <div class="table-responsive remarks-table" *ngFor="let remark of remarks;  let index = index">
+      <a href="{{'#' + remark.id}}" class="interviewer-remarks collapsible collapsed in"
+         data-toggle="collapse">
+          {{remark.email}}
+      </a>
+      <div id="{{remark.id}}" class="interviewer-remarks collapse in">
+        <table
+        class="table table-vcenter table-bordered table-hover table-striped">
+          <thead>
+          <tr>
+            <th>Fields</th>
+            <th>Values</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let key of remarkKeys">
+            <td>{{key}}</td>
+            <td>{{remark[key]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="push-bit clearfix">
   <div class="col-sm-12 element">
     <textarea placeholder="Remarks" class="form-control" rows="5"
