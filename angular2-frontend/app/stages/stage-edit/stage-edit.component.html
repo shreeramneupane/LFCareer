@@ -1,9 +1,9 @@
-<page-header [pageHeader]="'Edit Stage'"></page-header>
+<page-header [pageHeader]="'Edit Stage'" [breadCrumb]="breadCrumb" [title]="stage?.title || 'Edit Stage'"></page-header>
 <div class="row">
   <div class="col-lg-12">
     <div class="block full">
       <stage-form [stage]="stage"
-                     (onSubmit)="onSubmit($event)"></stage-form>
+                  (onSubmit)="onSubmit($event)"></stage-form>
     </div>
   </div>
 </div>

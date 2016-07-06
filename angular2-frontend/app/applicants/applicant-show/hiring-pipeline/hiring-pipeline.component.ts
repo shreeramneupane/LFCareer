@@ -27,7 +27,7 @@ export class HiringPipeline implements OnInit {
   }
 
   getJobs() {
-    this.jobService.listJobs()
+    this.jobService.getAllJobs()
     .subscribe(
     response => {
       this.jobs = response.jobs;

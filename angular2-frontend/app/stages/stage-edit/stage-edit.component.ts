@@ -21,6 +21,10 @@ import * as toastr from 'toastr';
 
 export class StageEditComponent implements OnInit {
   public stage:Stage;
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Stage',
+    route: ['/App/Stage']
+  }, {name: 'Edit'}];
 
   constructor(private stageService:StageService, private routeParams:RouteParams, private router:Router) {
   }

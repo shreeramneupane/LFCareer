@@ -20,6 +20,11 @@ export class JobNewComponent {
   job:Job = new Job();
   stages:Array<any>;
 
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Job',
+    route: ['/App/Job']
+  }, {name: 'New'}];
+
   constructor(private jobService:JobService, private stageService:StageService, private router:Router) {
     this.getStages();
   }

@@ -23,6 +23,8 @@ export class ApplicantListComponent implements OnInit {
   totalCount:number = 0;
   sorter:any;
 
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Applicants'}];
+
   constructor(private applicantService:ApplicantService, private sorterService:Sorter) {
     this.sorter = this.sorterService.getSorterObject(['name', 'appliedFor', 'total_experience', 'created_at']);
   }

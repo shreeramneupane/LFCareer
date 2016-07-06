@@ -21,6 +21,10 @@ import * as toastr from 'toastr';
 
 export class PositionEditComponent implements OnInit {
   public position:Position;
+  public breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Position',
+    route: ['/App/Position']
+  }, {name: 'Edit'}];
 
   constructor(private positionService:PositionService, private routeParams:RouteParams, private router:Router) {
   }
@@ -28,9 +32,7 @@ export class PositionEditComponent implements OnInit {
   ngOnInit() {
     let id = this.routeParams.get('id');
     this.positionService.getPosition(id).subscribe(
-    response => {
-      this.position = response.position
-    },
+    response => this.position = response.position,
     error => toastr.error(error)
     );
   }

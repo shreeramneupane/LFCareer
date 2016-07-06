@@ -1,0 +1,6 @@
+<ul class="breadcrumb breadcrumb-top">
+  <li *ngFor="let bcComponent of breadCrumb"><a *ngIf="bcComponent.hasOwnProperty('route')"
+                                                [routerLink]="bcComponent.route">{{bcComponent.name}}</a>
+    <span *ngIf="!bcComponent.hasOwnProperty('route')">{{bcComponent.name}}</span>
+  </li>
+</ul>
