@@ -33,7 +33,17 @@
         <td>{{applicant?.total_experience}}</td>
         <td>Pending</td>
         <td>{{applicant.phone_number}}</td>
-        <td>{{getDate(applicant.created_at)}}</td>
+        <td>{{dateUtil.getFormattedDate(applicant.created_at)}}</td>
+      </tr>
+      <tr *ngIf="apiStatus=='loading'">
+        <td colspan="10">
+              <span class="loader-icon">
+                <img alt="loader"/>
+              </span>
+        </td>
+      </tr>
+      <tr *ngIf="apiStatus=='not-found'">
+        <td colspan="10">No records available.</td>
       </tr>
       </tbody>
     </table>

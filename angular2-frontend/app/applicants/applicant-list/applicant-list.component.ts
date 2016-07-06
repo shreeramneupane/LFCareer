@@ -3,6 +3,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Applicant }        from '../shared/applicant';
 import { ApplicantService } from '../shared/applicant.service';
+import { DateUtil } from '../../shared/utils/date.util';
 import { PageHeader } from '../../shared/components/page-header/pageHeader.component';
 import { Pagination } from '../../shared/components/pagination/pagination.component';
 import { Sorter } from '../../shared/utils/sort.util';
@@ -22,10 +23,11 @@ export class ApplicantListComponent implements OnInit {
   currentPage:number = 1;
   totalCount:number = 0;
   sorter:any;
+  apiStatus:string = 'loading';
 
   breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Applicants'}];
 
-  constructor(private applicantService:ApplicantService, private sorterService:Sorter) {
+  constructor(private applicantService:ApplicantService, private sorterService:Sorter, private dateUtil:DateUtil) {
     this.sorter = this.sorterService.getSorterObject(['name', 'appliedFor', 'total_experience', 'created_at']);
   }
   
@@ -33,20 +35,19 @@ export class ApplicantListComponent implements OnInit {
     this.listApplicants(1, null);
   }
 
-  getDate(date) {
-    return moment(date).format("MMM Do YYYY");
-  }
-
   listApplicants(page, sortBy) {
     this.applicantService.listApplicants(page, sortBy)
     .subscribe(
     response => {
+      this.apiStatus = (response.applicants.length) ? 'loaded' : 'not-found';
       this.applicants = response.applicants;
       this.totalCount = response.total_count;
       this.addJobAppliedField();
-
     },
-    error => toastr.error(error)
+    error => {
+      toastr.error(error);
+      this.apiStatus = 'not-found';
+    }
     );
   }
 
