@@ -62,7 +62,7 @@ export class JobFormComponent implements OnInit {
   }
 
   getPositions() {
-    this.positionService.listPosition()
+    this.positionService.getAllPositions()
     .subscribe(
     response => {
       let positions = response.positions;

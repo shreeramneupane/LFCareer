@@ -16,8 +16,17 @@ export class PositionService {
     return new Position('', '', '');
   }
 
-  listPosition() {
+  getAllPositions(){
     return this.apiService.fetch(AppConstants.POSITIONS);
+  }
+
+  listPosition(page, sortBy) {
+    let pathParams = AppConstants.POSITIONS + this.converter.serialize({
+      sort  : sortBy,
+      start : (page - 1) * 10,
+      offset: AppConstants.OFFSET
+    });
+    return this.apiService.fetch(pathParams);
   }
 
   getPosition(id:string):Observable<Position> {

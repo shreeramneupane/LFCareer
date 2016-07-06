@@ -1,4 +1,4 @@
-<page-header [pageHeader]="'Stages List'"></page-header>
+<page-header [pageHeader]="'Stage List'" [breadCrumb]="breadCrumb"  [title]="'Stages'"></page-header>
 <div class="row">
   <div class="col-lg-12">
     <div class="block full">
@@ -16,7 +16,8 @@
           <thead>
           <tr>
             <th>SN</th>
-            <th class="cursor-pointer noselect" (click)="sort('title')">Title<i class="fa pull-right" ngClass="{{sorter.title}}"></i></th>
+            <th class="cursor-pointer noselect" (click)="sort('title')">Title<i class="fa pull-right"
+                                                                                ngClass="{{sorter.title}}"></i></th>
             <th>Action</th>
           </tr>
           </thead>
@@ -26,7 +27,7 @@
             <td>{{stage.title}}</td>
             <td class="text-center">
               <div class="btn-group">
-                <a *ngIf="!stage.is_default"  [routerLink]="['StageEdit', {id: stage.id}]"
+                <a *ngIf="!stage.is_default" [routerLink]="['StageEdit', {id: stage.id}]"
                    data-toggle="tooltip" title="Edit Stage"
                    class="btn btn-sm btn-default">
                   <i class="fa fa-pencil"></i></a>

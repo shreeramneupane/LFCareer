@@ -18,9 +18,12 @@ import * as toastr from 'toastr';
 
 export class StageListComponent implements OnInit {
   stages:Stage[];
+
   currentPage:number = 1;
   totalCount:number = 0;
   sorter:any;
+
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Stages'}];
 
   constructor(private stageService:StageService, private sorterService:Sorter) {
     this.sorter = this.sorterService.getSorterObject(['title']);

@@ -18,7 +18,16 @@ export class JobService {
     })
   }
 
-  listJobs() {
+  listJobs(page, sortBy) {
+    let pathParams = AppConstants.JOBS + this.converter.serialize({
+      sort  : sortBy,
+      start : (page - 1) * 10,
+      offset: AppConstants.OFFSET
+    });
+    return this.apiService.fetch(pathParams);
+  }
+
+  getAllJobs(){
     return this.apiService.fetch(AppConstants.JOBS);
   }
 

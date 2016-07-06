@@ -24,6 +24,11 @@ export class JobEditComponent implements OnInit {
   public job:Job = new Job();
   stages:Array<any>;
 
+  public breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Job',
+    route: ['/App/Job']
+  }, {name: 'Edit'}];
+
   constructor(private jobService:JobService, private stageService:StageService, private routeParams:RouteParams, private router:Router) {
   }
 

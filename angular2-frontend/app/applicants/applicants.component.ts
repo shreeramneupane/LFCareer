@@ -4,7 +4,6 @@ RouteConfig,
 ROUTER_DIRECTIVES,
 } from '@angular/router-deprecated';
 
-import { ApplicantEditComponent } from './applicant-edit/applicant-edit.component';
 import { ApplicantListComponent } from './applicant-list/applicant-list.component';
 import { ApplicantShowComponent } from './applicant-show/applicant-show.component';
 
