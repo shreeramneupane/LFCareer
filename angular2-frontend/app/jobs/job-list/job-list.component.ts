@@ -23,6 +23,7 @@ export class JobList implements OnInit {
   currentPage:number = 1;
   totalCount:number = 0;
   sorter:any;
+  apiStatus:string = 'loading';
 
   breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Jobs'}];
 
@@ -38,10 +39,14 @@ export class JobList implements OnInit {
     this.jobService.listJobs(page, sortBy)
     .subscribe(
     response => {
+      this.apiStatus = (response.jobs.length) ? 'loaded' : 'not-found';
       this.jobs = response.jobs;
       this.totalCount = response.total_count || 10;
     },
-    error => toastr.error(error)
+    error => {
+      toastr.error(error);
+      this.apiStatus = 'not-found';
+    }
     );
   }
 
