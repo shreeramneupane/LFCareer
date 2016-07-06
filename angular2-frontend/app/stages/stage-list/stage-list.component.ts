@@ -22,6 +22,7 @@ export class StageListComponent implements OnInit {
   currentPage:number = 1;
   totalCount:number = 0;
   sorter:any;
+  apiStatus:string = 'loading';
 
   breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Stages'}];
 
@@ -37,10 +38,14 @@ export class StageListComponent implements OnInit {
     this.stageService.listStage(page, sortBy)
     .subscribe(
     response => {
-      this.stages = response.stages
-      this.totalCount = response.total_count || 10
+      this.apiStatus = (response.stages.length) ? 'loaded' : 'not-found';
+      this.stages = response.stages;
+      this.totalCount = response.total_count || 10;
     },
-    error => toastr.error(error)
+    error => {
+      toastr.error(error);
+      this.apiStatus = 'not-found';
+    }
     );
   }
 

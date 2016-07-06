@@ -40,7 +40,6 @@ export class PositionListComponent implements OnInit {
     .subscribe(
     response => {
       this.apiStatus = (response.positions.length) ? 'loaded' : 'not-found';
-      console.log('row')
       this.positions = response.positions;
       this.totalCount = response.total_count || 10;
     },

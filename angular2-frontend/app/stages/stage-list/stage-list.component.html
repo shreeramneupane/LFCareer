@@ -1,4 +1,4 @@
-<page-header [pageHeader]="'Stage List'" [breadCrumb]="breadCrumb"  [title]="'Stages'"></page-header>
+<page-header [pageHeader]="'Stage List'" [breadCrumb]="breadCrumb" [title]="'Stages'"></page-header>
 <div class="row">
   <div class="col-lg-12">
     <div class="block full">
@@ -33,6 +33,16 @@
                   <i class="fa fa-pencil"></i></a>
               </div>
             </td>
+          </tr>
+          <tr *ngIf="apiStatus=='loading'">
+            <td colspan="10">
+              <span class="loader-icon">
+                <img alt="loader"/>
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="apiStatus=='not-found'">
+            <td colspan="10">No records available.</td>
           </tr>
           </tbody>
         </table>

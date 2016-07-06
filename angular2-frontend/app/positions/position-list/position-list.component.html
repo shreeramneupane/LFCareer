@@ -37,14 +37,14 @@
             </td>
           </tr>
           <tr *ngIf="apiStatus=='loading'">
-            <td colspan="3">
+            <td colspan="10">
               <span class="loader-icon">
                 <img alt="loader"/>
               </span>
             </td>
           </tr>
           <tr *ngIf="apiStatus=='not-found'">
-            <td rowspan="3">No records available</td>
+            <td colspan="10">No records available.</td>
           </tr>
           </tbody>
         </table>
