@@ -836,3 +836,12 @@ html, body, #page-container, #main-container, #sidebar {
 .ui-state-focus {
   font-weight : 100 !important;
 }
+
+.loader-icon {
+  display    : block;
+  text-align : center;
+}
+
+.loader-icon img {
+  content : url('../../assets/images/loader.gif');
+}

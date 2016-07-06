@@ -23,6 +23,7 @@ export class PositionListComponent implements OnInit {
   currentPage:number = 1;
   totalCount:number = 0;
   sorter:any;
+  apiStatus:string = 'loading';
 
   breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Positions'}];
 
@@ -38,10 +39,15 @@ export class PositionListComponent implements OnInit {
     this.positionListService.listPosition(page, sortBy)
     .subscribe(
     response => {
+      this.apiStatus = (response.positions.length) ? 'loaded' : 'not-found';
+      console.log('row')
       this.positions = response.positions;
       this.totalCount = response.total_count || 10;
     },
-    error => toastr.error(error)
+    error => {
+      toastr.error(error);
+      this.apiStatus = 'not-found';
+    }
     );
   }
 
