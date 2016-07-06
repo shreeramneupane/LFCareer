@@ -8,14 +8,18 @@ import { PositionService }  from '../shared/position.service';
 import * as toastr from 'toastr';
 
 @Component({
-  selector   : 'position-show',
-  template: require('./position-show.component.html'),
-  providers  : [PositionService],
-  directives : [ROUTER_DIRECTIVES, PageHeader]
+  selector  : 'position-show',
+  template  : require('./position-show.component.html'),
+  providers : [PositionService],
+  directives: [ROUTER_DIRECTIVES, PageHeader]
 })
 
 export class PositionShowComponent implements OnInit {
   public position:Position;
+  public breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Position',
+    route: ['/App/Position']
+  }, {name: 'Details'}];
 
   constructor(private positionService:PositionService, private routeParams:RouteParams) {
   }

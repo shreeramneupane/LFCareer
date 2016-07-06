@@ -20,6 +20,10 @@ import * as toastr from 'toastr';
 export class JobShowComponent implements OnInit {
   public job:Job;
   public applicants:Array<any> = [{}, {}, {}, {}, {}, {}, {}, {}];
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Job',
+    route: ['/App/Job']
+  }, {name: 'Details'}];
 
   constructor(private jobService:JobService, private routeParams:RouteParams, private alertBox:AlertBox) {
   }

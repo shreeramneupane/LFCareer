@@ -1,4 +1,4 @@
-<page-header [pageHeader]="'Applicants List'"></page-header>
+<page-header [pageHeader]="'Applicants List'" [breadCrumb]="breadCrumb" [title]="'Applicants'"></page-header>
 <div class="block full">
   <div class="block-title">
     <h2>Applicant Details</h2>
@@ -14,12 +14,12 @@
                                                                                            ngClass="{{sorter.appliedFor}}"></i>
         </th>
         <th class="cursor-pointer noselect" (click)="sort('total_experience')">Experience<i class="fa pull-right"
-                                                                                              ngClass="{{sorter.total_experience}}"></i>
+                                                                                            ngClass="{{sorter.total_experience}}"></i>
         </th>
         <th>Hiring Stage(Static)</th>
         <th>Phone</th>
         <th class="cursor-pointer noselect" (click)="sort('created_at')">Applied Date<i class="fa pull-right"
-                                                                                         ngClass="{{sorter.created_at}}"></i>
+                                                                                        ngClass="{{sorter.created_at}}"></i>
         </th>
       </tr>
       </thead>

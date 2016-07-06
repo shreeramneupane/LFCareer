@@ -17,6 +17,10 @@ import * as toastr from 'toastr';
 
 export class PositionNewComponent {
   position = this.positionService.newPosition();
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Position',
+    route: ['/App/Position']
+  }, {name: 'New'}];
 
   constructor(private positionService:PositionService, private router:Router) {
   }

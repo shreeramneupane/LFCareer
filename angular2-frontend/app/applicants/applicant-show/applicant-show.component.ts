@@ -32,6 +32,11 @@ export class ApplicantShowComponent implements OnInit {
   applicant:Applicant;
   timeline:any;
 
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {
+    name : 'Applicant',
+    route: ['/App/Applicant']
+  }, {name: 'Details'}];
+
   constructor(private applicantService:ApplicantService, private timelineService:TimelineService, private routeParams:RouteParams) {
   }
 

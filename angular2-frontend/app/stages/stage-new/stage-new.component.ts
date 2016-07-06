@@ -17,6 +17,7 @@ import * as toastr from 'toastr';
 
 export class StageNewComponent {
   stage:Stage = new Stage();
+  breadCrumb:any = [{name: 'Dashboard', route: ['/App/Dashboard']}, {name: 'Stage', route: ['/App/Stage']},{name: 'New'}];
 
   constructor(private stageService:StageService, private router:Router) {
   }

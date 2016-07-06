@@ -1,4 +1,4 @@
-<page-header [pageHeader]="'Jobs List'"></page-header>
+<page-header [pageHeader]="'Jobs List'" [breadCrumb]="breadCrumb" [title]="'Jobs'"></page-header>
 <div class="block full">
   <div class="block-title">
     <h2>Job Details</h2>
@@ -14,8 +14,11 @@
       <thead>
       <tr>
         <th>S.No.</th>
-        <th>Job</th>
-        <th>Number of openings</th>
+        <th class="cursor-pointer noselect" (click)="sort('title')">Title<i class="fa pull-right"
+                                                                            ngClass="{{sorter.title}}"></i></th>
+        <th class="cursor-pointer noselect" (click)="sort('number_of_opening')">Number of openings<i
+        class="fa pull-right"
+        ngClass="{{sorter.number_of_opening}}"></i></th>
         <th class="text-center">Actions</th>
       </tr>
       </thead>
