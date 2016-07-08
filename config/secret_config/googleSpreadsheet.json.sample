@@ -1,0 +1,8 @@
+{
+  "development": {
+    "spreadsheet_id": "google_spreadsheet_id_for_development"
+  },
+  "production": {
+    "spreadsheet_id": "google_spreadsheet_id_for_production"
+  }
+}
