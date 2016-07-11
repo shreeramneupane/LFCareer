@@ -4,6 +4,7 @@ var models = require('../models/index');
 var Promise = require('bluebird');
 
 var Regex = require('../config/regex');
+var InterviewResponseFromSpreadsheetService = require('../services/interviewResponseFromSpreadsheetService');
 
 var ApplicantStageInterviewService = {
 
@@ -54,6 +55,26 @@ var ApplicantStageInterviewService = {
         reject(err);
       });
     });
+  },
+
+  interviewerResponse: function (interviewID) {
+    return new Promise(function (resolve, reject) {
+      models.ApplicantStageInterview.findOne({where: {id: interviewID}})
+      .then(function (applicantStageInterview) {
+        if (applicantStageInterview) {
+          InterviewResponseFromSpreadsheetService.interviewResponse(interviewID)
+          .then(function (response) {
+            resolve(response);
+          })
+        }
+        else {
+          throw new Error("Detail of the provided interview can't be found.")
+        }
+      })
+      .catch(function (err) {
+        reject(err);
+      })
+    })
   },
 
   verifyInterviewStage: function (stageId) {

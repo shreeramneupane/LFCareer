@@ -20,5 +20,20 @@ module.exports = {
         }
       })
     })
+  },
+
+  interviewResponse: function (request, response) {
+    var applicantStageInterviewID = request.params.id;
+    ApplicantStageInterviewService.interviewerResponse(applicantStageInterviewID)
+    .then(function (interviewResponse) {
+      response.status(HttpStatus.OK).json(interviewResponse);
+    })
+    .catch(function (err) {
+      response.status(err.code || HttpStatus.BAD_REQUEST).json({
+        error: {
+          message: err.message, code: err.code, type: err.type
+        }
+      })
+    })
   }
 };

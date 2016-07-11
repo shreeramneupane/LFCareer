@@ -12,5 +12,6 @@ router.get('/applicants/:applicant_id/stages', ApplicantStageController.index);
 router.post('/applicants/:applicant_id/stages', ApplicantStageController.create);
 router.post('/applicant_stage_reviews', ApplicantStageReviewController.create);
 router.put('/applicant_stage_interviews/:id', ApplicantStageInterviewController.update);
+router.get('/applicant_stage_interviews/:id/interview_response', ApplicantStageInterviewController.interviewResponse);
 
 module.exports = router;
