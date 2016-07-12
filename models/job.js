@@ -38,6 +38,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       }
     },
+    concern_people: DataTypes.STRING,
     closed_on: DataTypes.DATE,
     description: {
       type: DataTypes.TEXT,
