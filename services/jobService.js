@@ -6,12 +6,17 @@ var Promise = require("bluebird");
 var models = require('../models/index');
 
 var JobStageService = require('../services/jobStageService');
+var env = process.env.NODE_ENV || 'development';
+var HttpStatus = require('http-status-codes');
+var request = require('request');
+
+var config = require("../config/secret_config/vyagutaService.json")[env];
 
 var JobService = {
 
   list: function (status) {
     console.log(Date.now());
-    var whereCondition = (status === 'closed' ? {where: { valid_until: { $lt: Date.now() } }} : status === 'open' ? {where: { valid_until: { $gt: Date.now() } }} : {});
+    var whereCondition = (status === 'closed' ? {where: {valid_until: {$lt: Date.now()}}} : status === 'open' ? {where: {valid_until: {$gt: Date.now()}}} : {});
     return new Promise(function (resolve, reject) {
       models.Job.findAndCountAll(whereCondition)
       .then(function (response) {
@@ -85,7 +90,7 @@ var JobService = {
     });
   },
 
-  update: function (id, jobParam) {
+  update: function (id, jobParam, authorizationToken) {
     var jobID;
 
     return new Promise(function (resolve, reject) {
@@ -96,33 +101,40 @@ var JobService = {
       })
       .then(function (job) {
         if (job) {
-          return models.sequelize.transaction()
-          .then(function (t) {
-            return job.updateAttributes(jobParam, {transaction: t})
-            .then(function (job) {
-              jobID = job.id;
-              return models.Applicant.count({
-                where: {
-                  job_id: jobID
-                }
+          JobService.validateConcernPeople(jobParam.concern_people, authorizationToken)
+          .then(function () {
+            return models.sequelize.transaction()
+            .then(function (t) {
+              return job.updateAttributes(jobParam, {transaction: t})
+              .then(function (job) {
+                jobID = job.id;
+                return models.Applicant.count({
+                  where: {
+                    job_id: jobID
+                  }
+                })
+                .then(function (applicantCount) {
+                  if (applicantCount === 0) {
+                    return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
+                    .then(function () {
+                      return JobStageService.updateMultiple(jobID, jobParam['stages'], t)
+                    });
+                  }
+                })
               })
-              .then(function (applicantCount) {
-                if (applicantCount === 0) {
-                  return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
-                  .then(function () {
-                    return JobStageService.updateMultiple(jobID, jobParam['stages'], t)
-                  });
-                }
+              .then(function () {
+                return t.commit();
               })
-            })
-            .then(function () {
-              return t.commit();
-            })
-            .catch(function (err) {
-              t.rollback();
-              throw new Error(err);
+              .catch(function (err) {
+                t.rollback();
+                throw new Error(err);
+              });
             });
-          });
+          })
+          .catch(function (err) {
+            console.log(err, 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+            throw new Error(err);
+          })
         }
         else {
           throw new Error("Can't find job with provided id.")
@@ -137,6 +149,36 @@ var JobService = {
       .catch(function (err) {
         reject(err);
       });
+    });
+  },
+
+  validateConcernPeople: function (concernPeopleID, authorizationToken) {
+    var concernPersonValidationURL;
+    return new Promise(function (resolve, reject) {
+      return models.sequelize.Promise.map(concernPeopleID, function (concernPersonID) {
+        concernPersonValidationURL = config['vyaguta_employee_detail_url'];
+        concernPersonValidationURL = concernPersonValidationURL.replace(':id', concernPersonID);
+
+        return request({
+          url: concernPersonValidationURL,
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': authorizationToken
+          }
+        }, function (err, response) {
+          console.log(response, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+          if (err || response.statusCode !== HttpStatus.OK || JSON.parse(response.body).hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
+
+            console.log('666666666666666666666666666666666666666666666666666')
+            reject(new Error('Concern Person can not be validated.'));
+          }
+        });
+      })
+      .then(function () {
+        console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR')
+        resolve(true);
+      })
     });
   }
 };

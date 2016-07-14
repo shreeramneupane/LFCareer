@@ -1,0 +1,7 @@
+{
+  "development": {
+      "vyaguta_employee_detail_url": "dev.vayaguta.url.com",
+      "vyaguta_employee_valid_hrStatus": "Permanent"
+    },
+  "production": same as development
+}

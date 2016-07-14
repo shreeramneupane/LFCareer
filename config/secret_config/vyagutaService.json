@@ -1,0 +1,6 @@
+{
+  "development": {
+    "vyaguta_employee_detail_url": "http://dev.vyaguta.lftechnology.com/api/core/employees/:id",
+    "vyaguta_employee_valid_hrStatus": "Permanent"
+  }
+}

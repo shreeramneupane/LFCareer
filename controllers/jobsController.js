@@ -53,9 +53,10 @@ module.exports = {
   },
 
   update: function (request, response) {
+    var authorizationToken = request.get('Authorization');
     var id = request.params.id;
     var job = request.body;
-    JobService.update(id, job)
+    JobService.update(id, job, authorizationToken)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })
