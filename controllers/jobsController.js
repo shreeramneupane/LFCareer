@@ -38,8 +38,10 @@ module.exports = {
   },
 
   create: function (request, response) {
+    var authorizationToken = request.get('Authorization');
     var job = request.body;
-    JobService.create(job)
+    
+    JobService.create(job, authorizationToken)
     .then(function (data) {
       response.status(HttpStatus.OK).json(data);
     })

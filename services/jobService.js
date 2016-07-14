@@ -7,8 +7,7 @@ var models = require('../models/index');
 
 var JobStageService = require('../services/jobStageService');
 var env = process.env.NODE_ENV || 'development';
-var HttpStatus = require('http-status-codes');
-var request = require('request');
+var request = require('request-promise');
 
 var config = require("../config/secret_config/vyagutaService.json")[env];
 
@@ -39,6 +38,7 @@ var JobService = {
       })
       .then(function (job) {
         var job = job.dataValues;
+        job.concern_people = job.concern_people.split(',');
         job.stages = _.map(job.Stages, 'dataValues');
         delete job.Stages;
         _.each(job.stages, function (stage) {
@@ -55,38 +55,43 @@ var JobService = {
     });
   },
 
-  create: function (jobParam) {
+  create: function (jobParam, authorizationToken) {
     var jobID;
-
     return new Promise(function (resolve, reject) {
-      models.sequelize.transaction()
-      .then(function (t) {
-        return models.Job.create(jobParam, {transaction: t})
-        .then(function (job) {
-          jobID = job.id;
-          return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
+      JobService.validateConcernPeople(jobParam.concern_people, authorizationToken)
+      .then(function () {
+        models.sequelize.transaction()
+        .then(function (t) {
+          jobParam.concern_people = jobParam.concern_people.toString();
+          return models.Job.create(jobParam, {transaction: t})
+          .then(function (job) {
+            jobID = job.id;
+            return JobStageService.validatePresenceOfAllDefaultStageWithPrecedence(jobParam['stages'])
+            .then(function () {
+              return JobStageService.createMultiple(jobID, jobParam['stages'], t)
+            });
+          })
           .then(function () {
-            return JobStageService.createMultiple(jobID, jobParam['stages'], t)
+            return t.commit();
+          })
+          .catch(function (err) {
+            t.rollback();
+            throw new Error(err);
           });
         })
         .then(function () {
-          return t.commit();
+          JobService.show(jobID)
+          .then(function (createdJob) {
+            resolve(createdJob);
+          });
         })
         .catch(function (err) {
-          t.rollback();
-          throw new Error(err);
-        });
-      })
-      .then(function () {
-        JobService.show(jobID)
-        .then(function (createdJob) {
-          resolve(createdJob);
+          reject(err);
         });
       })
       .catch(function (err) {
         reject(err);
       });
-
     });
   },
 
@@ -101,10 +106,11 @@ var JobService = {
       })
       .then(function (job) {
         if (job) {
-          JobService.validateConcernPeople(jobParam.concern_people, authorizationToken)
+          return JobService.validateConcernPeople(jobParam.concern_people, authorizationToken)
           .then(function () {
             return models.sequelize.transaction()
             .then(function (t) {
+              jobParam.concern_people = jobParam.concern_people.toString();
               return job.updateAttributes(jobParam, {transaction: t})
               .then(function (job) {
                 jobID = job.id;
@@ -132,7 +138,6 @@ var JobService = {
             });
           })
           .catch(function (err) {
-            console.log(err, 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
             throw new Error(err);
           })
         }
@@ -155,31 +160,35 @@ var JobService = {
   validateConcernPeople: function (concernPeopleID, authorizationToken) {
     var concernPersonValidationURL;
     return new Promise(function (resolve, reject) {
-      return models.sequelize.Promise.map(concernPeopleID, function (concernPersonID) {
+      return Promise.map(concernPeopleID, function (concernPersonID) {
         concernPersonValidationURL = config['vyaguta_employee_detail_url'];
         concernPersonValidationURL = concernPersonValidationURL.replace(':id', concernPersonID);
 
-        return request({
-          url: concernPersonValidationURL,
-          method: 'GET',
+        var options = {
+          uri: concernPersonValidationURL,
           headers: {
-            'Content-Type': 'application/json',
             'Authorization': authorizationToken
+          },
+          json: true
+        };
+        return request(options)
+        .then(function (response) {
+          if (response.hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
+            throw new Error();
           }
-        }, function (err, response) {
-          console.log(response, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-          if (err || response.statusCode !== HttpStatus.OK || JSON.parse(response.body).hrStatus.title !== config['vyaguta_employee_valid_hrStatus']) {
-
-            console.log('666666666666666666666666666666666666666666666666666')
-            reject(new Error('Concern Person can not be validated.'));
-          }
+        })
+        .catch(function () {
+          throw new Error();
         });
       })
       .then(function () {
-        console.log('RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR')
         resolve(true);
       })
-    });
+      .catch(function () {
+        reject(new Error('Concern Person can not be validated.'));
+      });
+    })
+
   }
 };
 
