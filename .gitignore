@@ -6,6 +6,7 @@ config/secret_config/dbConfig.json
 config/secret_config/s3Config.json
 config/secret_config/googleSpreadsheet.json
 config/secret_config/googleServiceAccountCredentials.json
+config/secret_config/mailer.json
 
 
 # Angular Front end Gitignore

@@ -1,0 +1,8 @@
+{
+  "development": {
+    "username": "user@gmail.com",
+    "password": "password",
+    "default_email": "career@lftechnology.com"
+  },
+  "production": {}
+}

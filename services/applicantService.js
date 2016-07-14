@@ -18,6 +18,8 @@ var ApplicantReferenceService = require('../services/applicantReferenceService')
 var SkillService = require('../services/skillService');
 var WorkareaService = require('../services/workAreaService');
 
+var AppliedSuccessfullyMailer = require('../mailers/appliedSuccessfully');
+
 var ApplicantService = {
   list: function (query) {
     var parsedQuery = QueryParser.parse(models.Applicant, query);
@@ -122,6 +124,14 @@ var ApplicantService = {
             });
           })
           .then(function () {
+            models.Applicant.findOne({
+              where: {
+                id: applicantID
+              }
+            })
+            .then(function (applicant) {
+              AppliedSuccessfullyMailer.messageToApplicant(applicant)
+            });
             resolve({applicant: {id: applicantID}});
           })
           .catch(function (err) {
